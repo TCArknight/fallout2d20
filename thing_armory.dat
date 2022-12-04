@@ -1,0 +1,316 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="armNatural" name="Natural Armor" description="Description goes here" compset="Armor" uniqueness="unique" holdable="no">
+    <fieldval field="defPhysical" value="1"/>
+    <tag group="Equipment" tag="AutoEquip"/>
+    <tag group="Equipment" tag="Natural"/>
+    </thing>
+  <thing id="wpUnarmed" name="Unarmed Strike" description="Description goes here" compset="Melee" uniqueness="unique" holdable="no">
+    <fieldval field="shortname" value="Unarmed"/>
+    <fieldval field="wpStrReq" value="0"/>
+    <fieldval field="wpDamage" value="2"/>
+    <tag group="Equipment" tag="Natural"/>
+    <tag group="WeaponType" tag="Unarmed"/>
+    <tag group="DamageType" tag="Physical"/>
+    </thing>
+  <thing id="wpSampleM" name="Sample Melee" description="Description goes here" compset="Melee">
+    <fieldval field="wpDamage" value="1d3"/>
+    <fieldval field="wpStrReq" value="0"/>
+    <fieldval field="grCost" value="5"/>
+    <fieldval field="gearWeight" value="1"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wp44Pistol" name=".44 Pistol" description="The .44 pistol is a double-action revolver, chambered to use the .44 Magnum cartridge. It’s a powerful gun, though not as customizable as other handguns. Due to their simple, rugged design, they’re prized by their owners, but not so uncommon as to be truly rare.\n\nA .44 Pistol can accept one each of the following mods:\n* Receiver: Hardened, Powerful, Advanced\n* Barrel: Snubnose Barrel, Bull Barrel\n* Grip: Comfort Grip\n* Sights: Short Scope, Reflex Sight, Recon Scope" compset="Ranged">
+    <fieldval field="wpDamage" value="6"/>
+    <fieldval field="grCost" value="99"/>
+    <fieldval field="gearWeight" value="4"/>
+    <fieldval field="grRarity" value="2"/>
+    <fieldval field="wpFireRate" value="1"/>
+    <tag group="DamageType" tag="Physical"/>
+    <tag group="Range" tag="Close"/>
+    <tag group="Quality" tag="CQ"/>
+    <tag group="WeaponType" tag="SmallGun"/>
+    <tag group="Effect" tag="Vicious"/>
+    <tag group="ItemModCatAllowed" tag="RangedBarrel"/>
+    <tag group="ItemModCatAllowed" tag="RangedGrip"/>
+    <tag group="ItemModCatAllowed" tag="RangedReceiver"/>
+    <tag group="ItemModCatAllowed" tag="RangedSights"/>
+    <tag group="RangedMod" tag="modAdvanced"/>
+    <tag group="RangedMod" tag="modHardened"/>
+    <tag group="RangedMod" tag="modPowerful"/>
+    <tag group="RangedMod" tag="modBullBarrel"/>
+    <tag group="RangedMod" tag="modComfortGrip"/>
+    <tag group="RangedMod" tag="modReconScope"/>
+    <tag group="RangedMod" tag="modRefSight"/>
+    <tag group="RangedMod" tag="modShortScope"/>
+    <tag group="RangedMod" tag="modSnubBarrel"/>
+    <tag group="AmmoType" tag="am44Mag"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="am38" name=".38" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="1"/>
+    </thing>
+  <thing id="am10mm" name="10mm" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="2"/>
+    </thing>
+  <thing id="am308" name=".308" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="3"/>
+    <fieldval field="grRarity" value="1"/>
+    </thing>
+  <thing id="amFlare" name="Flare" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="1"/>
+    <fieldval field="grRarity" value="1"/>
+    </thing>
+  <thing id="amShotShell" name="Shotgun Shell" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="3"/>
+    <fieldval field="grRarity" value="1"/>
+    </thing>
+  <thing id="am45" name=".45" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="3"/>
+    <fieldval field="grRarity" value="2"/>
+    </thing>
+  <thing id="amFlamerFuel" name="Flamer Fuel" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="1"/>
+    <fieldval field="grRarity" value="2"/>
+    </thing>
+  <thing id="amFusionCell" name="Fusion Cell" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="3"/>
+    <fieldval field="grRarity" value="2"/>
+    </thing>
+  <thing id="amGamma" name="Gamma Round" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="10"/>
+    <fieldval field="grRarity" value="2"/>
+    </thing>
+  <thing id="amRailSpike" name="Railway Spike" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="1"/>
+    <fieldval field="grRarity" value="2"/>
+    </thing>
+  <thing id="amSyringer" name="Syringer Ammo" compset="Ammunition" stacking="merge">
+    <fieldval field="grRarity" value="2"/>
+    </thing>
+  <thing id="am44Mag" name=".44 Magnum" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="3"/>
+    <fieldval field="grRarity" value="3"/>
+    </thing>
+  <thing id="am50" name=".50" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="4"/>
+    <fieldval field="grRarity" value="3"/>
+    </thing>
+  <thing id="am556mm" name="5.56mm" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="2"/>
+    <fieldval field="grRarity" value="3"/>
+    </thing>
+  <thing id="am5mm" name="5mm" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="1"/>
+    <fieldval field="grRarity" value="3"/>
+    </thing>
+  <thing id="amFusionCore" name="Fusion Core" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="200"/>
+    <fieldval field="grRarity" value="3"/>
+    <fieldval field="gearWeight" value="4"/>
+    </thing>
+  <thing id="amMissile" name="Missile" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="25"/>
+    <fieldval field="grRarity" value="3"/>
+    <fieldval field="gearWeight" value="7"/>
+    </thing>
+  <thing id="amPlasmaCart" name="Plasma Cartridge" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="5"/>
+    <fieldval field="grRarity" value="4"/>
+    </thing>
+  <thing id="am2mmEC" name="2mm EC" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="10"/>
+    <fieldval field="grRarity" value="5"/>
+    </thing>
+  <thing id="amMiniNuke" name="Mini-Nuke" compset="Ammunition" stacking="merge">
+    <fieldval field="grCost" value="100"/>
+    <fieldval field="grRarity" value="6"/>
+    <fieldval field="gearWeight" value="12"/>
+    </thing>
+  <thing id="hdrAmmunition" name="-- Ammunition --" compset="Ammunition" isshowonly="yes"></thing>
+  <thing id="wpCombatKnife" name="Combat Knife" compset="Melee">
+    <fieldval field="wpDamage" value="3"/>
+    <fieldval field="gearWeight" value="1"/>
+    <fieldval field="grCost" value="25"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="Effect" tag="Piercing1"/>
+    <tag group="DamageType" tag="Physical"/>
+    <tag group="WeaponType" tag="MeleeWpn"/>
+    <tag group="ItemModCatAllowed" tag="Upgrade"/>
+    <tag group="MeleeMod" tag="modSerratedCbtKni"/>
+    <tag group="MeleeMod" tag="modStealthCbtKni"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="armToughClothing" name="Tough Clothing" description="Hard-wearing clothing cobbled together from sufficiently sturdy garments to create an outfit that can withstand a hard life in the wasteland. Normally made from a jacket, a shirt and undershirt, a pair of jeans, and some walking boots, reinforced (or patched) with duct tape, to provide both a little protection against the bumps and scrapes of life and a bit of warmth on those cold nuclear winter nights." compset="Clothing">
+    <fieldval field="defPhysical" value="1"/>
+    <fieldval field="defEnergy" value="1"/>
+    <fieldval field="gearWeight" value="3"/>
+    <fieldval field="grCost" value="20"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="ArmorLoc" tag="LeftLeg"/>
+    <tag group="ArmorLoc" tag="RightLeg"/>
+    <tag group="ArmorLoc" tag="Torso"/>
+    <tag group="ArmorLoc" tag="LeftArm"/>
+    <tag group="ArmorLoc" tag="RightArm"/>
+    <tag group="ItemModCatAllowed" tag="Clothing"/>
+    <tag group="ClothingMod" tag="modBalWeave"/>
+    <tag group="ClothingMod" tag="modBalWeave2"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="armCasualHat" name="Casual Hat" description="A simple, lightweight hat, normally with a peak or brim to keep the sunlight out of the wearer’s eyes.\n\nSpecial: A character wearing a casual hat ignores any difficulty increases caused by extremely bright light." compset="Headgear">
+    <fieldval field="grCost" value="15"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="ArmorLoc" tag="Head"/>
+    <tag group="ItemModCatAllowed" tag="Clothing"/>
+    <tag group="ClothingMod" tag="modBalWeave"/>
+    <tag group="ClothingMod" tag="modBalWeave2"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="armHeavyCoat" name="Heavy Coat" description="A long, heavy-weight coat—a leather duster, a trenchcoat, or similar—ideal for protecting you from the harsh elements. Provides a bit of protection against physical harm, extreme heat, and even covers well enough to keep a little radiation out.\n\nSpecial: Wearing a heavy coat allows you to re-roll a single d20 on one END-based skill test you make each scene, as it helps protect you from harsh conditions." compset="Clothing">
+    <fieldval field="defPhysical" value="1"/>
+    <fieldval field="defEnergy" value="1"/>
+    <fieldval field="defRadiation" value="1"/>
+    <fieldval field="gearWeight" value="2"/>
+    <fieldval field="grCost" value="20"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="ArmorLoc" tag="LeftArm"/>
+    <tag group="ArmorLoc" tag="RightArm"/>
+    <tag group="ArmorLoc" tag="LeftLeg"/>
+    <tag group="ArmorLoc" tag="RightLeg"/>
+    <tag group="ItemModCatAllowed" tag="Clothing"/>
+    <tag group="ClothingMod" tag="modBalWeave"/>
+    <tag group="ClothingMod" tag="modBalWeave2"/>
+    <tag group="User" tag="Activation"/>
+    <tag group="ArmorLoc" tag="Torso"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="hdrSmallGuns" name="-- Small Guns --" compset="Ranged" isshowonly="yes">
+    <tag group="WeaponType" tag="SmallGun"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="hdrBigGuns" name="-- Big Guns --" compset="Ranged" isshowonly="yes">
+    <tag group="WeaponType" tag="BigGun"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="hdrEnergyWeapons" name="-- Energy Weapons --" compset="Ranged" isshowonly="yes">
+    <tag group="WeaponType" tag="EnergyWpn"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="hdrExplosives" name="-- Explosives --" compset="Ranged" isshowonly="yes">
+    <tag group="WeaponType" tag="Explosive"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wpBaseballGren" name="Baseball Grenade" description="Little more than a hollowed-out baseball filled with an improvised explosive mixture, these grenades are crude, low-tech, and easy to make, dealing a moderate amount of damage to those within the blast." compset="Ranged">
+    <fieldval field="wpDamage" value="5"/>
+    <fieldval field="gearWeight" value="1"/>
+    <fieldval field="grCost" value="40"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="Quality" tag="Blast"/>
+    <tag group="Quality" tag="ThrownM"/>
+    <tag group="WeaponType" tag="Explosive"/>
+    <tag group="DamageType" tag="Physical"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wpFragGren" name="Frag Grenade" description="A basic fragmentation grenade, consisting of an explosive core within a metal casing designed to shatter into shrapnel upon detonation. They’re simple and highly effective. Just remember to throw the grenade, and not the pin." compset="Ranged">
+    <fieldval field="wpDamage" value="6"/>
+    <fieldval field="grCost" value="50"/>
+    <fieldval field="grRarity" value="2"/>
+    <tag group="DamageType" tag="Physical"/>
+    <tag group="Quality" tag="Blast"/>
+    <tag group="Quality" tag="ThrownM"/>
+    <tag group="WeaponType" tag="Explosive"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wpMolotov" name="Molotov Cocktail" description="Consisting of a glass bottle—normally from an alcoholic beverage—containing a flammable fuel mixture, a bit of motor oil to help it spread, and an alcohol-soaked rag stuffed in the top to act as a wick. When used, the wick is ignited and the bottle hurled at the target; the breaking bottle spreads the agitated mixture, which quickly ignites begins to burn anything in the vicinity. Cheap and effective." compset="Ranged">
+    <fieldval field="wpDamage" value="4"/>
+    <fieldval field="gearWeight" value="1"/>
+    <fieldval field="grCost" value="20"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="DamageType" tag="Energy"/>
+    <tag group="Quality" tag="Blast"/>
+    <tag group="Quality" tag="ThrownM"/>
+    <tag group="WeaponType" tag="Explosive"/>
+    <tag group="Effect" tag="Persistent"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wp10mmPistol" name="10mm Pistol" description="Small, dependable, reasonably powerful, and widely available, the 10mm pistol has been a staple of wasteland combat since the bombs first fell. Its versatility and potential for customization mean that a well-looked-after 10mm pistol will keep its owner safe for a long time.\n\nA 10mm Pistol can accept one each of the following mods:\nReceiver: Calibrated, Hardened, Automatic, Hair-Trigger, Powerful, Advanced\nBarrel: Long Barrel, Ported Barrel\nGrip: Comfort Grip, Sharpshooter’s Grip\nMagazine: Large Magazine, Quick-Eject Magazine,\nLarge Quick-Eject Magazine\nSights: Reflex Sight, Recon Scope\nMuzzle: Compensator, Suppressor" compset="Ranged">
+    <fieldval field="wpDamage" value="4"/>
+    <fieldval field="wpFireRate" value="2"/>
+    <fieldval field="gearWeight" value="4"/>
+    <fieldval field="grCost" value="50"/>
+    <fieldval field="grRarity" value="1"/>
+    <tag group="Range" tag="Close"/>
+    <tag group="Quality" tag="CQ"/>
+    <tag group="Quality" tag="Reliable"/>
+    <tag group="DamageType" tag="Physical"/>
+    <tag group="WeaponType" tag="SmallGun"/>
+    <tag group="ItemModCatAllowed" tag="RangedBarrel"/>
+    <tag group="ItemModCatAllowed" tag="RangedGrip"/>
+    <tag group="ItemModCatAllowed" tag="RangedMag"/>
+    <tag group="ItemModCatAllowed" tag="RangedMuzzle"/>
+    <tag group="ItemModCatAllowed" tag="RangedReceiver"/>
+    <tag group="ItemModCatAllowed" tag="RangedSights"/>
+    <tag group="AmmoType" tag="am10mm"/>
+    <tag group="RangedMod" tag="modAdvanced"/>
+    <tag group="RangedMod" tag="modAutomatic"/>
+    <tag group="RangedMod" tag="modCalibrated"/>
+    <tag group="RangedMod" tag="modComfortGrip"/>
+    <tag group="RangedMod" tag="modCompensator"/>
+    <tag group="RangedMod" tag="modHairTrigger"/>
+    <tag group="RangedMod" tag="modHardened"/>
+    <tag group="RangedMod" tag="modLargeMag"/>
+    <tag group="RangedMod" tag="modLgQuickEject"/>
+    <tag group="RangedMod" tag="modLongBarrel"/>
+    <tag group="RangedMod" tag="modPortedBarrel"/>
+    <tag group="RangedMod" tag="modQuickEjectMag"/>
+    <tag group="RangedMod" tag="modReconScope"/>
+    <tag group="RangedMod" tag="modRefSight"/>
+    <tag group="RangedMod" tag="modSharpshooterGr"/>
+    <tag group="RangedMod" tag="modSuppressor"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wpPipeBoltAction" name="Pipe Bolt-Action" description="A makeshift weapon, normally seen in the hands of those who can’t make, buy, or scavenge anything better, pipe guns are crude and somewhat unreliable, but effective enough. Bolt-action pipe guns tend to be chambered for rifle caliber rounds, trading rate-of-fire for power and simplicity.\n\nA Pipe Bolt-Action can accept one each of the following mods. You may not take both a Grip and a Stock Mod. Any Stock mods add the word “Rifle” to the end of the weapon’s name.\n\n Receiver: Calibrated, Hardened, Powerful, .38 Receiver, .50 Receiver\n Barrel: Stub Barrel, Long Barrel, Ported Barrel, Finned Barrel\n Grip: Sharpshooter’s Grip\nStock: Standard Stock, Marksman’s Stock, Recoil-Compensating Stock\nSights: Reflex Sight, Short Scope, Long Scope, Short Night Vision Scope, Long Night Vision Scope, Recon Scope\nMuzzle: Bayonet, Compensator, Muzzle Brake, Suppressor" compset="Ranged">
+    <fieldval field="wpDamage" value="5"/>
+    <fieldval field="gearWeight" value="2"/>
+    <fieldval field="grCost" value="30"/>
+    <tag group="Effect" tag="Piercing1"/>
+    <tag group="DamageType" tag="Physical"/>
+    <tag group="Range" tag="Close"/>
+    <tag group="Quality" tag="Unreliable"/>
+    <tag group="WeaponType" tag="SmallGun"/>
+    <tag group="ItemModCatAllowed" tag="RangedBarrel"/>
+    <tag group="ItemModCatAllowed" tag="RangedGrip"/>
+    <tag group="ItemModCatAllowed" tag="RangedMuzzle"/>
+    <tag group="ItemModCatAllowed" tag="RangedReceiver"/>
+    <tag group="ItemModCatAllowed" tag="RangedStock"/>
+    <tag group="ItemModCatAllowed" tag="RangedSights"/>
+    <tag group="RangedMod" tag="modCalibrated"/>
+    <tag group="RangedMod" tag="modFinnedBarrel"/>
+    <tag group="RangedMod" tag="modFullStock"/>
+    <tag group="RangedMod" tag="modHardened"/>
+    <tag group="RangedMod" tag="modLongBarrel"/>
+    <tag group="RangedMod" tag="modPortedBarrel"/>
+    <tag group="RangedMod" tag="modPowerful"/>
+    <tag group="RangedMod" tag="modSnubBarrel"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="wpInstituteLaser" name="Institute Laser" description="Developed by The Institute after the Great War, Institute lasers differ in design and function from the pre-War lasers used by other factions such as the Brotherhood of Steel. Eschewing raw power for a rapid succession of beams, these lasers can lay down a searing volley of suppressive fire.\n\nThe default profile is for an Institute laser pistol. An Institute laser can accept one each of the following mods. Any Stock mods change the weapon to an Institute laser rifle.\n* Capacitor: Photon Exciter, Beta Wave Tuner, Boosted Capacitor, Photon Agitator\n* Barrel: Long Barrel, Automatic Barrel, Improved Barrel\n* Stock: Standard Stock\n* Sights: Reflex Sight, Short Scope, Long Scope, Short Night Vision Scope, Long Night Vision Scope, Recon Scope\n* Muzzle: Beam Splitter, Beam Focuser, Gyro-Compensating Lens" compset="Ranged">
+    <fieldval field="wpDamage" value="3"/>
+    <fieldval field="wpFireRate" value="3"/>
+    <fieldval field="gearWeight" value="4"/>
+    <fieldval field="grCost" value="50"/>
+    <fieldval field="grRarity" value="2"/>
+    <tag group="WeaponType" tag="EnergyWpn"/>
+    <tag group="Range" tag="Close"/>
+    <tag group="Quality" tag="CQ"/>
+    <tag group="Quality" tag="Inaccurate"/>
+    <tag group="Effect" tag="Burst"/>
+    <tag group="DamageType" tag="Energy"/>
+    <tag group="ItemModCatAllowed" tag="Capacitor"/>
+    <tag group="ItemModCatAllowed" tag="RangedBarrel"/>
+    <tag group="ItemModCatAllowed" tag="RangedMuzzle"/>
+    <tag group="ItemModCatAllowed" tag="RangedSights"/>
+    <tag group="ItemModCatAllowed" tag="RangedStock"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  </document>

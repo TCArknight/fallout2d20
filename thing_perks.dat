@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="prkSample" name="Sample" description="Description goes here" compset="Perk" uniqueness="useronce"></thing>
+  <thing id="prkArmorer" name="Armorer" description="You can modify armor with armor mods. Each rank in this perk unlocks an additional rank of mods: rank 1 unlocks rank 1 mods, rank 2 unlocks rank 2 mods, etc.\n\nEach time you take this perk, the level requirement increases by 4." compset="Perk" maxlimit="4">
+    <fieldval field="prkMaxRank" value="4"/>
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkLevelIncrement" value="4"/>
+    <tag group="Perk" tag="IsRanked"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "You can modify armor with mods up to rank " & field[xCount].value & "."]]></eval>
+    </thing>
+  <thing id="prkCenterMass" name="Center Mass" description="When you make a ranged attack, you may choose to strike your target’s Torso location (or equivalent) without increasing the difficulty of the attack. In addition, you may re-roll 1d20 when making your attack test." compset="Perk" uniqueness="useronce"></thing>
+  </document>

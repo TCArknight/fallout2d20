@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="spcSample" name="Sample" description="Description goes here" compset="Species" uniqueness="unique"></thing>
+  <thing id="spcBrotherIni" name="Brotherhood Initiate" description="Born from the terrible revelations of the Mariposa Rebellion, Roger Maxson formed the Brotherhood of Steel so that his people—and eventually the rest of the survivors in this new world—would have something to believe in. With its own mythology, creed, and hierarchy, the Brotherhood of Steel’s primary goal is the recovery and preservation of the technology of the pre-war world. With the Great War disrupting humanity’s access to technology, the Brotherhood’s knights and scribes do all they can to secure the technology of the past, for the needs of future generations.\n\nYou may be a descendant of a knight or paladin, born into the Brotherhood and a firm believer of their doctrine, or you may be a new recruit, pledging yourself to their cause and looking to rise through their ranks.\n\nAlthough the Brotherhood share a common goal, their chapters across the wasteland can have different beliefs and protocols, and they aren’t as unified as they seem from the outside. While the West Coast Brotherhood of Steel warred with the New California Republic over reclamation of technology and the NCR’s expansion efforts, the East Coast chapter was effectively isolated when it prioritized charity over the exchange of technology and the preservation of pre-war equipment. Elder Lyons’ mission became humanitarian, and while that earned them isolation at first, Arthur Maxson led their expansion of influence from Washington D.C. to the entire Eastern Seaboard, refocusing their efforts on technological recovery and development." compset="Species" uniqueness="unique">
+    <bootstrap thing="stChainThatBinds"></bootstrap>
+    </thing>
+  <thing id="spcGhoul" name="Ghoul" compset="Species" uniqueness="unique"></thing>
+  <thing id="spcSuperMutant" name="Super Mutant" compset="Species" uniqueness="unique"></thing>
+  <thing id="spcMisterHandy" name="Mister Handy" compset="Species" uniqueness="unique"></thing>
+  <thing id="spcSurvivor" name="Survivor" description="You are the living legacy of the people who prepared for Armageddon on their own. You are only alive in the post-nuclear apocalyptic landscape because your forebears dug in, survived, and found community enough to continue humanity’s existence.\n\nYou could be from any number of settlements, isolated shelters, or traveling groups that sparsely populate the wasteland from West Coast to East Coast. You could be from the New California Republic, carrying on the legacy of Vault 15 and Shady Sands. You could fight to protect others, calling a group of survivors like the Minutemen or the Regulators your home. You could also be a merciless raider or be born into one of these groups but escaped in order to rehabilitate and reform.\n\nWherever you are from, or wherever you travel, making connections and laying down roots can be hard. Survivors are naturally wary of others, and are always on the lookout for the next conman, raiding party, or thief that will take their hard-earned resources. Travelling vast distances is difficult too, and many travelling survivors—particularly trading caravans—move between large settlements within their area of the wasteland, rather than travelling from coast to coast." compset="Species" uniqueness="unique">
+    <fieldval field="spPerkTrait" value="1"/>
+    <fieldval field="spNumTraits" value="2"/>
+    <fieldval field="spTraitSelect" value="1"/>
+    </thing>
+  <thing id="spcVaultDweller" name="Vault Dweller" compset="Species" uniqueness="unique"></thing>
+  <thing id="stChainThatBinds" name="The Chain That Binds" description="You gain one additional Tag skill, which must be one of Energy Weapons, Science, or Repair.\n\nAs a member of the Brotherhood of Steel, you are bound by\nthe chain of command: The Chain that Binds. You must carry\nout the orders of your immediate superiors, and you are\nresponsible for your subordinate siblings. If you do not carry\nout your duty, you are expelled from the Brotherhood and\nyour technology will be reclaimed—by any means  necessary." compset="SpecTrait">
+    <eval phase="PreTraits" priority="1000">hero.findchild[Species].field[spMaxTagSkills].value += 1</eval>
+    </thing>
+  <thing id="stEducated" name="Educated" description="Benefit: You have one additional tag skill.\n\nPenalty: When you fail a skill test using a skill other than a tag skill, the GM gains 1 AP." compset="SpecTrait" summary="Gain an additional Tag Skill. When you fail a skill test using a skill other than a tag skill, the GM gains 1 AP.">
+    <tag group="Species" tag="spcSurvivor"/>
+    <eval phase="PreTraits" priority="1000">hero.findchild[Species].field[spMaxTagSkills].value += 1</eval>
+    </thing>
+  <thing id="stHeavyHanded" name="Heavy Handed" description="Benefit: Your Melee Damage bonus increases by +1 DC .\n\nPenalty: Your melee and unarmed attacks suffer a complication on a 19 or 20, rather than only a 20." compset="SpecTrait" summary="+1 DC Melee Damage, but unarmed attacks suffer complication on a 19 or 20.">
+    <tag group="Species" tag="spcSurvivor"/>
+    </thing>
+  </document>

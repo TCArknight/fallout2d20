@@ -1,0 +1,541 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains the definition of the "Skills" tab panel. This tab is where
+      the user selects and adjusts the skills for the character.
+
+      All public visual elements used with this tab panel start with the prefix "sk"
+      to associate them with the tab.
+-->
+
+<document signature="Hero Lab Data">
+
+  <portal
+    id="spChsLbl"
+    style="lblBrdLeft">
+    <label>
+	  <labeltext>
+	  @text = "Trait"
+	    </labeltext>
+      </label>
+    </portal>
+	
+  <portal
+    id="spChsTrait"
+    style="chsNormal"
+    width="110">
+    <chooser_table
+      component="SpecTrait"
+      choosetemplate="LargeItem">
+      <needtag usehero="yes" container="Species" thing="Species"/>
+      <chosen><![CDATA[
+        if (@ispick = 0) then
+          @text = "{text clrwarning}Select Trait"
+        else
+          @text = field[name].text
+          endif
+        ]]></chosen>
+      <titlebar><![CDATA[
+        @text = "Choose the trait for your character"
+        ]]></titlebar>
+      </chooser_table>
+    </portal>
+      
+  <portal
+    id="spChsLbl2"
+    style="lblBrdLeft">
+    <label>
+	  <labeltext>
+	  @text = "Trait"
+	    </labeltext>
+      </label>
+    </portal>
+	
+  <portal
+    id="spChsTrait2"
+    style="chsNormal"
+    width="110">
+    <chooser_table
+      component="SpecTrait"
+      choosetemplate="LargeItem">
+      <needtag usehero="yes" container="Species" thing="Species"/>
+      <chosen><![CDATA[
+        if (@ispick = 0) then
+          @text = "{text clrwarning}Select Trait"
+        else
+          @text = field[name].text
+          endif
+        ]]></chosen>
+      <titlebar><![CDATA[
+        @text = "Choose the trait for your character"
+        ]]></titlebar>
+      </chooser_table>
+    </portal>	
+	
+  <template
+    id="spSpcPerkTrait"
+    name="Species Perk Trait Template"
+    compset="Species"
+    marginhorz="3"
+    marginvert="2">
+
+  <portal
+    id="spLblPerk"
+    style="lblBrdLeft">
+    <label>
+	  <labeltext>
+	  @text = "Select Perk instead of Trait?"
+	    </labeltext>
+      </label>
+    </portal>
+	
+  <portal
+    id="spPerkTrait"
+    style="chkNormal"
+    tiptext="Click to select a perk instead of a 2nd trait.">
+    <checkbox
+      field="spPerkSelect">
+      </checkbox>
+      </portal>
+                
+    <position><![CDATA[
+      ~set up our dimensions, with a width that we dictate; our width can vary
+     
+      portal[spLblPerk].height = 20
+
+      ~position the description on the left and let it use all available space
+      portal[spPerkTrait].top = 0
+      portal[spPerkTrait].left = 0
+      ~portal[spPerkTrait].width = width
+      portal[spPerkTrait].height = height
+
+      portal[spLblPerk].top = 0
+      portal[spLblPerk].left = portal[spPerkTrait].right + 5
+      portal[spLblPerk].width = width - portal[spPerkTrait].width
+	  ~portal[spLblPerk].height = portal[spPerkTrait].height
+	  perform portal[spLblPerk].centeron[vert,spPerkTrait]
+      ]]></position>
+
+    </template>	
+  <template
+    id="spSpcTemp"
+    name="Species Template"
+    compset="Species"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="spSpcTitle"
+      style="lblTitle">
+      <label>
+        <labeltext><![CDATA[
+          @text = "Description"
+          ]]></labeltext>
+        </label>
+      </portal>
+      
+    <portal
+      id="spSpcDesc"
+      style="lblBrdLeft">
+      <label
+        field="descript"
+        ismultiline="yes">
+        </label>
+      </portal>
+                
+    <position><![CDATA[
+      ~set up our dimensions, with a width that we dictate; our width can vary
+     
+      portal[spSpcTitle].height = 20
+
+      ~position the description on the left and let it use all available space
+      portal[spSpcTitle].top = 0
+      portal[spSpcTitle].left = 0
+      portal[spSpcTitle].width = width
+      
+      portal[spSpcDesc].top = portal[spSpcTitle].bottom + 5
+      portal[spSpcDesc].left = 0
+      portal[spSpcDesc].width = width
+      portal[spSpcDesc].height = height
+
+      ]]></position>
+
+    </template>
+
+  <template
+    id="spSpcMenus"
+    name="Species Menus"
+    compset="UserSelect"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="lblmenu1"
+      style="lblBrdLeft">
+      <label
+        field="usrLabel1">
+        </label>
+      </portal>
+
+    <portal
+      id="lblmenu2"
+      style="lblBrdLeft">
+      <label
+        field="usrLabel2">
+        </label>
+      </portal>
+	  
+    <portal
+      id="menu1"
+      style="menuNormal">
+      <menu_things
+        field="usrChosen1"
+        component="none"
+        maxvisible="10"
+        usepicksfield="usrSource1"
+        candidatefield="usrCandid1">
+        </menu_things>
+      </portal>
+
+    <portal
+      id="menu2"
+      style="menuNormal">
+      <menu_things
+        field="usrChosen2"
+        component="none"
+        maxvisible="10"
+        usepicksfield="usrSource2"
+        candidatefield="usrCandid2">
+        </menu_things>
+      </portal>
+  
+    <position><![CDATA[
+      ~position our labels on the left
+      portal[lblmenu1].height = portal[menu1].height
+	  portal[lblmenu1].left = 0
+	  portal[lblmenu1].width = 180
+
+	  portal[menu1].left = portal[lblmenu1].right + 5
+	  portal[menu1].width = 150
+
+      portal[lblmenu2].top = portal[lblmenu1].bottom + 10
+	  portal[lblmenu2].height = portal[menu1].height
+	  portal[lblmenu2].left = portal[lblmenu1].left
+	  portal[lblmenu2].width = portal[lblmenu1].width
+
+	  portal[menu2].top = portal[menu1].bottom + 10
+	  portal[menu2].left = portal[menu1].left
+	  portal[menu2].width = portal[menu1].width
+	  
+      ~determine whether our portals are visible; we only show them if requested
+      ~Note: Remember that a non-empty tagexpr field indicates menu selection is used.
+      if (field[usrCandid1].isempty <> 0) then
+        portal[lblmenu1].visible = 0
+        portal[menu1].visible = 0
+      elseif (field[usrLabel1].isempty <> 0) then
+        portal[lblmenu1].visible = 0
+        endif
+	  
+      if (field[usrCandid2].isempty <> 0) then
+        portal[lblmenu2].visible = 0
+        portal[menu2].visible = 0
+      elseif (field[usrLabel2].isempty <> 0) then
+        portal[lblmenu2].visible = 0
+        endif
+
+      ~if a menu is visible, make sure it has a selection
+      if (portal[menu1].visible <> 0) then
+        if (field[usrChosen1].ischosen = 0) then
+          perform portal[menu1].setstyle[menuError]
+          endif
+        endif
+      if (portal[menu2].visible <> 0) then
+        if (field[usrChosen2].ischosen = 0) then
+          perform portal[menu2].setstyle[menuError]
+          endif
+        endif
+		
+	]]></position>
+
+    </template>	
+
+  <template
+    id="spTagSkillMenu"
+    name="Tag Skills Menus"
+    compset="Species"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="lbltag1"
+      style="lblBrdLeft">
+      <label>
+	    <labeltext>
+		  @text = "Tag Skill"
+		  </labeltext>
+        </label>
+      </portal>
+
+    <portal
+      id="lbltag2"
+      style="lblBrdLeft">
+      <label>
+	    <labeltext>
+		  @text = "Tag Skill"
+		  </labeltext>
+        </label>
+      </portal>
+
+    <portal
+      id="lbltag3"
+      style="lblBrdLeft">
+      <label>
+	    <labeltext>
+		  @text = "Tag Skill"
+		  </labeltext>
+        </label>
+      </portal>
+
+    <portal
+      id="lbltag4"
+      style="lblBrdLeft">
+      <label>
+	    <labeltext>
+		  @text = "Tag Skill"
+		  </labeltext>
+        </label>
+      </portal>
+
+    <portal
+      id="menutag1"
+      style="menuNormal">
+      <menu_things
+        field="spTagSkill1"
+        component="none"
+        maxvisible="10"
+        usepicks="actor">
+		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
+        </menu_things>
+      </portal>	
+
+    <portal
+      id="menutag2"
+      style="menuNormal">
+      <menu_things
+        field="spTagSkill2"
+        component="none"
+        maxvisible="10"
+        usepicks="actor">
+		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
+        </menu_things>
+      </portal>	
+
+    <portal
+      id="menutag3"
+      style="menuNormal">
+      <menu_things
+        field="spTagSkill3"
+        component="none"
+        maxvisible="10"
+        usepicks="actor">
+		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
+        </menu_things>
+      </portal>	
+
+    <portal
+      id="menutag4"
+      style="menuNormal">
+      <menu_things
+        field="spTagSkill4"
+        component="none"
+        maxvisible="10"
+        usepicks="actor">
+		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
+        </menu_things>
+      </portal>	
+	  
+    <position><![CDATA[
+      ~position our labels on the left
+      portal[lbltag1].top = 0
+	  portal[lbltag1].height = portal[menutag1].height
+	  portal[lbltag1].left = 0
+	  portal[lbltag1].width = width/4
+	  
+      portal[lbltag2].top = portal[lbltag1].bottom + 5
+	  portal[lbltag2].height = portal[lbltag1].height
+	  portal[lbltag2].left = 0
+	  portal[lbltag2].width = width/4
+	  
+      portal[lbltag3].top = portal[lbltag2].bottom + 5
+	  portal[lbltag3].height = portal[lbltag1].height
+	  portal[lbltag3].left = 0
+	  portal[lbltag3].width = width/4
+	  
+      portal[lbltag4].top = portal[lbltag3].bottom + 5
+	  portal[lbltag4].height = portal[lbltag1].height
+	  portal[lbltag4].left = 0
+	  portal[lbltag4].width = width/4
+
+	  portal[menutag1].top = portal[lbltag1].top
+	  portal[menutag1].left = portal[lbltag1].right + 5
+	  portal[menutag1].width = width/4
+	  
+	  portal[menutag2].top = portal[lbltag2].top
+	  portal[menutag2].left = portal[lbltag2].right + 5
+	  portal[menutag2].width = width/4
+	  
+	  portal[menutag3].top = portal[lbltag3].top
+	  portal[menutag3].left = portal[lbltag3].right + 5
+	  portal[menutag3].width = width/4
+	  
+	  portal[menutag4].top = portal[lbltag4].top
+	  portal[menutag4].left = portal[lbltag4].right + 5
+	  portal[menutag4].width = width/4
+	  
+	  if (field[spMaxTagSkills].value <> 4) then
+	    portal[lbltag4].visible = 0
+		portal[menutag4].visible = 0
+	    endif
+      ~determine whether our portals are visible; we only show them if requested
+      ~Note: Remember that a non-empty tagexpr field indicates menu selection is used.
+
+      ~if a menu is visible, make sure it has a selection
+      if (portal[menutag1].visible <> 0) then
+        if (field[spTagSkill1].ischosen = 0) then
+          perform portal[menutag1].setstyle[menuError]
+          endif
+        endif
+      if (portal[menutag2].visible <> 0) then
+        if (field[spTagSkill2].ischosen = 0) then
+          perform portal[menutag2].setstyle[menuError]
+          endif
+        endif
+      if (portal[menutag3].visible <> 0) then
+        if (field[spTagSkill3].ischosen = 0) then
+          perform portal[menutag3].setstyle[menuError]
+          endif
+        endif
+      if (portal[menutag4].visible <> 0) then
+        if (field[spTagSkill4].ischosen = 0) then
+          perform portal[menutag4].setstyle[menuError]
+          endif
+        endif		
+	]]></position>
+
+    </template>	
+  <!-- origin layout
+        This layout orchestrates the display of the visual elements that comprise
+        the Skills tab. This amounts to a title at the top and a dynamic table below
+        where the user can add and adjust the skills he wants.
+
+        The logic for this layout is similar to (albeit much simpler than) the
+        logic for the Basics tab. So please refer to the Basics tab for more details.
+		
+		
+    <templateref template="spSpcMenus" useagent="yes"/>
+  -->
+  <layout
+    id="origin">
+    <portalref portal="spChsLbl" />
+    <portalref portal="spChsTrait" />
+    <portalref portal="spChsLbl2" />
+    <portalref portal="spChsTrait2" />
+    <templateref template="spSpcPerkTrait" useagent="yes"/>
+    <templateref template="spSpcTemp" useagent="yes"/>
+    <templateref template="spTagSkillMenu" useagent="yes"/>
+	
+    <!-- This script sizes and positions the layout and its child visual elements. -->
+    <position><![CDATA[
+	  var myWidth as number
+	  myWidth = width/4 - 5
+
+      ~both tables span the full width
+      template[spSpcTemp].width = width
+	  template[spSpcTemp].height = height/2
+      template[spSpcTemp].visible = 1
+	  
+      ~template[spSpcMenus].top = template[spSpcTemp].bottom + 30
+      ~template[spSpcMenus].width = width
+	  ~template[spSpcMenus].height = 100
+      ~template[spSpcMenus].visible = 1
+	  
+	  template[spSpcPerkTrait].top = template[spSpcTemp].bottom + 30
+	  template[spSpcPerkTrait].left = template[spSpcTemp].left + 3
+	  template[spSpcPerkTrait].width = width/2
+	  template[spSpcPerkTrait].height = 40
+	  
+	  template[spSpcPerkTrait].visible = agent.field[spTraitSelect].value
+	  
+      if (template[spSpcPerkTrait].visible = 1) then
+	    portal[spChsLbl].top = template[spSpcPerkTrait].bottom + 10
+	  else
+	    portal[spChsLbl].top = template[spSpcTemp].bottom + 30
+	    endif
+	  portal[spChsLbl].left = template[spSpcPerkTrait].left + 3
+	  portal[spChsLbl].width = myWidth
+	  portal[spChsLbl].height = 20
+	  portal[spChsLbl].visible = agent.field[spTraitSelect].value
+	  
+	  portal[spChsTrait].top = portal[spChsLbl].top
+	  portal[spChsTrait].left = portal[spChsLbl].right + 5
+	  portal[spChsTrait].width = myWidth
+	  portal[spChsTrait].height = 20
+	  portal[spChsTrait].visible = agent.field[spTraitSelect].value
+	  
+	  portal[spChsLbl2].top = portal[spChsLbl].top
+	  portal[spChsLbl2].left = portal[spChsTrait].right + 5
+	  portal[spChsLbl2].width = myWidth
+	  portal[spChsLbl2].height = 20
+	  portal[spChsLbl2].visible = agent.field[spTraitSelect].value
+	  
+	  portal[spChsTrait2].top = portal[spChsLbl2].top
+	  portal[spChsTrait2].left = portal[spChsLbl2].right + 5
+	  portal[spChsTrait2].width = myWidth
+	  portal[spChsTrait2].height = 20
+	  portal[spChsTrait2].visible = agent.field[spTraitSelect].value
+	  
+      template[spTagSkillMenu].top = portal[spChsLbl].bottom + 5
+      template[spTagSkillMenu].width = width
+	  template[spTagSkillMenu].height = 200
+      template[spTagSkillMenu].visible = 1
+  
+	  if (agent.field[spNumTraits].value = 1) then
+	    portal[spChsLbl2].visible = 0
+	    portal[spChsTrait2].visible = 0
+	  else
+	    portal[spChsLbl2].visible = portal[spChsLbl].visible
+	    portal[spChsTrait2].visible = portal[spChsTrait].visible
+	    endif
+      
+	  if (agent.field[spPerkSelect].value = 1) then
+	    portal[spChsLbl2].visible = 0
+	    portal[spChsTrait2].visible = 0
+	  else
+	    portal[spChsLbl2].visible = portal[spChsLbl].visible
+	    portal[spChsTrait2].visible = portal[spChsTrait].visible
+	    endif
+		
+      ]]></position>
+
+    </layout>
+
+  <!-- sorcery panel
+        This is the "Sorcery" panel shown within Hero Lab.
+  -->
+  <panel
+    id="origin"
+    name="Species"
+    marginhorz="5"
+    marginvert="5"
+    order="10"
+    agentcompset="Species"
+    agentlive="Species"
+    agentname="name"
+    >
+    <live>!HideTab.origin</live>
+    <layoutref layout="origin"/>
+    <position><![CDATA[
+      ]]></position>
+    </panel>
+
+
+  </document>

@@ -1,0 +1,299 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of skills for the game system. Note that each
+      skill is linked to an associated attribute for the character. This linkage allows
+      the value of the skill to easily incorporate the effects of the linked attribute
+      via a script on the component.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- -->
+  <thing
+    id="skAthletics"
+    name="Athletics"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Lifting, pushing, pulling, jumping, running, and swimming">
+    <fieldval field="trtAbbrev" value="Sam"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrStr"/>
+    </thing>
+	
+  <!-- -->
+  <thing
+    id="skBarter"
+    name="Barter"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="">
+    <fieldval field="trtAbbrev" value="Bar"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrCha"/>
+    </thing>
+	
+  <!-- -->
+  <thing
+    id="skBigGuns"
+    name="Big Guns"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Using heavy weapons such as miniguns, Fat Mans, gatling lasers, and gauss weapons">
+    <fieldval field="trtAbbrev" value="BigG"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrEnd"/>
+    </thing>
+	
+  <!-- -->
+  <thing
+    id="skEnergyWpns"
+    name="Energy Weapons"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Using energy weapons such as laser guns, plasma guns, and gauss weapons">
+    <fieldval field="trtAbbrev" value="Ener"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrPer"/>
+    </thing>
+	
+  <!-- -->
+  <thing
+    id="skExplosives"
+    name="Explosives"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Blowing things up, or stopping them from doing that">
+    <fieldval field="trtAbbrev" value="Ener"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrPer"/>
+    </thing>
+
+  <thing
+    id="skLockpick"
+    name="Lockpick"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Opening locks without the key">
+    <fieldval field="trtAbbrev" value="Ener"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrPer"/>
+    </thing>
+
+  <thing
+    id="skMedicine"
+    name="Medicine"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Healing people and stabilizing the dying">
+    <fieldval field="trtAbbrev" value="Med"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrInt"/>
+    </thing>
+
+  <thing
+    id="skMelee"
+    name="Melee Weapons"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Fighting people with bats, clubs, knives, boards, wrenches, and sledges">
+    <fieldval field="trtAbbrev" value="Mel"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrStr"/>
+    </thing>
+
+  <thing
+    id="skPilot"
+    name="Pilot"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Flying and driving">
+    <fieldval field="trtAbbrev" value="Pilot"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrPer"/>
+    </thing>
+
+  <thing
+    id="skRepair"
+    name="Repair"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Fixing stuff, crafting things, and building machines">
+    <fieldval field="trtAbbrev" value="Rep"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrInt"/>
+    </thing>
+
+  <thing
+    id="skScience"
+    name="Science"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Hacking, programming, and brewing chems">
+    <fieldval field="trtAbbrev" value="Sci"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrInt"/>
+    </thing>
+
+  <thing
+    id="skSmallGuns"
+    name="Small Guns"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Shooting people with pistols, rifles, and shotguns">
+    <fieldval field="trtAbbrev" value="SmlG"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrAgi"/>
+    </thing>
+
+  <thing
+    id="skSneak"
+    name="Sneak"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Moving quietly and staying hidden">
+    <fieldval field="trtAbbrev" value="Sne"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrAgi"/>
+    </thing>
+
+  <thing
+    id="skSpeech"
+    name="Speech"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Making friends, influencing people, and lying to them if you have to">
+    <fieldval field="trtAbbrev" value="Spe"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrCha"/>
+    </thing>
+
+  <thing
+    id="skSurvival"
+    name="Survival"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Foraging, hunting, cooking, and enduring the wastes">
+    <fieldval field="trtAbbrev" value="Sur"/>
+
+    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
+    <tag group="DashTacCon" tag="NonCombat"/>
+    -->
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrEnd"/>
+    </thing>
+	
+  <!-- Throwing Skill -->
+  <thing
+    id="skThrowing"
+    name="Throwing"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Launching weapons from your hands, like spears or knives">
+    <fieldval field="trtAbbrev" value="Throw"/>
+    <link linkage="attribute" thing="attrAgi"/>
+    </thing>
+
+  <!-- Unarmed Skill
+        NOTE! This skill is included because melee weapons rely on it to calculate
+              attack values.
+  -->
+  <thing
+    id="skUnarmed"
+    name="Unarmed"
+    compset="Skill"
+    isunique="yes"
+    description="Description goes here"
+	summary="Fighting without a weapon by making unarmed attacks">
+    <fieldval field="trtAbbrev" value="Unarm"/>
+    <link linkage="attribute" thing="attrStr"/>
+    </thing>
+
+
+  </document>

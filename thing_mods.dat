@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="modHardened" name="Hardened" description="+1 DC damage" compset="RangedMod" uniqueness="useronce">
+    <fieldval field="modCost" value="20"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 1</eval>
+    </thing>
+  <thing id="modPowerful" name="Powerful" description="+2 DC damage" compset="RangedMod" uniqueness="useronce">
+    <fieldval field="modCost" value="25"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 2</eval>
+    </thing>
+  <thing id="modAdvanced" name="Advanced" description="+3 DC damage, +1 Fire Rate" compset="RangedMod" uniqueness="useronce">
+    <fieldval field="modCost" value="35"/>
+    <fieldval field="modWeight" value="2"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 3
+parent.field[wpFireRate].value += 1</eval>
+    </thing>
+  <thing id="modCalibrated" name="Calibrated" description="Gain Vicious" compset="RangedMod">
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+perform parent.assign[Effect.Vicious]</eval>
+    </thing>
+  <thing id="modSuppressor" name="Suppressor" description="Gain Suppressed" compset="RangedMod">
+    <fieldval field="modWeight" value="2"/>
+    <fieldval field="modCost" value="45"/>
+    <tag group="ItemModCat" tag="RangedMuzzle"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+perform parent.assign[Quality.Suppressed]</eval>
+    </thing>
+  <thing id="modSnubBarrel" name="Snubnose" description="Gain Inaccurate" compset="RangedMod">
+    <fieldval field="modWeight" value="-1"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+if (parent.tagis[Quality.Accurate] <> 0) then
+  perform parent.delete[Quality.Accurate]
+else
+  perform parent.assign[Quality.Inaccurate]
+  endif]]></eval>
+    </thing>
+  <thing id="modBullBarrel" name="Bull Barrel" description="Gain Reliable" compset="RangedMod">
+    <fieldval field="modCost" value="10"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+if (parent.tagis[Quality.Unreliable] <> 0) then
+  perform parent.delete[Quality.Unreliable]
+else
+  perform parent.assign[Quality.Reliable]
+  endif]]></eval>
+    </thing>
+  <thing id="modComfortGrip" name="Comfort Grip" description="Remove Inaccurate" compset="RangedMod">
+    <tag group="ItemModCat" tag="RangedGrip"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]</eval>
+    </thing>
+  <thing id="modRefSight" name="Reflex Sight" description="May re-roll hit location die" compset="RangedMod">
+    <fieldval field="modCost" value="14"/>
+    <tag group="ItemModCat" tag="RangedSights"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+var spectxt as string
+spectxt = parent.field[wpSpecial].text
+parent.field[wpSpecial].text = splice(spectxt,"May re-roll hit location die",",")]]></eval>
+    </thing>
+  <thing id="modSerratedCbtKni" name="Serrated Blade" description="+1 DC , Gain Persistent" compset="MeleeMod">
+    <fieldval field="modCost" value="12"/>
+    <tag group="ItemModCat" tag="Upgrade"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 1
+perform parent.assign[Effect.Persistent]</eval>
+    </thing>
+  <thing id="modStealthCbtKni" name="Stealth Blade" description="+1 DC , Gain Persistent, +2 DC on Sneak Attacks" compset="MeleeMod">
+    <fieldval field="modCost" value="18"/>
+    <tag group="ItemModCat" tag="Upgrade"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 1
+perform parent.assign[Effect.Persistent]
+parent.field[wpSpecial].text = splice(parent.field[wpSpecial].text,"+2 DC on Sneak Attacks",", ")]]></eval>
+    </thing>
+  <thing id="modBalWeave" name="Ballistic Weave" description="Ballistic polymer weave is an armor mod which improves the defensive abilities of some clothing items. A layer of this tough artificial fabric can be used as a lining in a variety of garments, giving them a limited ability to resist impacts, bullets, and energy blasts." compset="ClothingMod">
+    <fieldval field="modCost" value="20"/>
+    <tag group="ItemModCat" tag="Clothing"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[defPhysical].value += 2
+parent.field[defEnergy].value += 2</eval>
+    </thing>
+  <thing id="modBalWeave2" name="Ballistic Weave II" description="Ballistic polymer weave is an armor mod which improves the defensive abilities of some clothing items. A layer of this tough artificial fabric can be used as a lining in a variety of garments, giving them a limited ability to resist impacts, bullets, and energy blasts." compset="ClothingMod">
+    <fieldval field="modCost" value="20"/>
+    <tag group="ItemModCat" tag="Clothing"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[defPhysical].value += 3
+parent.field[defEnergy].value += 3</eval>
+    </thing>
+  <thing id="modAutomatic" name="Automatic" description="-1 DC damage, +2 Fire Rate, Gain Burst, Gain Inaccurate" compset="RangedMod">
+    <fieldval field="modCost" value="30"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value -= 1
+parent.field[wpFireRate].value += 2
+perform parent.assign[Effect.Burst]
+
+if (parent.tagis[Quality.Accurate] <> 0) then
+  perform parent.delete[Quality.Accurate]
+else
+  perform parent.assign[Quality.Inaccurate]
+  endif]]></eval>
+    </thing>
+  <thing id="modHairTrigger" name="Hair Trigger" description="+1 Fire Rate" compset="RangedMod">
+    <fieldval field="modCost" value="20"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    </thing>
+  <thing id="modReceiver38" name=".38 Receiver" description="Change Damage to 4 DC , Ammo changes to .38" compset="RangedMod">
+    <fieldval field="modCost" value="20"/>
+    <fieldval field="modWeight" value="3"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Initialize" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value = 4</eval>
+    </thing>
+  <thing id="mod50Receiver" name=".50 Receiver" description="Change damage to 8 DC , Gain Vicious, Ammo changes to .50" compset="RangedMod">
+    <fieldval field="modCost" value="30"/>
+    <fieldval field="modWeight" value="4"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Initialize" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value = 8</eval>
+    <eval phase="Effects" priority="1000" index="2">doneif (parent.isgizmo = 0)
+
+perform parent.assign[Effect.Vicious]</eval>
+    </thing>
+  <thing id="mod308Receiver" name=".308 Receiver" description="Change damage to 7 DC, Ammo changes to .308" compset="RangedMod">
+    <fieldval field="modCost" value="30"/>
+    <fieldval field="modWeight" value="4"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Initialize" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value = 7</eval>
+    </thing>
+  <thing id="mod45Receiver" name=".45 Receiver" description="Change damage to 4 DC, +1 Fire Rate, Ammo changes to .45" compset="RangedMod">
+    <fieldval field="modCost" value="30"/>
+    <fieldval field="modWeight" value="4"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Initialize" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value = 4</eval>
+    <eval phase="Effects" priority="1000" index="2">doneif (parent.isgizmo = 0)
+
+parent.field[wpFireRate].value += 1</eval>
+    </thing>
+  <thing id="modAutoPiston" name="Automatic Piston" description="+2 Fire Rate, Reduce Range by 1 step" compset="RangedMod">
+    <fieldval field="modCost" value="30"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedReceiver"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+parent.field[wpFireRate].value += 2
+
+doneif (parent.tagis[Range.?] = 0)
+
+var rngChange as number
+var rngTag as number
+rngChange = -1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modLongBarrel" name="Long" description="Increase Range by 1 step" compset="RangedMod">
+    <fieldval field="modCost" value="20"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+doneif (parent.tagis[Range.?] = 0)
+
+var rngChange as number
+var rngTag as string
+rngChange = 1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modPortedBarrel" name="Ported" description="Increase Range by 1 step, +1 Fire Rate" compset="RangedMod">
+    <fieldval field="modCost" value="35"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+parent.field[wpFireRate].value += 1
+
+doneif (parent.tagis[Range.?] = 0)
+
+var rngChange as number
+var rngTag as string
+rngChange = 1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modVentedBarrel" name="Vented" description="Increase Range by 1 step, +1 Fire Rate, Gain Reliable" compset="RangedMod">
+    <fieldval field="modCost" value="35"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+parent.field[wpFireRate].value += 1
+if (parent.tagis[Quality.Unreliable] <> 0) then
+  perform parent.delete[Quality.Unreliable]
+else
+  perform parent.assign[Quality.Reliable]
+  endif
+
+doneif (parent.tagis[Range.?] = 0)
+
+var rngChange as number
+var rngTag as number
+rngChange = 1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modSawedOff" name="Sawed-Off" description="Remove Two-Handed, Gain Close Quarters" compset="RangedMod">
+    <fieldval field="modWeight" value="-2"/>
+    <fieldval field="modCost" value="3"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.TwoHanded]
+perform parent.assign[Quality.CQ]</eval>
+    </thing>
+  <thing id="modShieldedBarrel" name="Shielded Barrel" description="+1 DC damage" compset="RangedMod" uniqueness="useronce">
+    <fieldval field="modCost" value="37"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 1</eval>
+    </thing>
+  <thing id="modFinnedBarrel" name="Finned" description="+1 DC damage, Increase Range by 1 step" compset="RangedMod" uniqueness="useronce">
+    <fieldval field="modCost" value="15"/>
+    <fieldval field="modWeight" value="2"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+parent.field[wpDamage].value += 1
+
+doneif (parent.tagis[Range.?] = 0)
+var rngChange as number
+var rngTag as number
+rngChange = 1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modFullStock" name="Full Stock" description="Gain Two-Handed, Remove Inaccurate" compset="RangedMod">
+    <fieldval field="modCost" value="10"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedStock"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]
+perform parent.assign[Quality.TwoHanded]</eval>
+    </thing>
+  <thing id="modLargeMag" name="Large Magazine" description="+1 Fire Rate, Unreliable" compset="RangedMod">
+    <fieldval field="modWeight" value="1"/>
+    <fieldval field="modCost" value="3"/>
+    <tag group="ItemModCat" tag="RangedMag"/>
+    <tag group="Helper" tag="CostRebate"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+parent.field[wpFireRate].value += 1
+if (parent.tagis[Quality.Reliable] <> 0) then
+  perform parent.delete[Quality.Reliable]
+else
+  perform parent.assign[Quality.Unreliable]
+  endif]]></eval>
+    </thing>
+  <thing id="modQuickEjectMag" name="Quick-Eject Mag" description="Gain Reliable" compset="RangedMod">
+    <fieldval field="modCost" value="8"/>
+    <tag group="ItemModCat" tag="RangedMag"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+if (parent.tagis[Quality.Unreliable] <> 0) then
+  perform parent.delete[Quality.Unreliable]
+else
+  perform parent.assign[Quality.Reliable]
+  endif]]></eval>
+    </thing>
+  <thing id="modLgQuickEject" name="Large Quick-Eject Magazine" description="+1 Fire Rate" compset="RangedMod">
+    <fieldval field="modWeight" value="1"/>
+    <fieldval field="modCost" value="23"/>
+    <tag group="ItemModCat" tag="RangedMag"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+parent.field[wpFireRate].value += 1</eval>
+    </thing>
+  <thing id="modSharpshooterGr" name="Sharpshooter&apos;s Grip" description="Remove Inaccurate, Add Piercing 1" compset="RangedMod">
+    <fieldval field="modCost" value="10"/>
+    <tag group="ItemModCat" tag="RangedGrip"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]
+
+var tagVal as number
+var tagStr as string
+
+if (parent.tagis[Effect.Piercing?] <> 0) then
+  tagVal = parent.tagvalue[Effect.Piercing?]
+  perform parent.delete[Effect.Piercing?]
+endif
+
+tagVal += 1
+tagStr = "Effect.Piercing" & tagVal
+perform parent.assignstr[tagStr]]]></eval>
+    </thing>
+  <thing id="modMarksmanStock" name="Marksman&apos;s Stock" description="Gain Two-Handed, Remove Inaccurate, Gain Accurate" compset="RangedMod">
+    <fieldval field="modCost" value="20"/>
+    <fieldval field="modWeight" value="2"/>
+    <tag group="ItemModCat" tag="RangedStock"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]
+perform parent.assign[Quality.TwoHanded]
+perform parent.assign[Quality.Accurate]</eval>
+    </thing>
+  <thing id="modRecoilCompSt" name="Recoil Compensating Stock" description="Gain Two-Handed, Remove Inaccurate, +1 Fire Rate" compset="RangedMod">
+    <fieldval field="modCost" value="3"/>
+    <fieldval field="modWeight" value="2"/>
+    <tag group="ItemModCat" tag="RangedStock"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]
+perform parent.assign[Quality.TwoHanded]
+
+parent.field[wpFireRate].value += 1</eval>
+    </thing>
+  <thing id="modShortScope" name="Short Scope" description="Gain Accurate" compset="RangedMod">
+    <fieldval field="modCost" value="11"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedSights"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+
+if (parent.tagis[Quality.Inaccurate] <> 0) then
+  perform parent.delete[Quality.Inaccurate]
+else
+  perform parent.assign[Quality.Accurate]
+  endif]]></eval>
+    </thing>
+  <thing id="modLongScope" name="Long Scope" description="Gain Accurate, Increase Range by 1 step" compset="RangedMod">
+    <fieldval field="modCost" value="29"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedSights"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+if (parent.tagis[Quality.Inaccurate] <> 0) then
+  perform parent.delete[Quality.Inaccurate]
+else
+  perform parent.assign[Quality.Accurate]
+  endif
+
+doneif (parent.tagis[Range.?] = 0)
+
+var rngChange as number
+var rngTag as string
+rngChange = 1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modShortNVScope" name="Short Night Vision Scope" description="Gain Accurate, Gain Night Vision" compset="RangedMod">
+    <fieldval field="modCost" value="38"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedSights"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+
+perform parent.assign[Quality.NV]
+
+if (parent.tagis[Quality.Inaccurate] <> 0) then
+  perform parent.delete[Quality.Inaccurate]
+else
+  perform parent.assign[Quality.Accurate]
+  endif]]></eval>
+    </thing>
+  <thing id="modLongNVScope" name="Long Night Vision Scope" description="Gain Accurate, Increase Range by 1 step, Gain Night Vision" compset="RangedMod">
+    <fieldval field="modCost" value="50"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedSights"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+perform parent.assign[Quality.NV]
+
+if (parent.tagis[Quality.Inaccurate] <> 0) then
+  perform parent.delete[Quality.Inaccurate]
+else
+  perform parent.assign[Quality.Accurate]
+  endif
+
+doneif (parent.tagis[Range.?] = 0)
+
+var rngChange as number
+var rngTag as string
+rngChange = 1
+
+rngTag = parent.tagids[Range.?,"|"]
+
+call AdjustRange
+
+perform parent.delete[Range.?]
+perform parent.assignstr[rngTag]]]></eval>
+    </thing>
+  <thing id="modReconScope" name="Recon Scope" description="Gain Accurate, Gain Recon" compset="RangedMod">
+    <fieldval field="modCost" value="59"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedSights"/>
+    <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
+
+
+if (parent.tagis[Quality.Inaccurate] <> 0) then
+  perform parent.delete[Quality.Inaccurate]
+else
+  perform parent.assign[Quality.Accurate]
+  endif]]></eval>
+    </thing>
+  <thing id="modBayonet" name="Bayonet" description="Mounted melee weapon." compset="RangedMod">
+    <fieldval field="modWeight" value="2"/>
+    <fieldval field="modCost" value="10"/>
+    <tag group="ItemModCat" tag="RangedMuzzle"/>
+    <bootstrap thing="wpBayonet"></bootstrap>
+    </thing>
+  <thing id="wpBayonet" name="Bayonet" description="Small knife usually mounted on a weapon." compset="Melee">
+    <fieldval field="wpDamage" value="4"/>
+    <tag group="WeaponType" tag="MeleeWpn"/>
+    <tag group="Effect" tag="Piercing1"/>
+    <tag group="DamageType" tag="Physical"/>
+    <tag group="Hide" tag="Equipment"/>
+    </thing>
+  <thing id="modMuzzleBreak" name="Muzzle Break" description="Remove Inaccurate, +1 Fire Rate" compset="RangedMod">
+    <fieldval field="modCost" value="30"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedMuzzle"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]
+
+parent.field[wpFireRate].value += 1</eval>
+    </thing>
+  <thing id="modCompensator" name="Compensator" description="Remove Inaccurate" compset="RangedMod">
+    <fieldval field="modCost" value="15"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="RangedMuzzle"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+perform parent.delete[Quality.Inaccurate]</eval>
+    </thing>
+  <thing id="modBetaWaveTuner" name="Beta Wave Tuner" description="Gain Persistent" compset="CapacitorMod">
+    <fieldval field="modCost" value="30"/>
+    <tag group="ItemModCat" tag="Capacitor"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+perform parent.assign[Effect.Persistent]</eval>
+    </thing>
+  <thing id="modBoostedCap" name="Boosted Capacitor" description="+1 DC , -1 Fire Rate" compset="CapacitorMod">
+    <fieldval field="modCost" value="35"/>
+    <tag group="ItemModCat" tag="Capacitor"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+
+parent.field[wpDamage].value += 1
+parent.field[wpFireRate].value -= 1</eval>
+    </thing>
+  <thing id="modPhotonExciter" name="Photon Exciter" description="Gain Vicious" compset="CapacitorMod">
+    <fieldval field="modCost" value="30"/>
+    <tag group="ItemModCat" tag="Capacitor"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+perform parent.assign[Effect.Vicious]</eval>
+    </thing>
+  <thing id="modPhotonAgitator" name="Photon Agitator" description="+1 DC , Gain Vicious" compset="CapacitorMod">
+    <fieldval field="modCost" value="35"/>
+    <fieldval field="modWeight" value="1"/>
+    <tag group="ItemModCat" tag="Capacitor"/>
+    <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
+perform parent.assign[Effect.Vicious]
+
+parent.field[wpDamage].value += 1</eval>
+    </thing>
+  <thing id="modBracketShort" name="Bracketed Short Barrel" description="Allows the weapon to take a Muzzle mod" compset="RangedMod">
+    <fieldval field="modCost" value="6"/>
+    <tag group="ItemModCat" tag="RangedBarrel"/>
+    </thing>
+  </document>

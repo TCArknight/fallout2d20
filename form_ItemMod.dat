@@ -1,0 +1,662 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definition of the "static" form for the game system.
+      The "static" form represents the region at the top of the main window that
+      is always visible for every actor (hence the term "static"). It's an area of
+      limited vertical height that spans the entire width of the main window, less
+      the region needed for the validation button and the dashboard (if visible).
+
+      In general, the "static" form should contain the character's name and core
+      aspects of the character that the user will often want to refer to. However,
+      there are no hard requirements for what is placed in the "static" form.
+
+      NOTE! The unique id of the "static" form is specially recognized by Hero Lab
+      as the form to be used across the top of the main window. A form with the
+      id "static" is required within your data files.
+-->
+
+<document signature="Hero Lab Data">
+	
+  <!-- Item Mod portal -->
+
+  <portal
+    id="imCapacitorMods"
+    style="tblNormal">
+    <table_dynamic
+      component="CapacitorMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhCapacitorExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.Capacitor</list>
+      <headertitle><![CDATA[		
+		@text = "Capacitor Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imClothingMods"
+    style="tblNormal">
+    <table_dynamic
+      component="ClothingMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhClothingExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.Clothing</list>
+      <headertitle><![CDATA[		
+		@text = "Clothing Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
+  <portal
+    id="imUpgradeMods"
+    style="tblNormal">
+    <table_dynamic
+      component="MeleeMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhUpgradeExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.Upgrade</list>
+      <headertitle><![CDATA[		
+		@text = "Upgrade Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
+  <portal
+    id="imRMRecMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMReceiverExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedReceiver</list>
+      <headertitle><![CDATA[		
+		@text = "Receiver Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>	
+	
+  <portal
+    id="imRMBarrelMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMBarrelExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedBarrel</list>
+      <headertitle><![CDATA[		
+		@text = "Barrel Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imRMGripMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMGripExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedGrip</list>
+      <headertitle><![CDATA[		
+		@text = "Grip Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>	
+
+  <portal
+    id="imRMMagMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMMagExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedMag</list>
+      <headertitle><![CDATA[		
+		@text = "Magazine Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>		
+
+  <portal
+    id="imRMSightsMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMSightsExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedSights</list>
+      <headertitle><![CDATA[		
+		@text = "Sight Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>	
+
+  <portal
+    id="imRMMuzzleMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMMuzzleExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedMuzzle</list>
+      <headertitle><![CDATA[		
+		@text = "Muzzle Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imRMStockMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RangedMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRMStockExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RangedStock</list>
+      <headertitle><![CDATA[		
+		@text = "Stock Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
+  <template
+    id="imTitleTemp"
+    name="Title Template"
+    compset="ItemModHelper"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="lblItemTitle"
+      style="lblTitle">
+      <label>
+        <labeltext><![CDATA[
+          @text = field[imhItemName].text
+          ]]></labeltext>
+        </label>
+      </portal>
+
+    <portal
+      id="lblCustomName"
+      style="lblLeft">
+      <label>
+        <labeltext><![CDATA[
+          @text = "Custom Name: "
+          ]]></labeltext>
+        </label>
+      </portal>
+	  
+    <portal
+      id="CustomName"
+      style="editNormal">
+      <edit
+        field="imhUserName">
+        </edit>
+      </portal>
+	  
+    <position><![CDATA[
+      ~position our tallest portal at the top
+      portal[lblItemTitle].top = 0
+	  portal[lblItemTitle].width = width
+	  
+	  ~position the custom name portals beneath the title in the upper right
+	  portal[CustomName].width = 200
+      perform portal[CustomName].alignrel[ttob,lblItemTitle,5]
+      perform portal[CustomName].alignedge[right,-5]
+	  
+	  
+      perform portal[lblCustomName].centeron[vert,CustomName]
+      perform portal[lblCustomName].alignrel[rtol,CustomName,-7]
+	  
+	  height = portal[CustomName].bottom + 5
+      ]]></position>
+
+    </template>	
+
+  <template
+    id="imAttachments"
+    name="Attachments"
+    compset="ItemMod"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="activate"
+      style="chkNormal"
+      tiptext="Click to activate or deactivate this ability.">
+      <checkbox
+        field="imodActive"
+        dynamicfield="name">
+        </checkbox>
+      </portal>
+	  
+    <portal
+      id="name"
+      style="lblNormal"
+      showinvalid="yes">
+      <label
+        field="name">
+        </label>
+      </portal>
+
+    <portal
+      id="info"
+      style="actInfo">
+      <action
+        action="info">
+        </action>
+      <mouseinfo/>
+      </portal>
+
+    <portal
+      id="delete"
+      style="actDelete"
+      tiptext="Click to delete this item">
+      <action
+        action="delete">
+        </action>
+      </portal>
+
+    <position><![CDATA[
+      ~set up our height based on our tallest portal
+      height = portal[info].height
+
+      ~if we've been assigned a non-default width for use when showing things, adopt
+      ~that width now
+      if (ispick = 0) then
+        var size as number
+        size = tagvalue[SimpleItem.width?]
+        if (size > 0) then
+          width = size
+          endif
+        endif
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~position our tallest portal at the top
+      portal[info].top = 0
+
+      ~center the other portals vertically
+      perform portal[activate].centervert
+      perform portal[delete].centervert
+
+      ~position the delete portal on the far right
+      perform portal[delete].alignedge[right,0]
+
+      ~position the info portal to the left of the delete button
+      perform portal[info].alignrel[rtol,delete,-8]
+
+      ~if we're showing a thing, the info and delete buttons are irrelevant, since
+      ~we should be showing within a chooser, in which case there's nothing to
+      ~delete and we have the description already visible
+      var edge as number
+      if (ispick = 0) then
+        portal[info].visible = 0
+        portal[delete].visible = 0
+        edge = width
+      else
+        edge = portal[info].left - 5
+        endif
+
+      ~position the name on the left and let it use all available space
+      portal[activate].left = 0
+      portal[activate].width = minimum(portal[activate].width,edge)
+      portal[name].left = 0
+      portal[name].width = minimum(portal[activate].width,edge)
+	  
+	  if (tagis[User.Activation] <> 0) then
+	    portal[activate].visible = 1
+		portal[name].visible = 0
+	  else
+	    portal[activate].visible = 0
+		portal[name].visible = 1
+	    endif
+
+      ~center the name if requested or this is a show-only thing
+      if (tagis[SimpleItem.CenterName] + tagis[thing.showonly] <> 0) then
+        perform portal[activate].centerhorz
+        endif
+
+      ~if this is an auto-added pick, change its font to indicate that fact
+      ~if (ispick + !candelete >= 2) then
+      ~  perform portal[activate].setstyle[lblAuto]
+      ~  endif
+      ]]></position>
+
+    </template>
+
+  <template
+    id="imRangedModPick"
+    name="Ranged Mods"
+    compset="RangedMod"
+    marginhorz="3"
+    marginvert="2">
+	  
+    <portal
+      id="name"
+      style="lblNormal"
+      showinvalid="yes">
+      <label
+        field="name">
+        </label>
+      </portal>
+
+    <portal
+      id="info"
+      style="actInfo">
+      <action
+        action="info">
+        </action>
+      <mouseinfo/>
+      </portal>
+
+    <portal
+      id="delete"
+      style="actDelete"
+      tiptext="Click to delete this item">
+      <action
+        action="delete">
+        </action>
+      </portal>
+
+    <position><![CDATA[
+      ~set up our height based on our tallest portal
+      height = portal[info].height
+
+      ~if we've been assigned a non-default width for use when showing things, adopt
+      ~that width now
+      if (ispick = 0) then
+        var size as number
+        size = tagvalue[SimpleItem.width?]
+        if (size > 0) then
+          width = size
+          endif
+        endif
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~position our tallest portal at the top
+      portal[info].top = 0
+
+      ~center the other portals vertically
+      ~perform portal[activate].centervert
+      perform portal[delete].centervert
+
+      ~position the delete portal on the far right
+      perform portal[delete].alignedge[right,0]
+
+      ~position the info portal to the left of the delete button
+      perform portal[info].alignrel[rtol,delete,-8]
+
+      ~if we're showing a thing, the info and delete buttons are irrelevant, since
+      ~we should be showing within a chooser, in which case there's nothing to
+      ~delete and we have the description already visible
+      var edge as number
+      if (ispick = 0) then
+        portal[info].visible = 0
+        portal[delete].visible = 0
+        edge = width
+      else
+        edge = portal[info].left - 5
+        endif
+
+      ~position the name on the left and let it use all available space
+      ~portal[activate].left = 0
+      ~portal[activate].width = minimum(portal[activate].width,edge)
+      portal[name].left = 0
+      portal[name].width = maximum(portal[name].width,edge)
+	  
+	  ~if (tagis[User.Activation] <> 0) then
+	  ~  portal[activate].visible = 1
+	~	portal[name].visible = 0
+	~  else
+	~    ~portal[activate].visible = 0
+~		portal[name].visible = 1~
+~	    endif
+
+      ~center the name if requested or this is a show-only thing
+      ~if (tagis[SimpleItem.CenterName] + tagis[thing.showonly] <> 0) then
+      ~  perform portal[activate].centerhorz
+      ~  endif
+
+      ~if this is an auto-added pick, change its font to indicate that fact
+      ~if (ispick + !candelete >= 2) then
+      ~  perform portal[activate].setstyle[lblAuto]
+      ~  endif
+      ]]></position>
+
+    </template>
+	
+  <!-- static layout
+        This layout consists of the character's name, race, and status info, which
+        are laid out in a ribbon across the top.
+  -->
+  <layout
+    id="itemmodule">
+    <!-- <portalref portal="imRangedMods" taborder="10"/> -->
+    <portalref portal="imCapacitorMods" taborder="20"/>
+    <portalref portal="imClothingMods" taborder="20"/>
+    <portalref portal="imUpgradeMods" taborder="20"/>
+    <portalref portal="imRMRecMods" taborder="20"/>
+    <portalref portal="imRMGripMods" taborder="20"/>
+    <portalref portal="imRMBarrelMods" taborder="20"/>
+    <portalref portal="imRMMagMods" taborder="20"/>
+    <portalref portal="imRMSightsMods" taborder="20"/>
+    <portalref portal="imRMMuzzleMods" taborder="20"/>
+    <portalref portal="imRMStockMods" taborder="20"/>
+    <templateref template="imTitleTemp" dynamic="yes" thing="ItemModHelper"/>
+	<!-- <templateref template="lpPromotion" dynamic="yes" taborder="30"/>  -->
+
+    <!-- This script sizes and positions the layout and its child visual elements. -->
+    <position><![CDATA[	 
+	
+      portal[imCapacitorMods].freeze = container.parent.tagis[ItemModSelected.Capacitor]
+	  portal[imCapacitorMods].visible = container.parent.tagis[ItemModCatAllowed.Capacitor]
+	  
+      portal[imClothingMods].freeze = container.parent.tagis[ItemModSelected.Clothing]
+	  portal[imClothingMods].visible = container.parent.tagis[ItemModCatAllowed.Clothing]
+	
+      portal[imUpgradeMods].freeze = container.parent.tagis[ItemModSelected.Upgrade]
+	  portal[imUpgradeMods].visible = container.parent.tagis[ItemModCatAllowed.Upgrade]
+	  
+	  ~ Only 1 Ranged weapon mod per category allowed
+      portal[imRMRecMods].freeze = container.parent.tagis[ItemModSelected.RangedReceiver]
+      portal[imRMGripMods].freeze = container.parent.tagis[ItemModSelected.RangedGrip]
+      portal[imRMBarrelMods].freeze = container.parent.tagis[ItemModSelected.RangedBarrel]
+      portal[imRMMagMods].freeze = container.parent.tagis[ItemModSelected.RangedMag]
+      portal[imRMSightsMods].freeze = container.parent.tagis[ItemModSelected.RangedSights]
+      portal[imRMMuzzleMods].freeze = container.parent.tagis[ItemModSelected.RangedMuzzle]
+      portal[imRMStockMods].freeze = container.parent.tagis[ItemModSelected.RangedStock]
+	  
+	  portal[imRMRecMods].visible = container.parent.tagis[ItemModCatAllowed.RangedReceiver]
+      portal[imRMGripMods].visible = container.parent.tagis[ItemModCatAllowed.RangedGrip]
+      portal[imRMBarrelMods].visible = container.parent.tagis[ItemModCatAllowed.RangedBarrel]
+      portal[imRMMagMods].visible = container.parent.tagis[ItemModCatAllowed.RangedMag]
+      portal[imRMSightsMods].visible = container.parent.tagis[ItemModCatAllowed.RangedSights]
+      portal[imRMMuzzleMods].visible = container.parent.tagis[ItemModCatAllowed.RangedMuzzle]
+      portal[imRMStockMods].visible = container.parent.tagis[ItemModCatAllowed.RangedStock]
+	  
+	  perform template[imTitleTemp].autoplace[0]
+	  
+	  if (container.parent.tagis[ItemModCatAllowed.Capacitor] <> 0) then
+	    perform portal[imCapacitorMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.Clothing] <> 0) then
+	    perform portal[imClothingMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.Upgrade] <> 0) then
+	    perform portal[imUpgradeMods].autoplace[10]
+        endif
+	   
+	  if (container.parent.tagis[ItemModCatAllowed.RangedReceiver] <> 0) then
+	    perform portal[imRMRecMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.RangedBarrel] <> 0) then
+	    perform portal[imRMBarrelMods].autoplace[10]
+	  endif
+	  
+	  if (container.parent.tagis[ItemModCatAllowed.RangedGrip] <> 0) then
+	    perform portal[imRMGripMods].autoplace[10]
+	    endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.RangedMag] <> 0) then
+	    perform portal[imRMMagMods].autoplace[10]
+	    endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.RangedSights] <> 0) then
+	    perform portal[imRMSightsMods].autoplace[10] 
+	    endif
+
+	  if (container.parent.tagis[ItemModCatAllowed.RangedMuzzle] <> 0) then
+	    perform portal[imRMMuzzleMods].autoplace[10]
+		endif
+
+	  if (container.parent.tagis[ItemModCatAllowed.RangedStock] <> 0) then
+	    perform portal[imRMStockMods].autoplace[10]
+		endif
+
+	  height = autoextent
+      ]]></position>
+
+    </layout>
+
+
+  <!-- static form
+        This is the "static" form shown at the top of the main window within Hero
+        Lab.
+
+        NOTE! The unique id of this form is specially recognized by Hero Lab as
+        the form to be used across the top of the main window. A form with this
+        id is required within your data files.
+
+        NOTE! By default, this form is 40 pixels in height, and it must always be
+        set to be at least 40 pixels in height.
+  -->
+  <form
+    id="itemmodgiz"
+    name="Item Mod">
+    <layoutref layout="itemmodule"/>
+    <position><![CDATA[
+      layout[itemmodule].width = 350
+      perform layout[itemmodule].render
+      width = layout[itemmodule].width
+      height = layout[itemmodule].height
+      ]]></position>
+    </form>
+
+  </document>

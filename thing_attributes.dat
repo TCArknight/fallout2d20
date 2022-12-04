@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the assortment of attributes possessed by every actor for the
+      game system. The display order of attributes is controlled via the assignment of
+      an "explicit" tag with the relative position of each.
+-->
+
+<document signature="Hero Lab Data">
+
+  <!-- Strength Attribute
+        NOTE! We include the Strength attribute because the minimum strength
+              requirement mechanisms for weapons and armor rely upon it.
+  -->
+  <thing
+    id="attrStr"
+    name="Strength"
+    compset="Attribute"
+    isunique="yes"
+    description="Strength measures your character’s physical prowess. It is used to make melee attacks, increases melee damage, and influences how much stuff you can carry. Buy ranks in the Strength attribute if you want to be a strong character and solve your problems with force.">
+    <fieldval field="trtAbbrev" value="STR"/>
+    <tag group="explicit" tag="1"/>
+    </thing>
+	
+  <!--  -->
+  <thing
+    id="attrPer"
+    name="Perception"
+    compset="Attribute"
+    isunique="yes"
+    description="Your perceptiveness influences how easily you notice danger and how aware you are of your environment, affects your turn in the initiative order in combat, and is used to make attacks with energy weapons. Buy ranks in the Perception attribute if you want to be a perceptive person and solve your problems by studying your surroundings.">
+    <fieldval field="trtAbbrev" value="PER"/>
+    <tag group="explicit" tag="2"/>
+    </thing>
+	
+  <!--  -->
+  <thing
+    id="attrEnd"
+    name="Endurance"
+    compset="Attribute"
+    isunique="yes"
+    description="Your natural toughness and resilience influences how many health points you have, how easy you find it to shrug off the physical dangers of the wasteland, and your ability to wield heavy weapons. Buy ranks in the Endurance attribute if you want to be hardy and resilient, and solve your problems by pushing through them.">
+    <fieldval field="trtAbbrev" value="END"/>
+    <tag group="explicit" tag="3"/>
+    </thing>
+	
+  <!--  -->
+  <thing
+    id="attrCha"
+    name="Charisma"
+    compset="Attribute"
+    isunique="yes"
+    description="Your natural charisma influences how effectively you can convince people of your opinions, change their minds, barter with people, and find safety among others. Buy ranks in the Charisma attribute if you want to be persuasive and solve problems by talking your way out of them.">
+    <fieldval field="trtAbbrev" value="CHA"/>
+    <tag group="explicit" tag="4"/>
+    </thing>
+	
+  <!--  -->
+  <thing
+    id="attrInt"
+    name="Intelligence"
+    compset="Attribute"
+    isunique="yes"
+    description="Your intelligence measures your smarts, how able you are to apply your mind to an obstacle, and how much you remember and know from studying the world around you. Buy ranks in the Intelligence attribute if you want to be cunning and clever, and solve your problems by thinking of the most effective solution.">
+    <fieldval field="trtAbbrev" value="INT"/>
+    <tag group="explicit" tag="5"/>
+    <eval index="1" phase="Traits" priority="5000"><![CDATA[
+      #resmax[resSkill] += field[trtFinal].value
+      ]]></eval>
+    </thing>
+	
+  <!--  -->
+  <thing
+    id="attrAgi"
+    name="Agility"
+    compset="Attribute"
+    isunique="yes"
+    description="Your agility measures how fit and agile you are, your balance, athletic suppleness, and how precisely you can control your body. It is used to make ranged attacks with small guns. Buy ranks in the Agility attribute if you want to be nimble, and solve your problems with accuracy and skill.">
+    <fieldval field="trtAbbrev" value="AGI"/>
+    <tag group="explicit" tag="6"/>
+    </thing>
+	
+  <!--  -->
+  <thing
+    id="attrLuc"
+    name="Luck"
+    compset="Attribute"
+    isunique="yes"
+    description="Luck describes just how much fortune smiles down on you, turning fickle forces in your favor, and generally coming out on top when you should be at the bottom. Luck gives you points to spend to add story details. Use your Luck attribute when you make skill tests, and re-roll dice.">
+    <fieldval field="trtAbbrev" value="LUC"/>
+    <tag group="explicit" tag="7"/>
+    </thing>
+	
+  </document>
