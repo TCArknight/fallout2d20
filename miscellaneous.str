@@ -369,6 +369,10 @@
           by the actor pick when selected -->
     <identity group="CharType"/>
 
+    <!-- Track the creature type on the actor by assigning the appropriate tag -->
+    <eval index="2" phase="Initialize" priority="2000"><![CDATA[
+	  perform forward[HeroType.?]
+      ]]></eval>
     </component>
 
 

@@ -22,6 +22,21 @@
       type="derived">
       </field>
 
+    <!-- Prefix to be used for the race (e.g. "Race" or "Creature") -->
+    <field
+      id="acRacePref"
+      name="Race Prefix"
+      type="derived"
+      maxlength="10">
+      </field>
+	  
+    <!-- Name to be used for the race -->
+    <field
+      id="acRaceName"
+      name="Race Name"
+      type="derived"
+      maxlength="50">
+      </field>
     <!-- Number of hands of equipment the actor can use simultaneously -->
     <field
       id="acHands"
@@ -342,6 +357,14 @@
       type="derived">
       </field>
 	  
+    <!-- Craeture Fields -->
+    <field
+      id="acCreKeywords"
+      name="Creature Keywords"
+      type="derived"
+	  maxlength="150">
+      </field>
+	  
     <!-- For NPCs, you can enter a book id (SKU) and name -->
     <field
       id="acBookId"
@@ -398,8 +421,16 @@
       ]]></eval>
 
     <!-- activate our selected character type -->
-    <eval index="4" phase="Setup" priority="5000"><![CDATA[
+    <eval index="4" phase="Setup" priority="500"><![CDATA[
+	  trustme
+	  
       perform field[acType].chosen.forward[CharType.?]
+      perform field[acType].chosen.forward[HeroType.?]
+
+      if (#iscreature[] = 0) then
+	    field[acStartAttr].value = 12
+		endif
+		
       ]]></eval>
 	  
     <eval value="5" phase="Effects" priority="149" name="Prepare First Copy"><![CDATA[
@@ -431,6 +462,35 @@
       ~The next step is going to take place in the BaseClSpec component script.
       ]]></eval>
 
+    <!-- Synthesize the prefix and name to be shown for the race -->
+    <eval index="6" phase="Render" priority="1000"><![CDATA[
+      if (hero.tagis[HeroType.Creature] <> 0) then
+        field[acRacePref].text = "Creature"
+        field[acRaceName].text = hero.findchild[Creature].field[name].text
+      else
+        field[acRacePref].text = "Race"
+        field[acRaceName].text = hero.findchild[Species].field[shortname].text
+        endif
+		
+      if (field[acRaceName].isempty <> 0) then
+        field[acRaceName].text = "-none-"
+        endif
+      ]]></eval>
+	  
+    <!-- Timing: before the existence expression on the baRace table in
+       tab_basics.dat, which is currently at Initialize/10. That existence
+       expression needs to come before the containerreq on rHuman, which is
+       at Initialize/500 -->
+	<eval index="7" phase="Setup" priority="510" name="Process MinionType.?"><![CDATA[
+	  if (hero.tagis[MinionType.Creature] <> 0) then
+	    perform hero.delete[CharType.typHero]
+	    perform hero.delete[HeroType.PC]
+		perform hero.assign[Hero.SetRace]
+		perform hero.assign[Hero.Minion]
+		perform hero.assign[CharType.typCreature]
+		perform hero.assign[HeroType.Creature]
+		endif
+	  ]]></eval>
     </component>
 
 

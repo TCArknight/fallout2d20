@@ -691,6 +691,73 @@
 
     </component>
 
+  <component
+    id="Minion"
+    name="Minion"
+    autocompset="no">
+
+    <field
+      id="minEnabled"
+      name="Minion Enabled"
+      minvalue="0"
+      maxvalue="1"
+      defvalue="1"
+      type="user">
+      </field>
+
+    <field
+      id="minCoupled"
+      name="Are we coupled to the master?"
+      type="derived"
+      ispublic="yes">
+      </field>
+
+    <identity group="LiveMinion" ispublic="yes"/>
+
+    <eval index="1" phase="Initialize" priority="10000"><![CDATA[
+      if (field[minEnabled].value <> 0) then
+        perform hero.setidentity[LiveMinion]
+        endif
+      ]]></eval>
+
+    <eval index="2" phase="Initialize" priority="11000"><![CDATA[
+      if (hero.tagcount[LiveMinion.?] >= 3) then
+        if (field[minEnabled].value = 0) then
+          perform assign[Helper.MinionCantBeLive]
+          endif
+        endif
+      ]]></eval>
+
+    <!-- HACK - because of the use of the new "coupled" field, if someone loads
+        a saved portfolio with a non-live vehicle in it (turned off by the
+        minEnabled field), when that vehicle is made live, it won't be updated
+        properly until another evaluation happens on it. We can work around it
+        by "coupling" all non-live vehicles - this seems to trigger the
+        appropriate update when the vehicle is made live, then the vehicle is
+        uncoupled after that. This code can be removed when the bug in Hero Lab
+        is fixed.
+     -->
+    <eval index="3" phase="Traits" priority="20000"><![CDATA[
+      if (field[minEnabled].value = 0) then
+        field[minCoupled].value = 1
+        endif
+
+      ~While a vehicle is the active character, we may purchase or sell
+      ~equipment on that vehicle, and when we do, those items will add their
+      ~cost to the minCost field here, which is a persistent field.  So, when
+      ~a transaction happens that is supposed to change minCost, we need the
+      ~hero to run its scripts, too, so that the change to minCost is
+      ~incorporated in the anchor pick's cost.  So, while a minion is the
+      ~active character, we have it coupled, since if it's not active, we won't
+      ~be able to buy or sell anything on it.
+      if (hasminion <> 0) then
+        if (minion.isactive <> 0) then
+          field[minCoupled].value = 1
+          endif
+        endif
+      ]]></eval>
+
+    </component>
 
   <!-- Define various component sets associated with the components defined above.
   -->

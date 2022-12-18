@@ -108,6 +108,12 @@
 	  curMax = 22
 	  endif
     
+	lvlDiff = curMax - curLevel
+	
+	#resmax[resPerks] += lvlDiff
+	#resmax[resSkill] += lvlDiff
+	#traitbonus[trHealth] += lvlDiff
+	
     ]]></procedure>
 	
   <!-- Procedure Money

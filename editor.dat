@@ -799,6 +799,11 @@
       <it_taglist group="ItemModCat" tag="Ranged?"/>
       </inputthing>
     <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing
       name="Cost"
       helptext="Cost of the mod.">
       <it_field field="modCost"/>
@@ -809,6 +814,7 @@
       <it_field field="modWeight"/>
       </inputthing>
     </editthing>
+	
   <editthing
     group="Modifications"
     compset="MeleeMod"
@@ -820,6 +826,11 @@
       name="Mod Category"
       helptext="Specify the category that this mods belongs to.">
       <it_taglist group="ItemModCat" tag="Upgrade?"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
       </inputthing>
     <inputthing
       name="Cost"
@@ -845,27 +856,9 @@
       <it_taglist group="ItemModCat" tag="Clothing?"/>
       </inputthing>
     <inputthing
-      name="Cost"
-      helptext="Cost of the mod.">
-      <it_field field="modCost"/>
-      </inputthing>
-    <inputthing
-      name="Weight"
-      helptext="Weight that the mod adds to the gear.">
-      <it_field field="modWeight"/>
-      </inputthing>
-    </editthing>
-  <editthing
-    group="Modifications"
-    compset="CapacitorMod"
-    name="Capacitor Mod"
-    prefix="mod"
-    description="A gear mod ..."
-    summary="Defines a set of modifications that can be applied to various energy weapons.">
-    <inputthing
-      name="Mod Category"
-      helptext="Specify the category that this mods belongs to.">
-      <it_taglist group="ItemModCat" tag="Capacitor?"/>
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
       </inputthing>
     <inputthing
       name="Cost"
@@ -879,4 +872,153 @@
       </inputthing>
     </editthing>
 	
+  <editthing
+    group="Modifications"
+    compset="CapacitorMod"
+    name="Capacitor Mod"
+    prefix="mod"
+    description="A gear mod ..."
+    summary="Defines a set of modifications that can be applied to various energy weapons.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Capacitor?"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    </editthing>
+	
+  <!-- Companion editthing -->
+  <editthing
+    compset="Companion"
+    name="Companion"
+    prefix="cmp"
+	defminion="Creature"
+    defownmode="no"
+    deflivefield="minEnabled"
+    description="Defines a companion minion that can be bootstrapped to the hero."
+    summary="?"
+	>
+	
+    <inputthing
+      name="Companion details"
+      helptext="Specify details about the race and other details for the Companion this adds.">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Companion Race"
+      helptext="If you want to have this always add a certain race to the minion, select the race here.">
+      <it_bootcustom compset="Creature" target="minion">
+        <match><![CDATA[!thing.showonly]]></match>
+        </it_bootcustom>
+      </inputthing>
+    <inputthing
+      name="Fixed companion race?"
+      helptext="If you've selected a companion race, check here so that the user cannot change that race (which is necessary, because the race you've selected will always be there, meaning that if the user chose another one, the character would have two races).">
+      <it_tagcheck group="Hero" tag="SetRace" default="yes" target="minion"/>
+      </inputthing>
+    <inputthing
+      name="Companion a Creature?"
+      helptext=".">
+      <it_tagcheck group="MinionType" tag="Creature" default="yes" target="minion"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+	
+  <!-- Creature editthing -->
+  <editthing
+    compset="Creature"
+    name="Creature"
+    prefix="cre"
+    description="Creatures."
+    summary="Defines creatures.">
+    <inputthing
+      name="Level"
+      helptext="Specify the Creature Level.">
+      <it_field field="creLevel"/>
+      </inputthing>
+    <inputthing
+      name="Quality"
+      helptext="Specify whether this is a Normal, Mighty or Legendary creature.">
+      <it_tagpick group="CreatureQuality" tag="?" require="yes" deftag="Normal"/>
+      </inputthing>
+    <inputthing
+      name="Keywords"
+      helptext="Specify any keywords for the creature.">
+      <it_taglist group="Keyword" tag="?"/>
+      </inputthing>
+	<inputthing
+      name="Base Attributes"
+      helptext="Set the base attributes for the creature below.">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Body"
+      helptext="Specify the Attribute rating.">
+      <it_field field="creBody"/>
+      </inputthing>
+    <inputthing
+      name="Mind"
+      helptext="Specify the Attribute rating.">
+      <it_field field="creMind"/>
+      </inputthing>
+	<inputthing
+      name="Skills"
+      helptext="">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Melee"
+      helptext="Specify the Melee rating.">
+      <it_field field="creMelee"/>
+      </inputthing>
+    <inputthing
+      name="Guns"
+      helptext="Specify the Guns rating.">
+      <it_field field="creGuns"/>
+      </inputthing>
+    <inputthing
+      name="Other"
+      helptext="Specify the Other rating.">
+      <it_field field="creOther"/>
+      </inputthing>
+
+	<inputthing
+      name="Other"
+      helptext="">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Can creature not carry weight?"
+      helptext=".">
+      <it_tagcheck group="Hero" tag="NoCarry" default="no" />
+      </inputthing>
+    <inputthing
+      name="Defense"
+      helptext="Specify the Defese rating.">
+      <it_field field="creDefense"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+	
+		
   </document>

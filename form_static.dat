@@ -34,6 +34,7 @@
     <chooser_table
       component="Species"
       choosetemplate="LargeItem">
+      <candidate><![CDATA[!component.Minion & !component.Creature]]></candidate>
       <chosen><![CDATA[
         if (@ispick = 0) then
           @text = "{text clrwarning}Select Origin"
@@ -46,7 +47,52 @@
         ]]></titlebar>
       </chooser_table>
     </portal>
-
+	
+  <portal
+    id="RaceStatic"
+    style="lblStatic">
+      <label>
+        <labeltext><![CDATA[
+          @text = field[acRacePref].text & ": "  & herofield[acRaceName].text
+          ]]></labeltext>
+        </label>
+    </portal>	
+	
+  <portal
+    id="CreaStatic"
+    style="lblStatic">
+    <label>
+      <labeltext><![CDATA[
+        @text = field[acRacePref].text & ": " & herofield[acRaceName].text
+        ]]></labeltext>
+      </label>
+    </portal>
+	
+  <!-- stCreature portal
+        Displays a chooser wherein the user can select the type for the creature.
+        Identical to "stRace" except for the contents.
+  -->
+  <portal
+    id="stCreature"
+    style="chsNormal"
+    width="170">
+    <chooser_table
+      component="Creature"
+      choosetemplate="LargeItem"
+      descwidth="350">
+      <candidate><![CDATA[!component.Minion]]></candidate>
+      <chosen><![CDATA[
+        if (@ispick = 0) then
+          @text = "{text clrwarning}Select Creature Type"
+        else
+          @text = herofield[acRacePref].text & ": " & field[name].text
+          endif
+        ]]></chosen>
+      <titlebar><![CDATA[
+        @text = "Choose the type for your creature"
+        ]]></titlebar>
+      </chooser_table>
+    </portal>
 
   <!-- stName template
         This template displays the character name and a label to prefix it.
@@ -191,20 +237,62 @@
   <layout
     id="static">
     <portalref portal="stRace" taborder="20"/>
+    <portalref portal="RaceStatic" taborder="30"/>
+    <portalref portal="CreaStatic" taborder="30"/>
+    <portalref portal="stCreature" taborder="30"/>
     <templateref template="stName" thing="heroname" taborder="10"/>
     <templateref template="stActor" thing="actor"/>
 
     <!-- This script sizes and positions the layout and its child visual elements. -->
     <position><![CDATA[
+	  ~determine whether the race or creature chooser is visible
+      portal[RaceStatic].visible = 0
+      portal[CreaStatic].visible = 0
+	  
+	  if (hero.tagis[HeroType.Creature] <> 0) then
+        portal[stRace].visible = 0
+        if (hero.tagis[Hero.SetRace] <> 0) then
+          portal[stCreature].visible = 0
+          portal[CreaStatic].visible = 1
+          endif          
+      else
+        if (hero.tagis[Hero.NoRace] <> 0) then
+          portal[stRace].visible = 0
+          endif
+        portal[stCreature].visible = 0
+        if (hero.tagis[Hide.RaceChoose] <> 0) then
+          portal[stRace].visible = 0
+          portal[RaceStatic].visible = 1
+          endif          
+        endif
+		
       ~position the name template on the left, with a little margin, then render it
       ~to generate the appropriate dimensions
       template[stName].left = 10
       perform template[stName].render
-
+	  
       ~position the race portal to the right of the name, with the actor template
       ~a little to the right of the race
-      portal[stRace].left = template[stName].right + 20
-      template[stActor].left = portal[stRace].right + 15
+	  ~position the race/creature portal to the right of the name (if visible)
+      var x as number
+	  x = template[stName].right + 20
+  
+      if (portal[stRace].visible <> 0) then
+        portal[stRace].left = x
+        x = portal[stRace].right + 15
+      elseif (portal[RaceStatic].visible <> 0) then
+        portal[RaceStatic].left = x
+        x = portal[RaceStatic].right + 15
+      elseif (portal[stCreature].visible <> 0) then
+        portal[stCreature].left = x
+        x = portal[stCreature].right + 15
+      elseif (portal[CreaStatic].visible <> 0) then
+        portal[CreaStatic].left = x
+        x = portal[CreaStatic].right + 15
+        endif
+		
+      ~position the actor template a little to the right of the race/creature/cosm
+      template[stActor].left = x + 10
 
       ~limit the width of the actor template to the remaining space available and
       ~then render the template

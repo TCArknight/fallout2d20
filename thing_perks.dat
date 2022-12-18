@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document signature="Hero Lab Data">
-  <thing id="prkSample" name="Sample" description="Description goes here" compset="Perk" uniqueness="useronce"></thing>
+  <thing id="prkActionBoyGirl" name="Action Boy/Girl" description="When you spend AP to take an additional major action, you do not suffer the increased skill test difficulty during your second action." compset="Perk" uniqueness="useronce"></thing>
   <thing id="prkArmorer" name="Armorer" description="You can modify armor with armor mods. Each rank in this perk unlocks an additional rank of mods: rank 1 unlocks rank 1 mods, rank 2 unlocks rank 2 mods, etc.\n\nEach time you take this perk, the level requirement increases by 4." compset="Perk" maxlimit="4">
     <fieldval field="prkMaxRank" value="4"/>
     <fieldval field="prkIsRanked" value="1"/>
@@ -8,5 +8,215 @@
     <tag group="Perk" tag="IsRanked"/>
     <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "You can modify armor with mods up to rank " & field[xCount].value & "."]]></eval>
     </thing>
-  <thing id="prkCenterMass" name="Center Mass" description="When you make a ranged attack, you may choose to strike your target’s Torso location (or equivalent) without increasing the difficulty of the attack. In addition, you may re-roll 1d20 when making your attack test." compset="Perk" uniqueness="useronce"></thing>
+  <thing id="prkCenterMass" name="Center Mass" description="When you make a ranged attack, you may choose to strike your target’s Torso location (or equivalent) without increasing the difficulty of the attack. In addition, you may re-roll 1d20 when making your attack test." compset="Perk" uniqueness="useronce">
+    <exprreq message="Agility 7+ required."><![CDATA[#trait[attrAgi] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkGunslinger" name="Gunslinger" description="When you make an attack with a one-handed ranged weapon with a Fire Rate of 2 or lower, you increase the weapon’s damage by +1 DC per rank. In addition, you may re-roll the hit location die. \n\nEach time you take this perk, the level requirement increases by 4." compset="Perk" maxlimit="2">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkTakeAtLevel" value="2"/>
+    <fieldval field="prkLevelIncrement" value="4"/>
+    <eval phase="Render" priority="1000">field[prkSummary].text &amp;= &quot;When you make an attack with a one-handed ranged weapon with a Fire Rate of 2 or lower, you increase the weapon’s damage by +&quot; &amp; field[xCount].value &amp; &quot;.&quot;</eval>
+    </thing>
+  <thing id="prkAdamantSkele" name="Adamantium Skeleton" description="When you suffer damage, the amount of damage needed to inflict a critical hit on you increases by your rank in this perk. For example, if you have one rank in this perk, you suffer a critical hit from 6 or more damage, rather than 5 or more. Each time you take this perk, the level requirement increases by 3." compset="Perk">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="3"/>
+    <fieldval field="prkLevelIncrement" value="3"/>
+    <eval phase="Render" priority="1000"><![CDATA[var crit as number
+crit = 5 + field[xCount].value
+field[prkSummary].text &= "When you suffer damage, you suffer a critical hit from " & crit & " points rather than 5 or more."]]></eval>
+    <exprreq message="Endurance 7+ required."><![CDATA[#trait[attrEnd] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkAdrenalinRush" name="Adrenalin Rush" description="When your health is below its maximum value, you count your STR score as 10 for all purposes when attempting a STR-based skill test or melee attack." compset="Perk" uniqueness="useronce">
+    <eval phase="Render" priority="1000"><![CDATA[var crit as number
+crit = 5 + field[xCount].value
+field[prkSummary].text &= "When you suffer damage, you suffer a critical hit from " & crit & " points rather than 5 or more."]]></eval>
+    <exprreq message="Strength 7+ required."><![CDATA[#trait[attrStr] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkAnimalFriend" name="Animal Friend" description="At rank 1, whenever a creature NPC with the {b}Mammal, Lizard, or Insect{/b} keyword would attack you, roll 1DC : on any result other than an Effect, the creature chooses not to attack you, although it may still attack another character it can target. \n\nAt rank 2, you can attempt a CHA + Survival test with a difficulty of 2 as a major action. If you succeed, the animal treats you as friendly and will attack anyone who attacks you. Mighty and Legendary animals are unaffected by this perk. Each time you take this perk, the level requirement increases by 5." compset="Perk">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkLevelIncrement" value="5"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "Whenever a creature NPC with the {b}Mammal, Lizard, or Insect{/b} keyword would attack you, roll 1DC : on any result other than an Effect, the creature chooses not to attack you. "
+
+if (field[xCount].value >= 2) then
+  field[prkSummary].text &= " You can attempt a {b}CHA + Survival{/b} test with a difficulty of 2 as a major action. If you succeed, the animal treats you as friendly"
+  endif]]></eval>
+    <exprreq message="Charisma 6+ required."><![CDATA[#trait[attrCha] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkAquaboygirl" name="Aquaboy / Aquagirl" description="Water is your ally. At rank 1, you no longer take radiation damage from swimming in irradiated water, and you can hold your breath for twice as long as normal.\n\nAt rank 2, enemies add +2 to the difficulty to tests to detect you while you are submerged underwater. Each time you take this perk, the level requirement increases by 3." compset="Perk">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkLevelIncrement" value="3"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "You no longer take radiation damage from swimming in irradiated water, and you can hold your breath for twice as long as normal. "
+
+if (field[xCount].value >= 2) then
+  field[prkSummary].text &= "Enemies add +2 to the difficulty to tests to detect you while you are submerged underwater."
+  endif]]></eval>
+    <exprreq message="Endurance 5+ required."><![CDATA[#trait[attrEnd] >= 5]]></exprreq>
+    </thing>
+  <thing id="prkAwareness" name="Awareness" description="When you take the Aim minor action at a target within Close range, you spot their weaknesses and can attack more efficiently. The next attack you make against that target gains the Piercing 1 damage effect, or improves the rating of any existing Piercing X damage effect by 1." compset="Perk" uniqueness="useronce">
+    <exprreq message="Perception 7+ required."><![CDATA[#trait[attrPer] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkBarbarian" name="Barbarian" description="Your physical Damage Resistance increases on all hit locations based on your STR.\n\nYou do not gain this benefit while wearing Power Armor.\n\n* STR 7–8: +1 physical DR\n* STR 9–10: +2 physical DR\n* STR 11+: +3 physical DR" compset="Perk">
+    <fieldval field="prkTakeAtLevel" value="4"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "Due to your strength of " & #trait[attrStr] & ", you have " & signed(field[prkValue1].value) & " Physical DR when not in power armor."]]></eval>
+    <eval phase="Final" priority="1000" index="2"><![CDATA[var str as number
+str = #trait[attrStr]
+
+if (str <= 8) then
+  field[prkValue1].value += 1
+elseif (str <= 10) then
+  field[prkValue1].value += 2
+elseif (str >= 11) then
+  field[prkValue1].value += 3
+  endif]]></eval>
+    <exprreq message="Strength 7+ required."><![CDATA[#trait[attrStr] >= 7]]></exprreq>
+    <exprreq message="Level 4+ required."><![CDATA[#islevel[] >= 4]]></exprreq>
+    </thing>
+  <thing id="prkBasher" name="Basher" description="When you make a melee attack by bashing with your gun, your attack gains the Vicious damage effect." compset="Perk" uniqueness="useronce">
+    <exprreq message="Strength 6+ required."><![CDATA[#trait[attrStr] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkBetterCritical" name="Better Criticals" description="When you inflict one or more points of damage to an enemy, you may spend 1 Luck Point to automatically inflict a critical hit, causing an injury." compset="Perk" uniqueness="useronce">
+    <exprreq message="Luck 9+ required."><![CDATA[#trait[attrLuc] >= 9]]></exprreq>
+    </thing>
+  <thing id="prkBigLeagues" name="Big Leagues" description="When you make a melee attack with a two-handed melee weapon, the weapon gains the Vicious damage effect." compset="Perk" uniqueness="useronce">
+    <eval phase="Effects" priority="2000"><![CDATA[foreach pick in hero from WeapMelee where "Quality.TwoHanded" 
+  if (eachpick.tagis[Effect.Vicious] = 0) then
+    perform eachpick.assign[Effect.Vicious]
+    endif
+  nexteach]]></eval>
+    <exprreq message="Strength 6+ required."><![CDATA[#trait[attrStr] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkBlackWidow" name="Black Widow" description="The Black Widow perk affects men and masculine characters, while the Lady Killer perk affects women and feminine characters—they are otherwise identical. When you attempt a CHA based skill test to influence a character of the chosen gender, you may re-roll 1d20. In addition, your attacks inflict +1DC additional damage against characters of the chosen gender." compset="Perk" summary="When you attempt a CHA based skill test to influence a character of male gender, you may re-roll 1d20. In addition, your attacks inflict +1DC additional damage against characters of the male gender." uniqueness="useronce">
+    <exprreq message="Charisma 6+ required."><![CDATA[#trait[attrCha] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkLadyKiller" name="Lady Killer" description="The Black Widow perk affects men and masculine characters, while the Lady Killer perk affects women and feminine characters—they are otherwise identical. When you attempt a CHA based skill test to influence a character of the chosen gender, you may re-roll 1d20. In addition, your attacks inflict +1DC additional damage against characters of the chosen gender." compset="Perk" summary="When you attempt a CHA based skill test to influence a character of female gender, you may re-roll 1d20. In addition, your attacks inflict +1DC additional damage against characters of the female gender." uniqueness="useronce">
+    <exprreq message="Charisma 6+ required."><![CDATA[#trait[attrCha] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkBlacksmith" name="Blacksmith" description="You can modify melee weapons with weapon mods. Each rank in this perk unlocks an additional rank of melee weapon mods: rank 1 unlocks rank 1 mods, rank 2 unlocks rank 2 mods, and rank 3 unlocks rank 3 mods. \n\nEach time you take this perk, the level requirement increases by 4." compset="Perk" maxlimit="4">
+    <fieldval field="prkMaxRank" value="3"/>
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkLevelIncrement" value="4"/>
+    <fieldval field="prkTakeAtLevel" value="2"/>
+    <tag group="Perk" tag="IsRanked"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "You can modify melee weapons with mods up to rank " & field[xCount].value & "."]]></eval>
+    <exprreq message="Level 2+ required."><![CDATA[#islevel[] >= 2]]></exprreq>
+    <exprreq message="Strength 6+ required."><![CDATA[#trait[attrStr] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkBlitz" name="Blitz" description="When you move into reach of an opponent and make a melee attack against them in one turn, you may re-roll one d20 on your attack.\n\nAt rank 2, you also inflict +1 DC damage with that attack. \nEach time you take this perk, the level requirement increases by 3." compset="Perk" maxlimit="2">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkLevelIncrement" value="3"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "When you move into reach of an opponent and make a melee attack against them in one turn, you may re-roll one d20 on your attack. "
+
+if (field[xCount].value >= 2) then
+  field[prkSummary].text &= "You also inflict +1 DC damage with that attack."
+  endif]]></eval>
+    <exprreq message="Endurance 5+ required."><![CDATA[#trait[attrEnd] >= 5]]></exprreq>
+    </thing>
+  <thing id="prkBloodyMess" name="Bloody Mess" description="When you inflict a critical hit, roll 1DC ; if you roll an Effect, you inflict one additional injury to a random location." compset="Perk" uniqueness="useronce">
+    <exprreq message="Luck 6+ required."><![CDATA[#trait[attrLuc] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkCanDo" name="Can Do!" description="When you are scavenging a location that contains food, you gain 1 additional random food item, without spending AP." compset="Perk" uniqueness="useronce">
+    <exprreq message="Luck 5+ required."><![CDATA[#trait[attrLuc] >= 5]]></exprreq>
+    </thing>
+  <thing id="prkCapCollect" name="Cap Collector" description="When you buy or sell items, you may increase or decrease the price of the goods being traded by 10%." compset="Perk" uniqueness="useronce">
+    <exprreq message="Charisma5+ required."><![CDATA[#trait[attrCha] >= 5]]></exprreq>
+    </thing>
+  <thing id="prkCautiousNature" name="Cautious Nature" description="Whenever you attempt a skill test, and you buy one or more d20s by spending Action Points, you may re-roll 1d20 on that test. You may not purchase this perk if you have Daring Nature." compset="Perk" summary="Whenever you attempt a skill test, and you buy one or more d20s by spending Action Points, you may re-roll 1d20 on that test." uniqueness="useronce">
+    <pickreq thing="prkDaringNature" ispreclude="yes"/>
+    <exprreq message="Perception 7+ required."><![CDATA[#trait[attrPer] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkDaringNature" name="Daring Nature" description="Whenever you attempt a skill test, and you buy one or more d20s by giving the gamemaster Action Points, you may re-roll 1d20 on that test. You may not purchase this perk if you have Cautious Nature." compset="Perk" summary="Whenever you attempt a skill test, and you buy one or more d20s by giving the gamemaster Action Points, you may re-roll 1d20 on that test." uniqueness="useronce">
+    <pickreq thing="prkCautiousNature" ispreclude="yes"/>
+    <exprreq message="Luck 7+ required."><![CDATA[#trait[attrLuc] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkChemResist" name="Chem Resistant" description="At rank 1, roll one fewer DC when determining if you become addicted to chems, to a minimum of 0.\n\nAt rank 2, you cannot become addicted to chems. \n\nEach time you take this perk, the level requirement increases by 4." compset="Perk" maxlimit="2">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkLevelIncrement" value="3"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text = "Roll one fewer DC when determining if you become addicted to chems, to a minimum of 0. "
+
+if (field[xCount].value >= 2) then
+  field[prkSummary].text = "You cannot become addicted to chems."
+  endif]]></eval>
+    <exprreq message="Endurance 7+ required."><![CDATA[#trait[attrEnd] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkChemist" name="Chemist" description="Chems you create last twice as long as normal. In addition, you unlock chems recipes that have this perk as a requirement." compset="Perk" uniqueness="useronce">
+    <exprreq message="Intelligence 7+ required."><![CDATA[#trait[attrInt] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkCommando" name="Commando" description="When you make a ranged attack with any weapon with a Fire Rate of 3 or higher (except heavy weapons), you add +1DC per rank to the weapon’s damage. \n\nEach time you take this perk, the level requirement increases by 3." compset="Perk" maxlimit="2">
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkLevelIncrement" value="3"/>
+    <fieldval field="prkTakeAtLevel" value="2"/>
+    <tag group="Perk" tag="IsRanked"/>
+    <eval phase="Render" priority="1000">field[prkSummary].text &amp;= &quot;When you make a ranged attack with any weapon with a Fire Rate of 3 or higher (except heavy weapons) you add &quot; &amp; signed(field[xCount].value) &amp; &quot;to the weapon’s damage.&quot;</eval>
+    <exprreq message="Level 2+ required."><![CDATA[#islevel[] >= 2]]></exprreq>
+    <exprreq message="Agility 8+ required."><![CDATA[#trait[attrAgi] >= 8]]></exprreq>
+    </thing>
+  <thing id="prkComprehension" name="Comprehension" description="After you use the bonus gained from reading a magazine, roll 1 DC . If you roll an Effect, you may use that bonus one additional time." compset="Perk" uniqueness="useronce">
+    <exprreq message="Intelligence 6+ required."><![CDATA[#trait[attrInt] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkConcenFire" name="Concentrated Fire" description="When you make a ranged attack and spend ammunition\nto increase the damage, you may re-roll up to 3 DC for your damage roll." compset="Perk" uniqueness="useronce">
+    <exprreq message="Agility 6+ required."><![CDATA[#trait[attrAgi] >= 6]]></exprreq>
+    <exprreq message="Perception 8+ required."><![CDATA[#trait[attrPer] >= 8]]></exprreq>
+    </thing>
+  <thing id="prkDemoExpert" name="Demolition Expert" description="When you make an attack using a weapon with the Blast quality, the attack gains the Vicious damage effect. In addition, you unlock explosives recipes which have this perk as a requirement." compset="Perk" uniqueness="useronce">
+    <exprreq message="Luck 6+ required."><![CDATA[#trait[attrLuc] >= 6]]></exprreq>
+    <exprreq message="Perception 6+ required."><![CDATA[#trait[attrPer] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkDodger" name="Dodger" description="At rank 1, when you take the Defend major action, you reduce the difficulty of the skill test by 1. At rank 2, the AP cost to further increase your Defense is reduced to 1 AP. \n\nEach time you take this perk, the level requirement increases by 6." compset="Perk" maxlimit="2">
+    <fieldval field="prkMaxRank" value="2"/>
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkLevelIncrement" value="6"/>
+    <fieldval field="prkTakeAtLevel" value="4"/>
+    <tag group="Perk" tag="IsRanked"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "When you take the Defend major action, you reduce the difficulty of the skill test by 1. "
+
+if (field[xCount].value >= 2) then
+  field[prkSummary].text &= "Also, the AP cost to further increase your Defense is reduced to 1 AP."
+  endif]]></eval>
+    <exprreq message="Level 4+ required."><![CDATA[#islevel[] >= 4]]></exprreq>
+    <exprreq message="Agility 6+ required."><![CDATA[#trait[attrAgi] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkDogmeat" name="Dogmeat" description="You aren’t alone in the wilderness. You have a pet dog that serves as a friend and ally in dangerous times. The dog has the profile shown to the side and is treated as an allied NPC creature under your command (see p.338). If you need to forage for food and water, your dog looks after themselves. If your dog is slain, then you either find a new dog before the next adventure, or you may trade this perk for a different one after this adventure." compset="Perk" summary="You have a pet dog that serves as a friend and ally in dangerous times." uniqueness="useronce">
+    <bootstrap thing="cmpDogmeat"></bootstrap>
+    <exprreq message="Charisma 5+ required."><![CDATA[#trait[attrCha] >= 5]]></exprreq>
+    </thing>
+  <thing id="prkEntomologist" name="Entomologist" description="When you make an attack against an NPC with the Insect keyword, your attack gains the Piercing 1 damage effect, or improves the rating of any Piercing X effect the weapon has by +1." compset="Perk" uniqueness="useronce">
+    <exprreq message="Intelligence 7+ required."><![CDATA[#trait[attrInt] >= 7]]></exprreq>
+    </thing>
+  <thing id="prkFastMetabolism" name="Fast Metabolism" description="When you regain one or more HP from any source other than rest, increase the total HP regained by +1 per rank in this perk. \n\nEach time you take this perk, the level requirement increases by 3." compset="Perk" maxlimit="3">
+    <fieldval field="prkMaxRank" value="3"/>
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkLevelIncrement" value="3"/>
+    <tag group="Perk" tag="IsRanked"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text &= "When you regain one or more HP from any source other than rest, increase the total HP regained by +" & field[xCount].value & "."]]></eval>
+    <exprreq message="Endurance 6+ required."><![CDATA[#trait[attrEnd] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkFasterHeal" name="Faster Healing" description="When you make an {b}END + Survival{/b} test to heal your own injuries, the first additional d20 you buy is free. The normal maximum of 5d20 still applies." compset="Perk" uniqueness="useronce">
+    <exprreq message="Endurance 6+ required."><![CDATA[#trait[attrEnd] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkFinesse" name="Finesse" description="Once per combat encounter, you may re-roll all the DC in a single damage roll without spending any Luck points." compset="Perk" uniqueness="useronce">
+    <exprreq message="Agility 9+ required."><![CDATA[#trait[attrAgi] >= 9]]></exprreq>
+    </thing>
+  <thing id="prkFortuneFinder" name="Fortune Finder" description="Whenever you roll to determine how much money you find, you find more. At rank 1, you find +3DC additional caps. At rank 2, you find +6DC additional caps. At rank 3, you find +10 DC additional caps. \n\nEach time you take this perk, the level requirement increases by 4." compset="Perk" maxlimit="3">
+    <fieldval field="prkMaxRank" value="3"/>
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkTakeAtLevel" value="2"/>
+    <fieldval field="prkLevelIncrement" value="4"/>
+    <tag group="Perk" tag="IsRanked"/>
+    <eval phase="Render" priority="1000"><![CDATA[field[prkSummary].text = "Whenever you roll to determine how much money you find, you find +3DC additional caps."
+
+if (field[xCount].value = 2) then
+  field[prkSummary].text = "Whenever you roll to determine how much money you find, you find +6DC additional caps."
+  endif
+
+if (field[xCount].value = 3) then
+  field[prkSummary].text = "Whenever you roll to determine how much money you find, you find +10DC additional caps."
+  endif]]></eval>
+    <exprreq message="Endurance 6+ required."><![CDATA[#trait[attrEnd] >= 6]]></exprreq>
+    </thing>
   </document>

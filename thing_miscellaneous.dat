@@ -46,7 +46,11 @@
 
     <!-- Use the starting character points as our initial maximum -->
     <eval index="1" phase="Setup" priority="1000"><![CDATA[
+	  ~if (#iscreature[] = 0) then
       field[resMax].value = herofield[acStartAttr].value
+	  ~else
+	  ~  field[resMax].value = 7
+	  ~endif
       ]]></eval>
     </thing>
 	
@@ -131,6 +135,7 @@
       ~base our test on the adjusted curMax value, sans any in-play adjustments
       var curMax as number
       var curLevel as number
+	  var lvlDiff as number
 	  
 	  curLevel = herofield[acLevel].value
 	  
@@ -186,11 +191,22 @@
     id="typHero"
     name="Type: Hero (PC)"
     compset="CharType">
+    <tag group="explicit" tag="1"/>
+    <tag group="HeroType" tag="PC"/>
     </thing>
   <thing
     id="typNPC"
     name="Type: Non-Player Character"
     compset="CharType">
+    <tag group="explicit" tag="3"/>
+    <tag group="HeroType" tag="NPC"/>
+    </thing>
+  <thing
+    id="typCreature"
+    name="Type: Creature"
+    compset="CharType">
+    <tag group="explicit" tag="2"/>
+    <tag group="HeroType" tag="Creature"/>
     </thing>
 
 

@@ -45,6 +45,13 @@
     <value id="MultiCopy"/>   <!-- This pick is one of multiple of the component -->
     <value id="SpecUp"/>      <!-- This pick is an additional copy of the same trait -->
     <value id="CostRebate"/>      <!-- This pick is an additional copy of the same trait -->
+    <value id="MinionCantBeLive"/> 
+    <value id="NoSkillValue"/> 
+    <value id="StartValue4"/> 
+    <value id="StartValue5"/> 
+    <value id="StartValue6"/> 
+    <value id="StartValue7"/> 
+    <value id="StartValue8"/> 
     </group>
 
   <!-- User group - general helper tags that can be assigned by users via the Editor
@@ -77,8 +84,18 @@
     <value id="NoDamage"/>    <!-- Indicates no damage history exists for the hero -->
     <value id="Hand"/>        <!-- Each tag indicates one hand worth of weapons equipped -->
     <value id="RerollInit"/>  <!-- Indicates that the hero can re-roll initiative values -->
+    <value id="NoRace"/> 
+    <value id="NoCarry"/> 
+    <value id="SetRace"/> 
+    <value id="Minion"/>
     </group>
-
+	
+  <group
+    id="HeroType">
+    <value id="PC"/> 
+    <value id="NPC"/> 
+    <value id="Creature"/> 
+    </group>
   <!-- DashTacCon group - behaviors associated with the Dashboard and/or Tactical Console
         All tags that control behaviors relating to the Dashboard or TacCon should be
         defined in this group.
@@ -183,6 +200,7 @@
     <value id="Perk"/>            <!-- Indicates an perk that is not user selectable (i.e. conferred by race or similar mechanism) -->
     <value id="Tracker"/>         <!-- Indicates a tracker that is hidden from the In-Play tab (and likely shown somewhere else) -->
     <value id="Equipment"/>       <!-- Indicates a piece of gear that is hidden from the purchase screen -->
+    <value id="RaceChoose"/>    
     </group>
 
   <!-- Show group - controls whether things are shown in certain contexts
@@ -440,6 +458,7 @@
     <value id="TwoHanded" name="Two-Handed" />
     <value id="Unreliable" />
     </group>	
+	
   <!-- Damage Type tags -->
   <group
     id="DamageType"
@@ -486,5 +505,45 @@
     <value id="RightArm" name="Arm" abbrev="RA"/>               <!-- Arm Armor -->
     <value id="LeftLeg" name="Leg" abbrev="LL"/>               <!-- Leg Armor -->
     <value id="RightLeg" name="Leg" abbrev="RL"/>               <!-- Leg Armor -->
+    </group>
+
+  <group
+    id="MinionType"
+    dynamic="yes">
+    <value id="PC"/>           <!-- Minion is a PC -->
+    <value id="NPC"/>          <!-- Minion is an NPC -->
+    <value id="Creature"/>     <!-- Minion is a Creature -->
+    <value id="Vehicle"/>     <!-- Minion is a Vehicle -->
+    </group>
+	
+  <group
+    id="Creature"
+    dynamic="yes">
+    <value id="Standard"/>     
     </group>	
+		
+  <group
+    id="CreatureQuality"
+    dynamic="yes">
+    <value id="Normal" name="Normal"/>   
+    <value id="Mighty" name="Mighty"/>   
+    <value id="Legend" name="Legendary"/>     
+    </group>
+	
+  <group
+    id="Keyword"
+    dynamic="yes"
+    sequence="explicit">
+    <value id="Robot" order="5"/>  
+    <value id="Mutated" order="5"/> 
+    <value id="Brotherhood" order="40"/> 
+    <value id="Human" order="50" />   
+    <value id="Ghoul" order="50"/> 
+    <value id="SuperMutant" name="Super Mutant" order="50"/> 
+    <value id="Mammal" order="60"/> 
+    <value id="Lizard" order="60"/> 
+    <value id="Insect" order="60"/>   
+    <value id="Raider" order="60" /> 
+    </group>	
+
   </document>

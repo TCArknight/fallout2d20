@@ -37,14 +37,22 @@
     description="Your carry weight measures how much gear you can carry. You can carry a base of 150 pounds of equipment, plus your Strength attribute multiplied by 10. You can carry more by using perks, increasing your Strength attribute, and using equipment with extra carrying space.">
     <fieldval field="trtAbbrev" value="Carry"/>
     <tag group="explicit" tag="1"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
+    <tag group="HeroType" tag="Creature"/>
 
     <!-- Calculate the Health trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
       <before name="Derived trtFinal"/>
       <after name="Calc trtFinal"/><![CDATA[
 	  var strTot as number
-	  strTot = 10 * #trait[attrStr]
-      field[trtBonus].value += 150 + strTot
+	  if (#iscreature[] = 0) then
+	    strTot = 10 * #trait[attrStr]
+        field[trtBonus].value += 150 + strTot
+	  else
+	    strTot = 10 * #trait[attrBod]
+        field[trtBonus].value += strTot
+		endif
       ]]></eval>
     </thing>
 
@@ -60,12 +68,23 @@
     <tag group="User" tag="Combat"/>
     <tag group="DashTacCon" tag="Combat"/>
     <tag group="DashTacCon" tag="Traits"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
+    <tag group="HeroType" tag="Creature"/>
 
     <!-- Calculate the Initiative trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
       <before name="Derived trtFinal"/>
       <after name="Calc trtFinal"/><![CDATA[
-      field[trtBonus].value += #trait[attrPer] + #trait[attrAgi]
+	  if (#iscreature[] = 0) then
+        field[trtBonus].value += #trait[attrPer] + #trait[attrAgi]
+	  else
+	    if (#isminion[] <> 0) then
+		  field[trtBonus].value += #mastertrait[attrPer] + #mastertrait[attrAgi]
+		else
+          field[trtBonus].value += #trait[attrBod] + #trait[attrMin]
+		  endif
+		endif
       ]]></eval>
     </thing>
 
@@ -80,6 +99,9 @@
     <tag group="explicit" tag="3"/>
     <tag group="User" tag="Combat"/>
     <tag group="DashTacCon" tag="Combat"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
+    <tag group="HeroType" tag="Creature"/>
 
     <!-- Calcualte the Defense trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
@@ -87,11 +109,13 @@
       <after name="Calc trtFinal"/><![CDATA[
 	  var agiBon as number
 	  
-	  if (#trait[attrAgi] <= 8) then
-	    agiBon = 1
-	  else
-	    agiBon = 2
-		endif
+	  if (#iscreature[] = 0) then
+	    if (#trait[attrAgi] <= 8) then
+	      agiBon = 1
+	    else
+	      agiBon = 2
+		  endif
+	    endif
 		
       field[trtBonus].value += agiBon
       ]]></eval>
@@ -128,6 +152,8 @@
     <tag group="explicit" tag="4"/>
     <tag group="User" tag="Resistance"/>
     <tag group="DashTacCon" tag="Traits"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
 
     <!-- Calculate the Resistance trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
@@ -146,6 +172,8 @@
     <tag group="explicit" tag="5"/>
     <tag group="User" tag="Resistance"/>
     <tag group="DashTacCon" tag="Traits"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
 
     <!-- Calculate the Resistance trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
@@ -164,6 +192,8 @@
     <tag group="explicit" tag="6"/>
     <tag group="User" tag="Resistance"/>
     <tag group="DashTacCon" tag="Traits"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
 
     <!-- Calculate the Resistance trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
@@ -182,6 +212,8 @@
     <tag group="explicit" tag="7"/>
     <tag group="User" tag="Resistance"/>
     <tag group="DashTacCon" tag="Traits"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
 
     <!-- Calculate the Resistance trait as appropriate -->
     <eval value="1" phase="Traits" priority="4000">
@@ -204,6 +236,8 @@
     <!-- Assign an appropriate tag based on how the trait should be classified -->
     <tag group="User" tag="Combat"/>
     <tag group="User" tag="DamageDice"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
     <!--
     <tag group="User" tag="Power"/>
     <tag group="User" tag="Resistance"/>
@@ -254,4 +288,25 @@
       field[trtBonus].value += #trait[attrEnd] + #trait[attrLuc] + herofield[acLevel].value - 1
       ]]></eval>
     </thing>
+	
+  <!-- Health Trait -->
+  <thing
+    id="trCreHealth"
+    name="Health Points"
+    compset="Trait"
+    isunique="yes"
+    description="Description goes here">
+    <fieldval field="trtAbbrev" value="Hlth"/>
+    <tag group="explicit" tag="8"/>
+    <tag group="User" tag="Power"/>
+    <tag group="HeroType" tag="Creature"/>
+
+    <!-- Calculate the Health trait as appropriate -->
+    <eval value="1" phase="Traits" priority="4000">
+      <before name="Derived trtFinal"/>
+      <after name="Calc trtFinal"/><![CDATA[
+      field[trtBonus].value += #trait[attrBod] + herofield[acLevel].value
+      ]]></eval>
+    </thing>
+	
   </document>

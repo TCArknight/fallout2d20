@@ -966,7 +966,14 @@
       maxlength="100"
       type="user">
       </field>
-
+ 
+    <field
+      id="imodNamePrefix"
+      name="Name Prefix"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
     <!-- This is to place a value for Crew Reduction -->
     <field
       id="imodValue"
@@ -1330,6 +1337,14 @@
     name="Gear Modification"
     autocompset="no">
 
+ 
+    <field
+      id="modNamePrefix"
+      name="Name Prefix"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
     <!-- Gear cost -->
     <field
       id="modCost"
@@ -1361,8 +1376,20 @@
 	    endif
 		
       ]]></eval>
-
+	
+    <eval index="2" phase="Render" priority="5000"><![CDATA[
+      ~ set prefixed name
+	  var name as string
+	  doneif (field[modNamePrefix].isempty <> 0)
+	  
+	  name = field[modNamePrefix].text & " "
+	  name &= parent.field[name].text
+	  
+	  parent.field[livename].text = name
+	  
+      ]]></eval>
     </component>
+	
   <component
     id="ClothingMod"
     name="Clothing Modification"

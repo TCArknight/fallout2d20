@@ -57,7 +57,8 @@
       showtemplate="arWpnPick"
       choosetemplate="arWpnThing"
       buytemplate="BuyCash"
-      selltemplate="SellCash">
+      selltemplate="SellCash"
+	  alwaysupdate="yes">
       <list>component.WeapMelee</list>
       <candidate inheritlist="yes"><![CDATA[!Equipment.Natural & !Hide.Equipment]]></candidate>
       <titlebar><![CDATA[
@@ -86,7 +87,8 @@
       choosetemplate="arWpnThing"
       choosesortset="WeaponType"
       buytemplate="BuyCash"
-      selltemplate="SellCash">
+      selltemplate="SellCash"
+	  alwaysupdate="yes">
       <list>component.WeapRange</list>
       <candidate inheritlist="yes"><![CDATA[!Equipment.Natural & !Hide.Equipment]]></candidate>
       <titlebar><![CDATA[
@@ -117,7 +119,8 @@
       choosetemplate="arDefThing"
       showsortset="Armory"
       buytemplate="BuyCash"
-      selltemplate="SellCash">
+      selltemplate="SellCash"
+	  alwaysupdate="yes">
       <list>component.Defense</list>
       <candidate inheritlist="yes"><![CDATA[!Equipment.Natural & !Hide.Equipment]]></candidate>
       <titlebar><![CDATA[

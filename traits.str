@@ -131,21 +131,32 @@
     autocompset="no">
 
     <!-- Fixed adjustments always start out unchecked -->
-    <creation><![CDATA[
-      field[trtUser].value = 5
+    <creation><![CDATA[ 
+	  if (tagis[Helper.StartValue?] <> 0) then
+	    field[trtUser].value = tagvalue[Helper.StartValue?]
+	  else
+	    field[trtUser].value = 5
+	    endif
       ]]></creation>
 	  
     <!-- Attributes have a minimum trait value of 4 -->
     <eval index="1" phase="Initialize" priority="3000"><![CDATA[
       field[trtMinimum].value = 4
-      field[trtMaximum].value = 10
+	  
+	  if (hero.tagis[HeroType.Creature] <> 0) then
+        field[trtMaximum].value = 12
+	  else
+        field[trtMaximum].value = 10
+	    endif
       ]]></eval>
 
-    <!-- Each attribute point above one that is allocated by the user costs 7 CP -->
+    <!-- Each attribute point above four that is allocated by the user costs 1 pt -->
     <eval index="2" phase="Traits" priority="10000">
       <before name="Calc resLeft"/>
-      <after name="Bound trtUser"/><![CDATA[
-      hero.child[resAttribute].field[resSpent].value += field[trtUser].value - 4
+      <after name="Bound trtUser"/><![CDATA[  
+	  if (tagis[HeroType.Creature] = 0) then
+	    hero.child[resAttribute].field[resSpent].value += field[trtUser].value - 4
+		endif
       ]]></eval>
 	  
     </component>
@@ -169,13 +180,18 @@
         ~only access the linkage if the skill is directly on the hero; if not, it is
         ~likely within an advancement gizmo and no linkage will exist there
         if (container.ishero <> 0) then
-          @value = field[trtFinal].value + linkage[attribute].field[trtFinal].value
+          @value = field[trtFinal].value
+		  
+		  if (islinkage[attribute] <> 0) then
+		    @value += linkage[attribute].field[trtFinal].value
+			endif
+			
           endif
         ]]></calculate>
       </field>
 	  
     <!-- Each skill is associated with a specific attribute that must be identified -->
-    <linkage linkage="attribute" optional="no"/>
+    <linkage linkage="attribute" optional="yes"/>
 
     <!-- Each skill needs its own identity tag so existing skills can be identified during advancement -->
     <identity group="Skill"/>
@@ -188,12 +204,20 @@
     <tag group="DashTacCon" tag="Rolls"/>
 
     <!-- Skills have a maximum trait value of 6 -->
-    <eval index="1" phase="Initialize" priority="3000"><![CDATA[
-      field[trtMaximum].value = 3
+    <eval index="1" phase="Setup" priority="1100"><![CDATA[
+	  field[trtMaximum].value = 6
+	  
+	  doneif (#iscreature[] <> 0)
+	  
+	  if (herofield[acLevel].value = 1) then
+        field[trtMaximum].value = 3
+	    endif
       ]]></eval>
 	  
     <!-- Track the skill on the actor -->
     <eval index="2" phase="Setup" priority="6000"><![CDATA[
+	  doneif (#iscreature[] <> 0)
+	  
 	  doneif (tagis[Skill.TagSkill] = 0)
 	  
       field[trtBase].value += 2
@@ -268,6 +292,20 @@
       type="derived"
 	  defvalue="0">
       </field>
+
+     <!--  -->
+    <field
+      id="prkValue1"
+      name="Value 1"
+      type="derived">
+      </field>	 
+
+     <!--  -->
+    <field
+      id="prkValue2"
+      name="Value 2"
+      type="derived">
+      </field>	
 	  
     <identity group="Perk"/>
     <identity group="HasPerk"/>
@@ -394,6 +432,41 @@
     name="Derived Trait"
     autocompset="no">
 
+
+    <!-- Special value that sometimes gets output for trait -->
+    <field
+      id="trtSpecial"
+      name="Special Value"
+      type="derived">
+      </field>
+
+    <!-- Initial value assigned for a creature -->
+    <field
+      id="trtCreature"
+      name="Creature Start"
+      type="derived">
+      </field>
+
+    <!-- Lowest value allowed for a creature -->
+    <field
+      id="trtFloor"
+      name="Creature Floor"
+      type="derived">
+      </field>
+
+    <!-- User value assigned for the derived trait when dealing with creatures -->
+    <field
+      id="trtUserCre"
+      name="User Value for Creature"
+      type="user"
+      defvalue="0"
+      usedelta="yes"
+      maxfinal="50">
+      <!-- Final value for display is the fully adjusted net value that incorporates all adjustments from other sources -->
+      <finalize><![CDATA[
+        @text = field[trtFinal].value
+        ]]></finalize>
+      </field>
     <!-- Derived traits are based on other traits. The "calculate" script on the
         "trtFinal" field value will work great for most traits, but NOT for derived
         traits. Consequently, derived traits need to re-calculate the field value AFTER
@@ -661,6 +734,115 @@
     </component>
 
 
+  <!-- Creature component
+        Each creature derives from this component
+  -->
+  <component
+    id="Creature"
+    name="Creature"
+    autocompset="no">
+
+    <!-- Attribute specification -->
+    <field
+      id="creBody"
+      name="Base Body"
+      type="static">
+      </field>
+    <field
+      id="creMind"
+      name="Base Mind"
+      type="static">
+      </field>
+	  
+    <!-- Level specification -->
+    <field
+      id="creLevel"
+      name="Base Movement"
+      type="static">
+      </field>
+	  
+    <!-- Keywords -->
+    <field
+      id="creKeywords"
+      name="Keywords for the creature"
+      type="static"
+	  maxlength="150">
+      </field>
+	  
+    <!-- Movement trait specification -->
+    <field
+      id="creMovement"
+      name="Base Movement"
+      type="static">
+      </field>
+    <field
+      id="creDefense"
+      name="Base Defense"
+      type="static">
+      </field>
+
+    <!-- Skill traits -->
+    <field
+      id="creMelee"
+      name="Melee Skill rating"
+      type="static"
+	  defvalue="0">
+      </field>
+    <field
+      id="creGuns"
+      name="Guns Skill rating"
+      type="static"
+	  defvalue="0">
+      </field>
+    <field
+      id="creOther"
+      name="Melee Skill rating"
+      type="static"
+	  defvalue="0">
+      </field>
+    <!-- Each creature needs its own identity tag to configure the hero appropriately -->
+    <identity group="Creature"/>
+	
+    <eval index="1" phase="Initialize" priority="1000" name="Set Starting Attributes if not yet set"><![CDATA[
+      ~assign the appropriate die-type ratings to attributes if they have not been set yet
+      trustme
+      herofield[acLevel].value = field[creLevel].value
+      herofield[acCreKeywords].text = field[creKeywords].text
+	  
+	  ~herofield[acStartAttr].value = 7
+	  
+      #traituser[attrBod] = field[creBody].value
+      #traituser[attrMin] = field[creMind].value
+	  
+	  ~ skills
+	  #traituser[skCreMelee] = field[creMelee].value
+      #traituser[skCreGuns] = field[creGuns].value
+      #traituser[skCreOther] = field[creOther].value
+      #traitbonus[trDefense] = field[creDefense].value
+	  
+      ~assign the appropriate adjustment values to derived traits
+      ~hero.child[trShock].field[trtUserCre].value = field[creShock].value
+      ~hero.child[trWounds].field[trtUserCre].value = field[creWounds].value
+      ~hero.child[trMovement].field[trtUserCre].value = field[creMovement].value
+	  
+      ~hero.child[trDodge].field[trtUserCre].value = field[creDodge].value
+      ~hero.child[trMelee].field[trtUserCre].value = field[creMelee].value
+      ~hero.child[trUnarmed].field[trtUserCre].value = field[creUnarmed].value
+      ~hero.child[trToughness].field[trtUserCre].value = field[creToughness].value
+
+      ]]></eval>
+
+    <!-- Track the creature type on the actor by assigning the appropriate tag -->
+    <eval index="2" phase="Initialize" priority="2000"><![CDATA[
+      perform forward[Creature.?]
+	  perform forward[Hero.?]
+	  perform forward[CreatureQuality.?]
+	  perform forward[Keyword.?]
+	  
+      ]]></eval>
+
+    </component>
+
 
   <!-- Define various component sets associated with the components defined above.
   -->
@@ -728,6 +910,30 @@
     <compref component="CanAdvance"/>
     <compref component="UserSelect"/>
     <compref component="xCopyTracker"/>
+    </compset>	
+	
+  <!-- Creature - all creatures derive from this compset -->
+  <compset
+    id="Creature"
+    forceunique="yes">
+    <compref component="Creature"/>
+    <compref component="Species"/>
+    </compset>
+	
+  <!-- Companion - all creatures derive from this compset -->
+  <compset
+    id="Minion">
+    <compref component="Minion"/>
+    <compref component="Creature"/>
+    </compset>
+	
+  <!-- Companion - all creatures derive from this compset -->
+  <compset
+    id="Companion"
+    forceunique="yes">
+    <compref component="Creature"/>
+    <compref component="Species"/>
+    <compref component="Minion"/>
     </compset>	
 
   </document>

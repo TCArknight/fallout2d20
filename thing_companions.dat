@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="cmpDogmeat" name="Dogmeat" compset="Companion" uniqueness="unique">
+    <minion id="Creature" ownmode="no" livefield="minEnabled">
+      <tag group="Hero" tag="SetRace"/>
+      <tag group="MinionType" tag="Creature"/>
+      <bootstrap thing="creDog"></bootstrap>
+      </minion>
+    </thing>
+  </document>

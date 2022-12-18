@@ -39,7 +39,14 @@
       if (ismore <> 0) then
         append ", "
         endif
-      append eachpick.field[name].text & " " & eachpick.field[trtFinal].text
+      append eachpick.field[name].text 
+	  if (eachpick.tagis[component.Ability] + eachpick.tagis[component.Perk] = 0) then
+		if (eachpick.tagis[Helper.NoSkillValue] <> 0) then
+          append " --"
+		else
+	      append " " & eachpick.field[trtFinal].text
+		  endif
+		endif
       ismore = 1
       nexteach
     append @newline
@@ -160,19 +167,48 @@
         var txt as string
         var tagexpr as string
 
+      if (hero.tagis[HeroType.Creature] <> 0) then
         ~start by getting our name
         var name as string
         call sbname
 
         ~output our name
-        append @boldon & "Name: " & @boldoff & name & @newline
+        append @boldon & "Name: " & @boldoff & name & " (" & herofield[acRaceName].text & ")" & @newline
+		
+		append "Level " & herofield[acLevel].text & ", " & tagnames[Keyword.?," "] & ", " 
+		append tagnames[CreatureQuality.?," "] & " Creature" & @newline
+		
+		~output attributes
+        append @boldon & "Attributes: " & @boldoff
+        tagexpr = "component.Attribute & HeroType.Creature"
+        call sbtraits
+		
+        ~output skills
+        append @boldon & "Skills: " & @boldoff
+        tagexpr = "component.Skill & HeroType.Creature"
+        call sbtraits
+		
+        ~output derived traits
+        foreach pick in hero from Derived where "!Hide.Trait & HeroType.Creature" sortas explicit
+          append @boldon & eachpick.field[name].text & ": " & @boldoff & eachpick.field[trtFinal].text & @newline
+          nexteach
+	  else
+	  
+        ~start by getting our name
+        var name as string
+        call sbname
 
+        ~output our name
+        append @boldon & "Name: " & @boldoff & name & " (Level " & herofield[acLevel].text & ")" & @newline
+		
         ~output any race
-        txt = hero.findchild[Species].field[name].text
+        ~txt = hero.findchild[Species].field[name].text
+        txt = herofield[acRaceName].text
         if (empty(txt) <> 0) then
           txt = "-none-"
           endif
-        append @boldon & "Species: " & @boldoff & txt & @newline
+		  
+        append @boldon & "Origin: " & @boldoff & txt & @newline
 
         ~output age
         append @boldon & "Age: " & @boldoff & hero.child[mscPerson].field[perAge].text & @newline
@@ -184,7 +220,7 @@
 
         ~output skills
         append @boldon & "Skills: " & @boldoff
-        tagexpr = "component.Skill"
+        tagexpr = "component.Skill & (fieldval:trtFinal > 0)"
         call sbtraits
 
         ~output special abilities
@@ -192,6 +228,11 @@
         tagexpr = "component.Ability"
         call sbtraits
 
+        ~output special abilities
+        append @boldon & "Perks: " & @boldoff
+        tagexpr = "component.Perk"
+        call sbtraits
+		
         ~output derived traits
         foreach pick in hero from Derived where "!Hide.Trait" sortas explicit
           append @boldon & eachpick.field[name].text & ": " & @boldoff & eachpick.field[trtFinal].text & @newline
@@ -240,6 +281,7 @@
         tagexpr = "val:explicit.? > 45"
         title = "Additional Details"
         call sbnpcinfo
+		endif
         ]]></synthesize>
       </dossier_text>
     </dossier>

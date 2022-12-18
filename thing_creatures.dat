@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="creDog" name="Dog" compset="Creature" uniqueness="unique">
+    <fieldval field="creLevel" value="1"/>
+    <fieldval field="creKeywords" value="Normal Creature"/>
+    <fieldval field="creBody" value="5"/>
+    <fieldval field="creMind" value="4"/>
+    <fieldval field="creMelee" value="2"/>
+    <fieldval field="creOther" value="1"/>
+    <fieldval field="creDefense" value="1"/>
+    <tag group="CreatureQuality" tag="Normal"/>
+    <tag group="Keyword" tag="Mammal"/>
+    </thing>
+  </document>

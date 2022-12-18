@@ -74,6 +74,7 @@ parent.field[wpSpecial].text = splice(spectxt,"May re-roll hit location die",","
     </thing>
   <thing id="modSerratedCbtKni" name="Serrated Blade" description="+1 DC , Gain Persistent" compset="MeleeMod">
     <fieldval field="modCost" value="12"/>
+    <fieldval field="modNamePrefix" value="Serrated"/>
     <tag group="ItemModCat" tag="Upgrade"/>
     <eval phase="Effects" priority="1000">doneif (parent.isgizmo = 0)
 
@@ -82,6 +83,7 @@ perform parent.assign[Effect.Persistent]</eval>
     </thing>
   <thing id="modStealthCbtKni" name="Stealth Blade" description="+1 DC , Gain Persistent, +2 DC on Sneak Attacks" compset="MeleeMod">
     <fieldval field="modCost" value="18"/>
+    <fieldval field="modNamePrefix" value="Stealth"/>
     <tag group="ItemModCat" tag="Upgrade"/>
     <eval phase="Effects" priority="1000"><![CDATA[doneif (parent.isgizmo = 0)
 

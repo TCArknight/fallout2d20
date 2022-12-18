@@ -43,9 +43,10 @@
     major="0"
     minor="2"
     required="8.6"
-    summary="Initial Development"><![CDATA[{b}{text clrglow}Fallout 2d20 Data files for Hero Lab{text clrreset}{/b}
-
-In 2077, the storm of nuclear war reduced most of the planet to cinders. From the ashes of nuclear devastation, a new civilization will struggle to arise, a civilization you will shape. Welcome to the Wasteland. Welcome to the world of Fallout.
+    summary="Initial Development"><![CDATA[
+	{b}{text clrglow}                                         Fallout 2d20 Data files for Hero Lab{text clrreset}{/b}
+	
+	In 2077, the storm of nuclear war reduced most of the planet to cinders. From the ashes of nuclear devastation, a new civilization will struggle to arise, a civilization you will shape. Welcome to the Wasteland. Welcome to the world of Fallout.
 ]]>
     </release>
 
@@ -149,6 +150,10 @@ In 2077, the storm of nuclear war reduced most of the planet to cinders. From th
     result="hero.child[#tracker].field[trkMax].value"/>
 
 
+  <scriptmacro
+    name="islevel"
+    result="herofield[acLevel].value"/>
+
   <!-- Macros for DR Values of body -->
   <scriptmacro
     name="isheadarmor"
@@ -228,6 +233,18 @@ In 2077, the storm of nuclear war reduced most of the planet to cinders. From th
   <scriptmacro
     name="legrightDRRad"
     result="herofield[acLegRightDRRad].value"/>
+	
+  <scriptmacro
+    name="isminion"
+    result="hero.tagis[Hero.Minion]"/>
+  <scriptmacro
+    name="iscreature"
+    result="hero.tagis[HeroType.Creature]"/>
+  <scriptmacro
+    name="mastertrait"
+    param1="trait"
+    result="master.child[#trait].field[trtFinal].value"/>
+
 
   <!-- Decoration character used in summary panel headertitle scripts -->
   <scriptmacro

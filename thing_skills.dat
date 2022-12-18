@@ -296,4 +296,53 @@
     </thing>
 
 
+  <thing
+    id="skCreMelee"
+    name="Melee"
+    compset="Skill"
+    isunique="yes"
+    description="Melee is for all unarmed and melee attacks. All creatures have this.">
+    <fieldval field="trtAbbrev" value="Mel"/>
+	
+    <!-- Tag as a creature skill -->
+    <tag group="HeroType" tag="Creature"/>
+    <tag group="Skill" tag="TagSkill"/>
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrBod"/>
+    </thing>
+
+  <thing
+    id="skCreGuns"
+    name="Guns"
+    compset="Skill"
+    isunique="yes"
+    description="Guns is for all attacks with firearms, energy weapons, explosives, and throwing weapons. If a creature has a Guns rating of –, it cannot make ranged attacks at all.">
+    <fieldval field="trtAbbrev" value="Gun"/>
+	
+    <!-- Tag as a creature skill -->
+    <tag group="HeroType" tag="Creature"/>
+    <tag group="Skill" tag="TagSkill"/>
+    <tag group="Helper" tag="NoSkillValue"/>
+
+    <!-- Specify the attribute to which this skill is linked -->
+    <link linkage="attribute" thing="attrBod"/>
+    </thing>
+
+  <thing
+    id="skCreOther"
+    name="Other"
+    compset="Skill"
+    isunique="yes"
+    description="Other is for any other skill tests.">
+    <fieldval field="trtAbbrev" value="Oth"/>
+
+    <!-- Tag as a creature skill -->
+    <tag group="HeroType" tag="Creature"/>
+
+    <!-- Specify the attribute to which this skill is linked
+    <link linkage="attribute" thing="attrBod"/>  -->
+	
+    </thing>
+	
   </document>
