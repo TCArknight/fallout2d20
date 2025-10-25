@@ -10,7 +10,6 @@
 
 <document signature="Hero Lab Data">
 
-
   <!-- smAbility portal - table of special abilities
   -->
   <portal
@@ -21,7 +20,7 @@
       showtemplate="smAbility"
       scrollable="no">
       <headertitle><![CDATA[
-      @text = #summtitle_decoration[] & " Abilities " & #summtitle_decoration[]
+      @text = #summtitle_decoration[] & " Abilities & Traits " & #summtitle_decoration[]
       ]]></headertitle>
       </table_fixed>
     </portal>
@@ -50,12 +49,26 @@
       component="Skill"
       showtemplate="smTrait"
       scrollable="no">
+	  <list>component.Skill &amp; HeroType.PC</list>
       <headertitle><![CDATA[
       @text = #summtitle_decoration[] & " Skills " & #summtitle_decoration[]
       ]]></headertitle>
       </table_fixed>
     </portal>
-
+	
+  <portal
+    id="smSkillCre"
+    style="tblInvisSm">
+    <table_fixed
+      component="Skill"
+      showtemplate="smTrait"
+      scrollable="no">
+	  <list>component.Skill &amp; HeroType.Creature</list>
+      <headertitle><![CDATA[
+      @text = #summtitle_decoration[] & " Skills " & #summtitle_decoration[]
+      ]]></headertitle>
+      </table_fixed>
+    </portal>
 
   <!-- smAbility template
         This template shows the names of each special ability ability, providing
@@ -123,13 +136,19 @@
     id="smAbility">
     <portalref portal="smAbility"/>
     <portalref portal="smSkill"/>
+    <portalref portal="smSkillCre"/>
     <portalref portal="smPerk"/>
 
     <position><![CDATA[
       ~position and size the tables to span the full layout
       perform portal[smAbility].autoplace
-      perform portal[smPerk].autoplace[10]
-      perform portal[smSkill].autoplace[20]
+      perform portal[smPerk].autoplace[15]
+      perform portal[smSkill].autoplace[15]
+      perform portal[smSkillCre].autoplace[15]
+	  
+	  portal[smSkill].visible = hero.tagis[HeroType.PC]
+	  portal[smSkillCre].visible = hero.tagis[HeroType.Creature]
+	  
       ]]></position>
 
     </layout>

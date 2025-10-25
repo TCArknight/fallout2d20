@@ -165,12 +165,27 @@
     <sortkey isfield="no" id="Armory"/>
     <sortkey isfield="no" id="_Name_"/>
     </sortset>
-
+	
+  <!-- Define a sortset that lists activated abilities, then temporary in-play adjustments. -->
+  <sortset
+    id="ArmorType"
+    name="Armor By Type sort">
+    <sortkey isfield="no" id="ArmorType"/>
+    <sortkey isfield="yes" id="grRarity"/>
+    <sortkey isfield="no" id="_Name_"/>
+    </sortset>
+	
   <!-- Define a sortset that lists activated abilities, then temporary in-play adjustments. -->
   <sortset
     id="WeaponType"
     name="Weapons By Type sort">
     <sortkey isfield="no" id="WeaponType"/>
+    <sortkey isfield="no" id="_Name_"/>
+    </sortset>
+
+  <sortset
+    id="AmmoCatType"
+    name="Ammo Category">
     <sortkey isfield="no" id="_Name_"/>
     </sortset>
 	
@@ -196,6 +211,20 @@
     id="ItemModCat"
     name="Item Modifier Category sort">
     <sortkey isfield="no" id="ItemModCat"/>
+    <sortkey isfield="no" id="_Name_"/>
+    </sortset>
+
+  <sortset
+    id="PowerArmorParts"
+    name="Power Armor by Parts">
+    <sortkey isfield="no" id="PowerArmorPart"/>
+    <sortkey isfield="no" id="_Name_"/>
+    </sortset>
+
+  <sortset
+    id="PowerArmorType"
+    name="Power Armor by Type">
+    <sortkey isfield="no" id="PowerArmorType"/>
     <sortkey isfield="no" id="_Name_"/>
     </sortset>
 	

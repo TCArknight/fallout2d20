@@ -17,6 +17,11 @@
     <fieldval field="prkTakeAtLevel" value="2"/>
     <fieldval field="prkLevelIncrement" value="4"/>
     <eval phase="Render" priority="1000">field[prkSummary].text &amp;= &quot;When you make an attack with a one-handed ranged weapon with a Fire Rate of 2 or lower, you increase the weapon’s damage by +&quot; &amp; field[xCount].value &amp; &quot;.&quot;</eval>
+    <eval phase="Effects" index="2"><![CDATA[foreach pick in hero from WeaponRanged where "!Quality.TwoHanded"
+  if (eachpick.field[wpFireRate].value <= 2) then
+    eachpick.field[wpDamage].value += 1
+    endif
+  nexteach]]></eval>
     </thing>
   <thing id="prkAdamantSkele" name="Adamantium Skeleton" description="When you suffer damage, the amount of damage needed to inflict a critical hit on you increases by your rank in this perk. For example, if you have one rank in this perk, you suffer a critical hit from 6 or more damage, rather than 5 or more. Each time you take this perk, the level requirement increases by 3." compset="Perk">
     <fieldval field="prkIsRanked" value="1"/>
@@ -81,7 +86,7 @@ elseif (str >= 11) then
     <exprreq message="Luck 9+ required."><![CDATA[#trait[attrLuc] >= 9]]></exprreq>
     </thing>
   <thing id="prkBigLeagues" name="Big Leagues" description="When you make a melee attack with a two-handed melee weapon, the weapon gains the Vicious damage effect." compset="Perk" uniqueness="useronce">
-    <eval phase="Effects" priority="2000"><![CDATA[foreach pick in hero from WeapMelee where "Quality.TwoHanded" 
+    <eval phase="Effects" priority="2000"><![CDATA[foreach pick in hero from WeaponMelee where "Quality.TwoHanded" 
   if (eachpick.tagis[Effect.Vicious] = 0) then
     perform eachpick.assign[Effect.Vicious]
     endif
@@ -217,6 +222,21 @@ if (field[xCount].value = 2) then
 if (field[xCount].value = 3) then
   field[prkSummary].text = "Whenever you roll to determine how much money you find, you find +10DC additional caps."
   endif]]></eval>
+    <exprreq message="Endurance 6+ required."><![CDATA[#trait[attrEnd] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkArcher" name="Archer" description="When you are wielding a bow or crossbow, increase the weapon’s damage by +1 CD . At rank 2, this increases to +2 CD . At rank 3, this increases to +3 CD .\n\nEach time you take this perk, the level requirement increases by 7." compset="Perk">
+    <fieldval field="prkIsRanked" value="1"/>
+    <fieldval field="prkMaxRank" value="3"/>
+    <fieldval field="prkLevelIncrement" value="7"/>
+    <usesource source="srcFalloutWander"/>
+    <eval phase="Render" priority="1000">field[prkSummary].text &amp;= &quot;When you are wielding a bow or crossbow, increase the weapon’s damage by +&quot; &amp; field[xCount].value &amp; &quot;CD.&quot;</eval>
+    <eval phase="PreTraits" priority="1000" index="2">foreach pick in hero from WeaponBow
+  eachpick.field[wpDamage].value += field[prkCurrentRank].value
+  nexteach</eval>
+    <exprreq message="Perception 6+ required."><![CDATA[#trait[attrPer] >= 6]]></exprreq>
+    </thing>
+  <thing id="prkHunter" name="Hunter" description="When you make an attack against an NPC with one of the Mammal, Lizard, or Insect keywords and the Mutated keyword, your attack gains the Vicious damage effect, if it did not already have that effect." compset="Perk" uniqueness="useronce">
+    <usesource source="srcFalloutCore"/>
     <exprreq message="Endurance 6+ required."><![CDATA[#trait[attrEnd] >= 6]]></exprreq>
     </thing>
   </document>

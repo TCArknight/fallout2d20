@@ -85,7 +85,15 @@
       name="In-Play Bonus"
       type="derived">
       </field>
-
+	  
+    <!-- Override final value with this -->
+    <field
+      id="trtOverrideVal"
+      name="Override Value"
+      type="derived"
+      defvalue="0">
+      </field>
+	  
     <!-- Final value for the trait -->
     <field
       id="trtFinal"
@@ -95,8 +103,19 @@
       <calculate phase="Traits" priority="3000" name="Calc trtFinal"><![CDATA[
         ~Note! If you change this calculation, you may need to change the similar
         ~       calculation in the "Derived" component.
-        @value = field[trtUser].value + field[trtBase].value + field[trtBonus].value + field[trtInPlay].value
+		if (field[trtOverrideVal].value <> 0) then
+		  @value = field[trtOverrideVal].value
+		else
+          @value = field[trtUser].value + field[trtBase].value + field[trtBonus].value + field[trtInPlay].value
+		  endif
         ]]></calculate>
+      </field>
+	  	  
+    <field
+      id="trtFinalDisplay"
+      name="Display Final Value"
+      type="derived"
+	  maxlength="4">
       </field>
 
     <!-- Set the delta for the user value to be the current bonuses
@@ -119,6 +138,25 @@
         endif
       ]]></eval>
 
+	<eval index="3" phase="Final" priority="6000" name="Calc trtDisplay">
+		<after name="Calc trtFinal"/><![CDATA[
+	  var display as string
+	  ~if this trait is a resistance tagged with an "Immune.#" tag, then display Immune status
+	  ~ else use the final value
+	  if (tagis[User.Resistance] <> 0) then
+	    if (tagis[Immune.?] <> 0) then
+          display = "Imm."
+		else
+		  display = field[trtFinal].value
+		  endif
+	  else
+	    display = field[trtFinal].value
+        endif
+      
+	  
+      ~put the final result into the proper field
+      field[trtFinalDisplay].text = display
+      ]]></eval>
     </component>
 
 
@@ -143,7 +181,7 @@
     <eval index="1" phase="Initialize" priority="3000"><![CDATA[
       field[trtMinimum].value = 4
 	  
-	  if (hero.tagis[HeroType.Creature] <> 0) then
+	  if (#iscreature[] <> 0) then
         field[trtMaximum].value = 12
 	  else
         field[trtMaximum].value = 10
@@ -204,8 +242,8 @@
     <tag group="DashTacCon" tag="Rolls"/>
 
     <!-- Skills have a maximum trait value of 6 -->
-    <eval index="1" phase="Setup" priority="1100"><![CDATA[
-	  field[trtMaximum].value = 6
+    <eval index="1" phase="Setup" priority="5100"><![CDATA[
+	  field[trtMaximum].value = herofield[acSkillMax].value
 	  
 	  doneif (#iscreature[] <> 0)
 	  
@@ -236,8 +274,8 @@
 
     </component>
 
-  <!-- Ability component
-        Each special ability derives from this component
+  <!-- Perk component
+        Each Perk derives from this component
   -->
   <component
     id="Perk"
@@ -307,6 +345,13 @@
       type="derived">
       </field>	
 	  
+    <field
+      id="prkCurrentRank"
+      name="Current Rank"
+      type="derived"
+	  defvalue="0">
+      </field>     
+	  
     <identity group="Perk"/>
     <identity group="HasPerk"/>
 	
@@ -349,6 +394,10 @@
 	  ~ if we're not the FirstCopy, we're done
 	  doneif (tagis[Helper.FirstCopy] = 0)
 	  
+      ]]></eval>	  
+	  
+    <eval index="6" phase="PreTraits" priority="500"><![CDATA[	  
+	  field[prkCurrentRank].value = field[xCount].value
       ]]></eval>
 	  
     </component>
@@ -482,121 +531,174 @@
     </component>
 
 
-  <!-- Species component
+  <!-- Origin component
         Each race derives from this component
   -->
   <component
-    id="Species"
-    name="Species"
+    id="Origin"
+    name="Origin"
     autocompset="no">
 
      <!--  -->
     <field
-      id="spMaxTagSkills"
+      id="orMaxTagSkills"
       name="Max Tag Skills"
       type="derived"
 	  defvalue="3">
+      </field>   
+	  
+    <field
+      id="orSklChoiceExpr1"
+      name="Tag Skill Choice Expr 1"
+      maxlength="500"
+      type="derived"
+	  defvalue="component.Skill &amp; !Skill.TagSkill">
+      </field>   
+	  
+    <field
+      id="orSklChoiceExpr2"
+      name="Tag Skill Choice Expr 2"
+      maxlength="500"
+      type="derived"
+	  defvalue="component.Skill &amp; !Skill.TagSkill">
+      </field>   
+	  
+    <field
+      id="orSklChoiceExpr3"
+      name="Tag Skill Choice Expr 3"
+      maxlength="500"
+      type="derived"
+	  defvalue="component.Skill &amp; !Skill.TagSkill">
       </field>  
 	  
     <field
-      id="spNumTraits"
-      name="Number of Species Traits"
+      id="orSklChoiceExpr4"
+      name="Tag Skill Choice Expr 4"
+      maxlength="500"
+      type="derived"
+	  defvalue="component.Skill &amp; !Skill.TagSkill">
+      </field>  
+	  
+    <field
+      id="orNumTraits"
+      name="Number of Origin Traits"
       type="derived"
 	  defvalue="1">
+      </field>	
+	  	  
+    <!-- Can take a perk instead of a trait? -->
+    <field
+      id="orPerkTrait"
+      name="Perk For Trait?"
+      type="derived"
+      minvalue="0"
+      maxvalue="1"
+	  defvalue="0">
+      </field>
+	  
+    <field
+      id="orPerkSelect"
+      name="Is Selecting Perk For Trait"
+      type="user"
+      minvalue="0"
+      maxvalue="1"
+	  defvalue="0">
       </field>	
 	  
     <!-- Can select from list of traits? -->
     <field
-      id="spTraitSelect"
+      id="orTraitSelect"
       name="Select a Trait?"
-      type="user"
+      type="derived"
       minvalue="0"
       maxvalue="1"
 	  defvalue="0">
-      </field>
+      </field> 
 	  
-    <!-- Can take a perk instead of a trait? -->
+    <!-- How many limbs to select for robotic origin? -->
     <field
-      id="spPerkTrait"
-      name="Perk For Trait?"
-      type="user"
+      id="orLimbSelCount"
+      name="Number of Limds to select"
+      type="derived"
       minvalue="0"
-      maxvalue="1"
+      maxvalue="6"
 	  defvalue="0">
-      </field>
-	  
-    <field
-      id="spPerkSelect"
-      name="Selecting Perk For Trait"
-      type="user"
-      minvalue="0"
-      maxvalue="1"
-	  defvalue="0">
-      </field>	 
+      </field> 
 	  
     <!-- Tracks the first selection made when a menu choice is required -->
     <field
-      id="spTagSkill1"
+      id="orTagSkill1"
       name="Chosen Tag Skill #1"
       type="user"
       style="menu">
       </field>
     <field
-      id="spTagSkill2"
+      id="orTagSkill2"
       name="Chosen Tag Skill #2"
       type="user"
       style="menu">
       </field>
     <field
-      id="spTagSkill3"
+      id="orTagSkill3"
       name="Chosen Tag Skill #3"
       type="user"
       style="menu">
       </field>
     <field
-      id="spTagSkill4"
+      id="orTagSkill4"
       name="Chosen Tag Skill #4"
       type="user"
       style="menu">
       </field>
 	  
     <!-- Each race needs its own identity tag to configure the hero appropriately -->
-    <identity group="Species"/>
+    <identity group="Origin"/>
+    <identity group="OriginCat"/>	<!-- Category used to associate traits with origin -->
 
     <!-- Track the race on the actor by assigning the appropriate tag -->
-    <eval index="1" phase="Setup" priority="5000"><![CDATA[
-      perform forward[Species.?]
+    <eval index="1" phase="Setup" priority="500"><![CDATA[
+      perform forward[Hero.?]
+      perform forward[HitLocation.?]
+      perform forward[Origin.?]
+      perform forward[RobotBody.?]
 	  
-	  if (field[spTagSkill1].ischosen <> 0) then
-	    perform field[spTagSkill1].chosen.assign[Skill.TagSkill]
+	  if (field[orTagSkill1].ischosen <> 0) then
+	    perform field[orTagSkill1].chosen.assign[Skill.TagSkill]
 	    endif
-	  if (field[spTagSkill2].ischosen <> 0) then
-	    perform field[spTagSkill2].chosen.assign[Skill.TagSkill]
+	  if (field[orTagSkill2].ischosen <> 0) then
+	    perform field[orTagSkill2].chosen.assign[Skill.TagSkill]
 	    endif
-	  if (field[spTagSkill3].ischosen <> 0) then
-	    perform field[spTagSkill3].chosen.assign[Skill.TagSkill]
+	  if (field[orTagSkill3].ischosen <> 0) then
+	    perform field[orTagSkill3].chosen.assign[Skill.TagSkill]
 	    endif
-	  if (field[spTagSkill4].ischosen <> 0) then
-	    perform field[spTagSkill4].chosen.assign[Skill.TagSkill]
+	  if (field[orTagSkill4].ischosen <> 0) then
+	    perform field[orTagSkill4].chosen.assign[Skill.TagSkill]
 	    endif
-      
-      #resmax[resPerks] += field[spPerkSelect].value
 	  
+      ]]></eval>
+	  
+    <eval index="2" phase="Initialize" priority="1000"><![CDATA[
+      field[orPerkTrait].value = tagis[User.PerkForTrait]
+	  field[orTraitSelect].value = tagis[User.SelectTrait]
+      ]]></eval>
+	  
+    <eval index="3" phase="PreTraits" priority="1000"><![CDATA[
+      #resmax[resPerks] += field[orPerkSelect].value
       ]]></eval>
 
     </component>
 	
   <component
-    id="SpecTrait"
-    name="Species Trait"
+    id="OriginTrait"
+    name="Origin Trait"
     autocompset="no">
 
     <!-- Each race needs its own identity tag to configure the hero appropriately -->
-    <identity group="SpecTrait"/>
+    <identity group="OriginTrait"/>
 
     <!-- Track the race on the actor by assigning the appropriate tag -->
     <eval index="1" phase="Setup" priority="5000"><![CDATA[
-      perform forward[SpecTrait.?]
+      perform forward[OriginTrait.?]
       ]]></eval>
 
     </component>
@@ -653,6 +755,7 @@
           endif
         ]]></finalize>
       </field>    
+	  
     <eval index="1" phase="Effects" priority="155" name="Determine First Copy"><![CDATA[
       doneif (tagis[Helper.FirstCopy] <> 0)
 
@@ -875,6 +978,7 @@
     <compref component="Trait"/>
     <compref component="SpecialTab"/>
     <compref component="CanAdvance"/>
+    <compref component="UserSelect"/>
     </compset>
 
   <!-- Trait - all derived traits are based on this compset -->
@@ -884,11 +988,11 @@
     <compref component="Trait"/>
     </compset>
 
-  <!-- Species - all races derive from this compset -->
+  <!-- Origin - all races derive from this compset -->
   <compset
-    id="Species"
+    id="Origin"
     forceunique="yes">
-    <compref component="Species"/>
+    <compref component="Origin"/>
     <compref component="UserSelect"/>
     </compset>
 
@@ -902,8 +1006,8 @@
     </compset>
 	
   <compset
-    id="SpecTrait">
-    <compref component="SpecTrait"/>
+    id="OriginTrait">
+    <compref component="OriginTrait"/>
     <compref component="Ability"/>
     <compref component="Trait"/>
     <compref component="SpecialTab"/>
@@ -917,7 +1021,7 @@
     id="Creature"
     forceunique="yes">
     <compref component="Creature"/>
-    <compref component="Species"/>
+    <compref component="Origin"/>
     </compset>
 	
   <!-- Companion - all creatures derive from this compset -->
@@ -932,7 +1036,7 @@
     id="Companion"
     forceunique="yes">
     <compref component="Creature"/>
-    <compref component="Species"/>
+    <compref component="Origin"/>
     <compref component="Minion"/>
     </compset>	
 

@@ -265,6 +265,146 @@
     </template>
 
 
+  <!-- CustomItem template
+        Similar to SimpleItem, except that items with the "Helper.CustomItem"
+        tag display an edit control, allowing the user to edit the name of the
+        item.
+
+        This template uses the same customization logic via tags as "SimpleItem".
+  -->
+  <template
+    id="CustomModItem"
+    name="Custom Item with Mods"
+    compset="Custom"
+    marginhorz="3"
+    marginvert="2">
+
+    <portal
+      id="name"
+      style="lblNormal"
+      showinvalid="yes">
+      <label
+        field="name">
+        </label>
+      </portal>
+
+    <portal
+      id="username"
+      style="editNormal">
+      <edit
+        field="UserName"
+        maxlength="100">
+        </edit>
+      </portal>
+
+    <portal
+      id="edit"
+      style="actEdit"
+      tiptext="Edit this Item">
+      <action
+        action="edit"
+        buttontext="">
+        </action>
+      </portal>
+
+    <portal
+      id="info"
+      style="actInfo">
+      <action
+        action="info">
+        </action>
+      <mouseinfo/>
+      </portal>
+
+    <portal
+      id="delete"
+      style="actDelete"
+      tiptext="Click to delete this item">
+      <action
+        action="delete">
+        </action>
+      </portal>
+
+    <position><![CDATA[
+      ~set up our height based on our tallest portal
+      height = portal[info].height
+
+      ~if we've been assigned a non-default width for use when showing things, adopt
+      ~that width now
+      if (ispick = 0) then
+        var size as number
+        size = tagvalue[SimpleItem.width?]
+        if (size > 0) then
+          width = size
+          endif
+        endif
+
+      ~if this is a "sizing" calculation, we're done
+      doneif (issizing <> 0)
+
+      ~position our tallest portal at the top
+      portal[info].top = 0
+
+      ~center the other portals vertically
+      perform portal[name].centervert
+      perform portal[username].centervert
+      perform portal[delete].centervert
+      perform portal[edit].centervert
+
+      ~position the delete portal on the far right
+      perform portal[delete].alignedge[right,0]
+
+      ~position the info portal to the left of the delete button
+      perform portal[info].alignrel[rtol,delete,-8]
+	  
+      perform portal[edit].alignrel[rtol,info,-8]
+	  if (tagis[Equipment.Natural] <> 0) then
+	    portal[edit].visible = 0
+		endif
+
+      ~if we're showing a thing, the info and delete buttons are irrelevant, since
+      ~we should be showing within a chooser, in which case there's nothing to
+      ~delete and we have the description already visible
+      var edge as number
+      if (ispick = 0) then
+        portal[info].visible = 0
+        portal[delete].visible = 0
+        edge = width
+      else
+        edge = portal[info].left - 5
+        endif
+
+      ~position the name on the left and let it use all available space
+      portal[name].left = 0
+      portal[name].width = minimum(portal[name].width,edge)
+
+      ~if this is a "custom" item pick, show an edit portal instead of the name
+      if (ispick <> 0) then
+        if (tagis[Helper.CustomItem] <> 0) then
+          portal[name].visible = 0
+          portal[username].left = portal[name].left
+          var limit as number
+          limit = portal[info].left - portal[username].left - 5
+          portal[username].width = minimum(200,limit)
+          endif
+      else
+        portal[username].visible = 0
+        endif
+
+      ~center the name if requested or this is a show-only thing
+      if (tagis[SimpleItem.CenterName] + tagis[thing.showonly] <> 0) then
+        perform portal[name].centerhorz
+        perform portal[username].centerhorz
+        endif
+
+      ~if this is an auto-added pick, change its font to indicate that fact
+      if (ispick + !candelete >= 2) then
+        perform portal[name].setstyle[lblAuto]
+        endif
+      ]]></position>
+
+    </template>
+
   <!-- LargeItem template
         Similar to SimpleItem, except that items are displayed in a very large font
         and no delete button is provided. This template is ideal for use with choosers

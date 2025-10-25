@@ -76,11 +76,11 @@
           @text &= " (" & #resleft[resCP] & " left)"
           endif
         @text &= "{br}{align left}{/b}"
-        temp = hero.findchild[Species].field[name].text
+        temp = hero.findchild[Origin].field[name].text
         if (empty(temp) <> 0) then
           temp = "Unknown"
           endif
-        @text &= "Species: " & temp
+        @text &= "Origin: " & temp
         @text &= "; " & hero.child[mscPerson].field[perGender].text
         @text &= "; Age: " & hero.child[mscPerson].field[perAge].text
         @text &= "; Height: " & hero.child[mscPerson].field[perHeight].text
@@ -905,7 +905,7 @@
       style="outPlain">
       <output_label>
         <labeltext><![CDATA[
-          if (tagis[component.WeapRange] <> 0) then
+          if (tagis[component.WeaponRanged] <> 0) then
             @text = field[wpRange].text
             endif
           ]]></labeltext>
@@ -993,7 +993,7 @@
       ~if this is a ranged weapon, limit the name to the space up to the range details;
       ~otherwise, let the name extend over to the attack value
       var limit as number
-      if (tagis[component.WeapRange] <> 0) then
+      if (tagis[component.WeaponRanged] <> 0) then
         limit = portal[range].left
       else
         limit = portal[attack].left

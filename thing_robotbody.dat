@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+
+  <thing id="robBody" name="Robot Body" description="Main Body of the robot" compset="Robot">
+    <!-- Tag indicates what part this belongs to -->
+    <tag group="RobotBody" tag="Body"/>
+    <tag group="ItemModCatAllowed" tag="RobotInternal"/>
+    <tag group="ItemModCatAllowed" tag="RobotTorso"/>
+    <tag group="ItemModCatAllowed" tag="RobotModule"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="robHead" name="Robot Head" description="Head of the robot" compset="Robot">
+    <!-- Tag indicates what part this belongs to -->
+    <tag group="RobotBody" tag="Head"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="robArm" name="Robot Arm" description="Arm of the robot" compset="Robot">
+    <!-- Tag indicates what part this belongs to -->
+    <tag group="RobotBody" tag="Arm"/>
+    <tag group="ItemModCatAllowed" tag="RobotArm"/>
+    <child entity="ItemMods"></child>
+    </thing>
+  <thing id="robLeg" name="Robot Leg" description="Leg of the robot" compset="Robot">
+    <!-- Tag indicates what part this belongs to -->
+    <tag group="RobotBody" tag="Leg"/>
+    <child entity="ItemMods"></child>
+    </thing>
+
+  </document>

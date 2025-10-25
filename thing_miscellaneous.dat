@@ -146,6 +146,57 @@
       ]]></eval>
     </thing>
 
+  <!-- Robot Arms to select -->
+  <thing
+    id="resRobotArms"
+    name="Robot Arms"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Use the starting character points as our initial maximum -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+
+      field[resMax].value = hero.tagcount[RobotBody.Arm]
+
+      ]]></eval>
+    </thing>
+
+  <!-- Robot Modules to select -->
+  <thing
+    id="resRobotBody"
+    name="Robot Body"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Use the starting character points as our initial maximum -->
+    <eval index="1" phase="Setup" priority="1000"><![CDATA[
+
+      field[resMax].value = hero.tagcount[RobotBody.Torso]
+
+      ]]></eval>
+    </thing>
+
+  <!-- Luck Points -->
+  <thing
+    id="resLuckPoints"
+    name="Luck Points"
+    compset="Resource">
+
+    <!-- Automatically add the resource to every actor -->
+    <tag group="Helper" tag="Bootstrap"/>
+
+    <!-- Use the starting character points as our initial maximum -->
+    <eval index="1" phase="Traits" priority="3001" name="Set Luck Point Max">
+      <after name="Calc trtFinal"/><![CDATA[
+        field[resMax].value = #trait[attrLuc]
+
+      ]]></eval>
+    </thing>	
+	
   <!-- Advance resource to track the number of advances accrued/spent -->
   <thing
     id="resAdvance"
@@ -166,10 +217,10 @@
     </thing>
 
 
-  <!-- Power points tracker so the user can manage the expenditure of power points -->
+  <!-- Luck points tracker so the user can manage the expenditure of Luck points -->
   <thing
-    id="trkPower"
-    name="Power Points"
+    id="trkLuckPoints"
+    name="Luck Points"
     compset="Tracker">
 
     <!-- Automatically add the tracker to every actor -->
@@ -178,10 +229,10 @@
     <!-- Resetting the tracker sets the value to the maximum -->
     <tag group="Helper" tag="ResetMax"/>
 
-    <!-- Use the starting power points as our initial maximum -->
+    <!-- Use the starting Luck points as our initial maximum -->
     <eval index="1" phase="Final" priority="1000"><![CDATA[
       field[trkMin].value = 0
-      field[trkMax].value = #trait[trPowerPts]
+      field[trkMax].value = #resmax[resLuckPoints]
       ]]></eval>
     </thing>
 
@@ -287,15 +338,16 @@
     id="ItemModHelper"
     name="Item Mod helper fields"
     compset="ItemModHelper">	
-    <fieldval field="imhExpr" value="component.ItemMod"/>  
+    <fieldval field="imhExpr" value="component.GearMod"/>  
 	<tag group="ItemMod" tag="ItemModHelper"/>
 	      
     <eval index="1" phase="Effects" priority="2100"><![CDATA[
 	  var expr as string
 	  var skill as string
 	  
-	  expr =  parent.tagids[ItemModCatAllowed.?,"|"]
+	  expr = parent.tagids[ItemModCatAllowed.?,"|"]
 	  expr = replace(expr,"ItemModCatAllowed.","ItemModCat.",0)
+	  
 	  ~ notify "Mod Cats Allowed: " & expr
 	  
 	  ~if (parent.tagis[component.WeaponBase] <> 0) then

@@ -35,6 +35,7 @@
     var tagexpr as string
     var ismore as number
     ismore = 0
+	
     foreach pick in hero where tagexpr sortas explicit
       if (ismore <> 0) then
         append ", "
@@ -69,7 +70,7 @@
       if (eachpick.field[grIsEquip].value <> 0) then
         append " (Equipped)"
         endif
-      if (eachpick.tagis[component.WeapRange] <> 0) then
+      if (eachpick.tagis[component.WeaponRanged] <> 0) then
         append " (Rng: " & eachpick.field[wpRangeAbbrev].text & ")"
         endif
       append @newline
@@ -173,7 +174,7 @@
         call sbname
 
         ~output our name
-        append @boldon & "Name: " & @boldoff & name & " (" & herofield[acRaceName].text & ")" & @newline
+        append @boldon & "Name: " & @boldoff & name & " (" & herofield[acOriginName].text & ")" & @newline
 		
 		append "Level " & herofield[acLevel].text & ", " & tagnames[Keyword.?," "] & ", " 
 		append tagnames[CreatureQuality.?," "] & " Creature" & @newline
@@ -202,8 +203,8 @@
         append @boldon & "Name: " & @boldoff & name & " (Level " & herofield[acLevel].text & ")" & @newline
 		
         ~output any race
-        ~txt = hero.findchild[Species].field[name].text
-        txt = herofield[acRaceName].text
+        ~txt = hero.findchild[Origin].field[name].text
+        txt = herofield[acOriginName].text
         if (empty(txt) <> 0) then
           txt = "-none-"
           endif
@@ -220,7 +221,7 @@
 
         ~output skills
         append @boldon & "Skills: " & @boldoff
-        tagexpr = "component.Skill & (fieldval:trtFinal > 0)"
+        tagexpr = "component.Skill & HeroType.PC & (fieldval:trtFinal > 0)"
         call sbtraits
 
         ~output special abilities
@@ -235,17 +236,56 @@
 		
         ~output derived traits
         foreach pick in hero from Derived where "!Hide.Trait" sortas explicit
-          append @boldon & eachpick.field[name].text & ": " & @boldoff & eachpick.field[trtFinal].text & @newline
+          append @boldon & eachpick.field[name].text & ": " & @boldoff & eachpick.field[trtFinalDisplay].text & @newline
           nexteach
 
-        ~output DR Totals
+        ~output DR Totals depending on body parts
         append @boldon & "DR (Phys./Ener./Rad.): " & @boldoff & @newline
-	    append @indent & "Head: " & #headDRPhys[] & "/" & #headDREner[] & "/" & #headDRRad[] & @newline
-	    append @indent & "Torso: " & #torsoDRPhys[] & "/" & #torsoDREner[] & "/" & #torsoDRRad[] & @newline
-	    append @indent & "Arm (Left): " & #armleftDRPhys[] & "/" & #armleftDREner[] & "/" & #armleftDRRad[] & @newline
-	    append @indent & "Arm (Right): " & #armrightDRPhys[] & "/" & #armrightDREner[] & "/" & #armrightDRRad[] & @newline
-	    append @indent & "Leg (Left): " & #legleftDRPhys[] & "/" & #legleftDREner[] & "/" & #legleftDRRad[] & @newline
-	    append @indent & "Leg (Right): " & #legrightDRPhys[] & "/" & #legrightDREner[] & "/" & #legrightDRRad[] & @newline
+		if (#hashead[] <> 0) then
+	      append @indent & "Head: " & #headDRPhys[] & "/" & #headDREner[] & "/" & #headDRRad[] & @newline
+		  endif
+		  
+		if (#hasoptics[] <> 0) then
+	      append @indent & "Optics: " & #opticDRPhys[] & "/" & #opticDREner[] & "/" & #opticDRRad[] & @newline
+		  endif
+		  
+		if (#hastorso[] <> 0) then
+	      append @indent & "Torso: " & #torsoDRPhys[] & "/" & #torsoDREner[] & "/" & #torsoDRRad[] & @newline
+		  endif
+		  
+		if (#hasmainbody[] <> 0) then
+	      append @indent & "Main Body: " & #mainbodyDRPhys[] & "/" & #mainbodyDREner[] & "/" & #mainbodyDRRad[] & @newline
+		  endif
+		  
+		if (#hasleftarm[] <> 0) then
+	      append @indent & "Arm (Left): " & #armleftDRPhys[] & "/" & #armleftDREner[] & "/" & #armleftDRRad[] & @newline
+		  endif
+		if (#hasrightarm[] <> 0) then
+	      append @indent & "Arm (Right): " & #armrightDRPhys[] & "/" & #armrightDREner[] & "/" & #armrightDRRad[] & @newline
+		  endif
+		  
+		if (#hasarm1[] <> 0) then
+	      append @indent & "Arm 1: " & #arm1DRPhys[] & "/" & #arm1DREner[] & "/" & #arm1DRRad[] & @newline
+		  endif
+		  
+		if (#hasarm2[] <> 0) then
+	      append @indent & "Arm 2: " & #arm2DRPhys[] & "/" & #arm2DREner[] & "/" & #arm2DRRad[] & @newline
+		  endif
+		  
+		if (#hasarm3[] <> 0) then
+	      append @indent & "Arm 3: " & #arm3DRPhys[] & "/" & #arm3DREner[] & "/" & #arm3DRRad[] & @newline
+		  endif
+		  
+		if (#hasleftleg[] <> 0) then
+	      append @indent & "Leg (Left): " & #legleftDRPhys[] & "/" & #legleftDREner[] & "/" & #legleftDRRad[] & @newline
+		  endif
+		if (#hasrightleg[] <> 0) then
+	      append @indent & "Leg (Right): " & #legrightDRPhys[] & "/" & #legrightDREner[] & "/" & #legrightDRRad[] & @newline
+		  endif
+		if (#hasthruster[] <> 0) then
+	      append @indent & "Thruster: " & #thrusterDRPhys[] & "/" & #thrusterDREner[] & "/" & #thrusterDRRad[] & @newline
+		  endif
+		
 		
         ~output weapons/attacks
         call sbweapons

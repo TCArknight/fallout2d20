@@ -31,7 +31,7 @@
   <!-- Carry Weight -->
   <thing
     id="trCarry"
-    name="Carry Weight"
+    name="Carry Weight (Max)"
     compset="Trait"
     isunique="yes"
     description="Your carry weight measures how much gear you can carry. You can carry a base of 150 pounds of equipment, plus your Strength attribute multiplied by 10. You can carry more by using perks, increasing your Strength attribute, and using equipment with extra carrying space.">
@@ -46,13 +46,54 @@
       <before name="Derived trtFinal"/>
       <after name="Calc trtFinal"/><![CDATA[
 	  var strTot as number
+	  
 	  if (#iscreature[] = 0) then
-	    strTot = 10 * #trait[attrStr]
+	    if (#nocarrystr[] <> 0) then
+		  strTot = 0
+		elseif (#halfcarrystr[] <> 0) then
+		  strTot = 5 * #trait[attrStr]
+		else
+	      strTot = 10 * #trait[attrStr]
+		  endif
+		  
         field[trtBonus].value += 150 + strTot
 	  else
-	    strTot = 10 * #trait[attrBod]
+	    if (#nocarrystr[] <> 0) then
+		    strTot = 0
+		  elseif (#halfcarrystr[] <> 0) then
+		    strTot = 5 * #trait[attrBod]
+		  else
+	        strTot = 10 * #trait[attrBod]
+		    endif
+			
         field[trtBonus].value += strTot
 		endif
+		
+      ]]></eval>
+    </thing>
+	
+  <!-- Carried Weight -->
+  <thing
+    id="trCurrentCarry"
+    name="Weight Carried"
+    compset="Trait"
+    isunique="yes"
+    description="The total weight of all gear carried.">
+    <fieldval field="trtAbbrev" value="Carry"/>
+    <tag group="explicit" tag="2"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
+    <tag group="HeroType" tag="Creature"/>
+
+    <!-- Calculate the Health trait as appropriate -->
+    <eval value="1" phase="Traits" priority="4000">
+      <before name="Derived trtFinal"/>
+      <after name="Calc trtFinal"/><![CDATA[
+	  ~ if this is greater than carry, then assign hero encumbered tag
+      if (field[trtFinal].value > #trait[trCarry]) then
+	    perform hero.assign[Hero.Encumbered]
+		endif
+		
       ]]></eval>
     </thing>
 
@@ -64,7 +105,7 @@
     isunique="yes"
     description="Your initiative determines how quickly you act in combat. It is equal to your PER + AGI (minus any penalties for being over-encumbered). This is a static number which determines your place in the turn order during a combat encounter—it isn’t a target number for a skill test. It can be modified by perks and the effects of encumbrance.">
     <fieldval field="trtAbbrev" value="Init"/>
-    <tag group="explicit" tag="2"/>
+    <tag group="explicit" tag="3"/>
     <tag group="User" tag="Combat"/>
     <tag group="DashTacCon" tag="Combat"/>
     <tag group="DashTacCon" tag="Traits"/>
@@ -96,7 +137,7 @@
     isunique="yes"
     description="Your Defense statistic is the basic difficulty of any attacks made against you. It is based on your Agility attribute.">
     <fieldval field="trtAbbrev" value="Def"/>
-    <tag group="explicit" tag="3"/>
+    <tag group="explicit" tag="4"/>
     <tag group="User" tag="Combat"/>
     <tag group="DashTacCon" tag="Combat"/>
     <tag group="HeroType" tag="PC"/>
@@ -147,9 +188,9 @@
     name="Dmg. Resist. (Phys.)"
     compset="Trait"
     isunique="yes"
-    description="Description goes here">
+    description="Your resistance to different types of damage is determined by your equipment and your perks. Damage Resistance (DR) is subtracted from damage inflicted of the same type before it reduces your health—physical Damage Resistance reduces physical damage, radiation Damage Resistance reduces radiation damage, etc. \n\n{b}Physical Damage Resistance{/b} is how much physical damage you can shrug off from an attack. Clothing and armor are the main sources of physical DR, depending on how they’re made, but mutations can also provide some natural resistance to incoming attacks. Physical DR normally varies by hit location, depending on clothing or armor.">
     <fieldval field="trtAbbrev" value="DRp"/>
-    <tag group="explicit" tag="4"/>
+    <tag group="explicit" tag="5"/>
     <tag group="User" tag="Resistance"/>
     <tag group="DashTacCon" tag="Traits"/>
     <tag group="HeroType" tag="PC"/>
@@ -167,27 +208,7 @@
     name="Dmg. Resist. (Ener.)"
     compset="Trait"
     isunique="yes"
-    description="Description goes here">
-    <fieldval field="trtAbbrev" value="DRp"/>
-    <tag group="explicit" tag="5"/>
-    <tag group="User" tag="Resistance"/>
-    <tag group="DashTacCon" tag="Traits"/>
-    <tag group="HeroType" tag="PC"/>
-    <tag group="HeroType" tag="NPC"/>
-
-    <!-- Calculate the Resistance trait as appropriate -->
-    <eval value="1" phase="Traits" priority="4000">
-      <before name="Derived trtFinal"/>
-      <after name="Calc trtFinal"/><![CDATA[
-      field[trtBonus].value = 0
-      ]]></eval>
-    </thing>
-  <thing
-    id="trResistPoison"
-    name="Dmg. Resist. (Poi.)"
-    compset="Trait"
-    isunique="yes"
-    description="Description goes here">
+    description="Your resistance to different types of damage is determined by your equipment and your perks. Damage Resistance (DR) is subtracted from damage inflicted of the same type before it reduces your health—physical Damage Resistance reduces physical damage, radiation Damage Resistance reduces radiation damage, etc. \n\n{b}Energy Damage Resistance{/b} is how resistant you are to energy damage, and it normally comes from clothing or armor that has been made in a particular way. Energy Damage Resistance normally varies by hit location, depending on the clothing or armor worn.">
     <fieldval field="trtAbbrev" value="DRp"/>
     <tag group="explicit" tag="6"/>
     <tag group="User" tag="Resistance"/>
@@ -202,12 +223,13 @@
       field[trtBonus].value = 0
       ]]></eval>
     </thing>
+	
   <thing
-    id="trResistRads"
-    name="Dmg. Resist. (Rad.)"
+    id="trResistPoison"
+    name="Dmg. Resist. (Poi.)"
     compset="Trait"
     isunique="yes"
-    description="Description goes here">
+    description="Your resistance to different types of damage is determined by your equipment and your perks. Damage Resistance (DR) is subtracted from damage inflicted of the same type before it reduces your health—physical Damage Resistance reduces physical damage, radiation Damage Resistance reduces radiation damage, etc. \n\n{b}Poison Damage Resistance{/b} is how much poison damage you ignore from toxins. perks and mutations provide poison DR, as can certain chems and consumables. You have a single poison DR value for your entire body—it doesn’t vary by location.">
     <fieldval field="trtAbbrev" value="DRp"/>
     <tag group="explicit" tag="7"/>
     <tag group="User" tag="Resistance"/>
@@ -223,15 +245,66 @@
       ]]></eval>
     </thing>
 	
+  <thing
+    id="trResistRads"
+    name="Dmg. Resist. (Rad.)"
+    compset="Trait"
+    isunique="yes"
+    description="Your resistance to different types of damage is determined by your equipment and your perks. Damage Resistance (DR) is subtracted from damage inflicted of the same type before it reduces your health—physical Damage Resistance reduces physical damage, radiation Damage Resistance reduces radiation damage, etc. \n\n{b}Radiation Damage Resistance{/b} is rare but often vital, as it reduces how much radiation damage you receive from attacks and hazards, and it normally comes from protective clothing or armor, from chems like Rad-X, or from other consumables. Some creatures, like super mutants and ghouls, are entirely immune to radiation damage, as are machines such as robots. Radiation DR normally varies by hit location, depending on the clothing or armor you wear.">
+    <fieldval field="trtAbbrev" value="DRp"/>
+    <tag group="explicit" tag="8"/>
+    <tag group="User" tag="Resistance"/>
+    <tag group="DashTacCon" tag="Traits"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
+
+    <!-- Calculate the Resistance trait as appropriate -->
+    <eval value="1" phase="Traits" priority="4000">
+      <before name="Derived trtFinal"/>
+      <after name="Calc trtFinal"/><![CDATA[
+      field[trtBonus].value = 0
+      ]]></eval>
+    </thing>
+	
+  <!-- Health Trait -->
+  <thing
+    id="trHealth"
+    name="Health Points"
+    compset="Trait"
+    isunique="yes"
+    description="Your starting maximum {b}health points (HP){/b} are determined by adding together your Endurance and your Luck scores. Your health points deplete as you suffer damage, and generally show how far you are from death, as explained in the Combat chapter. As you increase in level, you increase your maximum health points, and you can use perks to increase them further.">
+    <fieldval field="trtAbbrev" value="Hlth"/>
+    <tag group="explicit" tag="9"/>
+    <tag group="User" tag="Power"/>
+    <tag group="HeroType" tag="PC"/>
+    <tag group="HeroType" tag="NPC"/>
+    <tag group="HeroType" tag="Creature"/>
+
+    <!-- Calculate the Health trait as appropriate -->
+    <eval value="1" phase="Traits" priority="4000">
+      <before name="Derived trtFinal"/>
+      <after name="Calc trtFinal"/><![CDATA[
+	  var myBonus as number
+	  
+	  if (#iscreature[] = 0) then
+	    myBonus = #trait[attrEnd] + #trait[attrLuc] + herofield[acLevel].value - 1
+	  else
+	    ~ creature health
+	    myBonus = #trait[attrBod] + herofield[acLevel].value
+	    endif
+		
+      field[trtBonus].value += myBonus
+      ]]></eval>
+    </thing>	
   <!-- Sample Trait -->
   <thing
     id="trMeleeDmg"
     name="Melee Damage"
     compset="Trait"
     isunique="yes"
-    description="Description goes here">
+    description="Your melee damage statistic lists any bonus damage you do with melee weapons or unarmed attacks, due to having a high Strength attribute. You add the number of bonus Combat Dice listed to your melee damage rolls.">
     <fieldval field="trtAbbrev" value="Samp"/>
-    <tag group="explicit" tag="9"/>
+    <tag group="explicit" tag="10"/>
 	
     <!-- Assign an appropriate tag based on how the trait should be classified -->
     <tag group="User" tag="Combat"/>
@@ -269,44 +342,6 @@
       ]]></eval>
     </thing>
 
-	
-  <!-- Health Trait -->
-  <thing
-    id="trHealth"
-    name="Health Points"
-    compset="Trait"
-    isunique="yes"
-    description="Description goes here">
-    <fieldval field="trtAbbrev" value="Hlth"/>
-    <tag group="explicit" tag="8"/>
-    <tag group="User" tag="Power"/>
 
-    <!-- Calculate the Health trait as appropriate -->
-    <eval value="1" phase="Traits" priority="4000">
-      <before name="Derived trtFinal"/>
-      <after name="Calc trtFinal"/><![CDATA[
-      field[trtBonus].value += #trait[attrEnd] + #trait[attrLuc] + herofield[acLevel].value - 1
-      ]]></eval>
-    </thing>
-	
-  <!-- Health Trait -->
-  <thing
-    id="trCreHealth"
-    name="Health Points"
-    compset="Trait"
-    isunique="yes"
-    description="Description goes here">
-    <fieldval field="trtAbbrev" value="Hlth"/>
-    <tag group="explicit" tag="8"/>
-    <tag group="User" tag="Power"/>
-    <tag group="HeroType" tag="Creature"/>
-
-    <!-- Calculate the Health trait as appropriate -->
-    <eval value="1" phase="Traits" priority="4000">
-      <before name="Derived trtFinal"/>
-      <after name="Calc trtFinal"/><![CDATA[
-      field[trtBonus].value += #trait[attrBod] + herofield[acLevel].value
-      ]]></eval>
-    </thing>
 	
   </document>

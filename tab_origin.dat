@@ -24,9 +24,10 @@
     style="chsNormal"
     width="110">
     <chooser_table
-      component="SpecTrait"
+      component="OriginTrait"
       choosetemplate="LargeItem">
-      <needtag usehero="yes" container="Species" thing="Species"/>
+      <needtag usehero="yes" container="Origin" thing="OriginCat"/>
+      <denytag usehero="yes" container="OriginTrait" thing="OriginTrait"/>
       <chosen><![CDATA[
         if (@ispick = 0) then
           @text = "{text clrwarning}Select Trait"
@@ -55,9 +56,10 @@
     style="chsNormal"
     width="110">
     <chooser_table
-      component="SpecTrait"
+      component="OriginTrait"
       choosetemplate="LargeItem">
-      <needtag usehero="yes" container="Species" thing="Species"/>
+      <needtag usehero="yes" container="Origin" thing="OriginCat"/>
+      <denytag usehero="yes" container="OriginTrait" thing="OriginTrait"/>
       <chosen><![CDATA[
         if (@ispick = 0) then
           @text = "{text clrwarning}Select Trait"
@@ -71,10 +73,84 @@
       </chooser_table>
     </portal>	
 	
+  <portal
+    id="spRobotBody"
+    style="tblNormal">
+    <table_dynamic
+      component="Robot"
+      showtemplate="CustomModItem"
+      choosetemplate="SimpleItem"
+      showfixedlast="yes"
+      addpick="resRobotBody">
+      <list>RobotBody.Body</list>
+      <candidate inheritlist="yes"></candidate>
+      <titlebar><![CDATA[
+        @text = "Add a Body - " & hero.child[resRobotBody].field[resSummary].text
+        ]]></titlebar>
+      <description/>
+      <headertitle><![CDATA[
+        @text = "Robot Body: " & hero.child[resRobotBody].field[resSummary].text
+        ]]></headertitle>
+      <additem><![CDATA[
+        ~if we're in advancement mode, we've been frozen, so display accordingly
+        if (state.iscreate = 0) then
+          @text = "{text clrgrey}Add  Via Advances Tab"
+          done
+          endif
+
+        ~set the color based on whether the proper number of slots are allocated
+        if (field[resLeft].value = 0) then
+          @text = "{text clrgrey}"
+        elseif (field[resLeft].value < 0) then
+          @text = "{text clrwarning}"
+          endif
+        
+		@text &= "Add New Module"
+		
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
+  <portal
+    id="spRobotArms"
+    style="tblNormal">
+    <table_dynamic
+      component="Robot"
+      showtemplate="CustomModItem"
+      choosetemplate="SimpleItem"
+      showfixedlast="yes"
+      addpick="resRobotArms">
+      <list>RobotBody.Arm</list>
+      <candidate inheritlist="yes"></candidate>
+      <titlebar><![CDATA[
+        @text = "Add an Arm - " & hero.child[resRobotArms].field[resSummary].text
+        ]]></titlebar>
+      <description/>
+      <headertitle><![CDATA[
+        @text = "Robot Arms: " & hero.child[resRobotArms].field[resSummary].text
+        ]]></headertitle>
+      <additem><![CDATA[
+        ~if we're in advancement mode, we've been frozen, so display accordingly
+        if (state.iscreate = 0) then
+          @text = "{text clrgrey}Add  Via Advances Tab"
+          done
+          endif
+
+        ~set the color based on whether the proper number of slots are allocated
+        if (field[resLeft].value = 0) then
+          @text = "{text clrgrey}"
+        elseif (field[resLeft].value < 0) then
+          @text = "{text clrwarning}"
+          endif
+        @text &= "Add New Arm"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
   <template
     id="spSpcPerkTrait"
-    name="Species Perk Trait Template"
-    compset="Species"
+    name="Origin Perk Trait Template"
+    compset="Origin"
     marginhorz="3"
     marginvert="2">
 
@@ -89,11 +165,11 @@
     </portal>
 	
   <portal
-    id="spPerkTrait"
+    id="orPerkTrait"
     style="chkNormal"
     tiptext="Click to select a perk instead of a 2nd trait.">
     <checkbox
-      field="spPerkSelect">
+      field="orPerkSelect">
       </checkbox>
       </portal>
                 
@@ -103,23 +179,24 @@
       portal[spLblPerk].height = 20
 
       ~position the description on the left and let it use all available space
-      portal[spPerkTrait].top = 0
-      portal[spPerkTrait].left = 0
-      ~portal[spPerkTrait].width = width
-      portal[spPerkTrait].height = height
+      portal[orPerkTrait].top = 0
+      portal[orPerkTrait].left = 0
+      ~portal[orPerkTrait].width = width
+      portal[orPerkTrait].height = height
 
       portal[spLblPerk].top = 0
-      portal[spLblPerk].left = portal[spPerkTrait].right + 5
-      portal[spLblPerk].width = width - portal[spPerkTrait].width
-	  ~portal[spLblPerk].height = portal[spPerkTrait].height
-	  perform portal[spLblPerk].centeron[vert,spPerkTrait]
+      portal[spLblPerk].left = portal[orPerkTrait].right + 5
+      portal[spLblPerk].width = width - portal[orPerkTrait].width
+	  ~portal[spLblPerk].height = portal[orPerkTrait].height
+	  perform portal[spLblPerk].centeron[vert,orPerkTrait]
       ]]></position>
 
     </template>	
+	
   <template
     id="spSpcTemp"
-    name="Species Template"
-    compset="Species"
+    name="Origin Template"
+    compset="Origin"
     marginhorz="3"
     marginvert="2">
 
@@ -138,7 +215,8 @@
       style="lblBrdLeft">
       <label
         field="descript"
-        ismultiline="yes">
+        ismultiline="yes"
+		scrollable="yes">
         </label>
       </portal>
                 
@@ -163,7 +241,7 @@
 
   <template
     id="spSpcMenus"
-    name="Species Menus"
+    name="Origin Menus"
     compset="UserSelect"
     marginhorz="3"
     marginvert="2">
@@ -259,12 +337,22 @@
     </template>	
 
   <template
-    id="spTagSkillMenu"
+    id="orTagSkillMenu"
     name="Tag Skills Menus"
-    compset="Species"
+    compset="Origin"
     marginhorz="3"
     marginvert="2">
 
+    <portal
+      id="lbltagTitle"
+      style="lblTitle">
+      <label>
+	    <labeltext>
+		  @text = "Tag Skills"
+		  </labeltext>
+        </label>
+      </portal>
+	  
     <portal
       id="lbltag1"
       style="lblBrdLeft">
@@ -309,11 +397,11 @@
       id="menutag1"
       style="menuNormal">
       <menu_things
-        field="spTagSkill1"
+        field="orTagSkill1"
         component="none"
         maxvisible="10"
+		candidatefield="orSklChoiceExpr1"
         usepicks="actor">
-		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
         </menu_things>
       </portal>	
 
@@ -321,11 +409,11 @@
       id="menutag2"
       style="menuNormal">
       <menu_things
-        field="spTagSkill2"
+        field="orTagSkill2"
         component="none"
         maxvisible="10"
+		candidatefield="orSklChoiceExpr2"
         usepicks="actor">
-		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
         </menu_things>
       </portal>	
 
@@ -333,11 +421,11 @@
       id="menutag3"
       style="menuNormal">
       <menu_things
-        field="spTagSkill3"
+        field="orTagSkill3"
         component="none"
         maxvisible="10"
+		candidatefield="orSklChoiceExpr3"
         usepicks="actor">
-		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
         </menu_things>
       </portal>	
 
@@ -345,53 +433,56 @@
       id="menutag4"
       style="menuNormal">
       <menu_things
-        field="spTagSkill4"
+        field="orTagSkill4"
         component="none"
         maxvisible="10"
+		candidatefield="orSklChoiceExpr4"
         usepicks="actor">
-		<candidate>component.Skill &amp; !Skill.TagSkill</candidate>
         </menu_things>
       </portal>	
 	  
     <position><![CDATA[
+      portal[lbltagTitle].top = 0
+	  portal[lbltagTitle].width = width
+		  
       ~position our labels on the left
-      portal[lbltag1].top = 0
+      portal[lbltag1].top = portal[lbltagTitle].bottom + 5
 	  portal[lbltag1].height = portal[menutag1].height
-	  portal[lbltag1].left = 0
-	  portal[lbltag1].width = width/4
-	  
-      portal[lbltag2].top = portal[lbltag1].bottom + 5
-	  portal[lbltag2].height = portal[lbltag1].height
-	  portal[lbltag2].left = 0
-	  portal[lbltag2].width = width/4
-	  
-      portal[lbltag3].top = portal[lbltag2].bottom + 5
-	  portal[lbltag3].height = portal[lbltag1].height
-	  portal[lbltag3].left = 0
-	  portal[lbltag3].width = width/4
-	  
-      portal[lbltag4].top = portal[lbltag3].bottom + 5
-	  portal[lbltag4].height = portal[lbltag1].height
-	  portal[lbltag4].left = 0
-	  portal[lbltag4].width = width/4
+	  portal[lbltag1].left = 10
+	  portal[lbltag1].width = (width/4) - 20
 
 	  portal[menutag1].top = portal[lbltag1].top
 	  portal[menutag1].left = portal[lbltag1].right + 5
 	  portal[menutag1].width = width/4
 	  
+      portal[lbltag2].top = portal[lbltag1].top 
+	  portal[lbltag2].height = portal[lbltag1].height
+	  portal[lbltag2].left = width/2
+	  portal[lbltag2].width = (width/4) - 20
+	  
 	  portal[menutag2].top = portal[lbltag2].top
 	  portal[menutag2].left = portal[lbltag2].right + 5
 	  portal[menutag2].width = width/4
+	  
+      portal[lbltag3].top = portal[lbltag1].bottom + 5
+	  portal[lbltag3].height = portal[lbltag1].height
+	  portal[lbltag3].left = portal[lbltag1].left
+	  portal[lbltag3].width = (width/4) - 20
 	  
 	  portal[menutag3].top = portal[lbltag3].top
 	  portal[menutag3].left = portal[lbltag3].right + 5
 	  portal[menutag3].width = width/4
 	  
+      portal[lbltag4].top = portal[lbltag3].top
+	  portal[lbltag4].height = portal[lbltag1].height
+	  portal[lbltag4].left = portal[lbltag2].left
+	  portal[lbltag4].width = (width/4) - 20
+	  
 	  portal[menutag4].top = portal[lbltag4].top
 	  portal[menutag4].left = portal[lbltag4].right + 5
 	  portal[menutag4].width = width/4
 	  
-	  if (field[spMaxTagSkills].value <> 4) then
+	  if (field[orMaxTagSkills].value <> 4) then
 	    portal[lbltag4].visible = 0
 		portal[menutag4].visible = 0
 	    endif
@@ -400,22 +491,22 @@
 
       ~if a menu is visible, make sure it has a selection
       if (portal[menutag1].visible <> 0) then
-        if (field[spTagSkill1].ischosen = 0) then
+        if (field[orTagSkill1].ischosen = 0) then
           perform portal[menutag1].setstyle[menuError]
           endif
         endif
       if (portal[menutag2].visible <> 0) then
-        if (field[spTagSkill2].ischosen = 0) then
+        if (field[orTagSkill2].ischosen = 0) then
           perform portal[menutag2].setstyle[menuError]
           endif
         endif
       if (portal[menutag3].visible <> 0) then
-        if (field[spTagSkill3].ischosen = 0) then
+        if (field[orTagSkill3].ischosen = 0) then
           perform portal[menutag3].setstyle[menuError]
           endif
         endif
       if (portal[menutag4].visible <> 0) then
-        if (field[spTagSkill4].ischosen = 0) then
+        if (field[orTagSkill4].ischosen = 0) then
           perform portal[menutag4].setstyle[menuError]
           endif
         endif		
@@ -439,9 +530,11 @@
     <portalref portal="spChsTrait" />
     <portalref portal="spChsLbl2" />
     <portalref portal="spChsTrait2" />
+    <portalref portal="spRobotBody" />
+    <portalref portal="spRobotArms" />
     <templateref template="spSpcPerkTrait" useagent="yes"/>
     <templateref template="spSpcTemp" useagent="yes"/>
-    <templateref template="spTagSkillMenu" useagent="yes"/>
+    <templateref template="orTagSkillMenu" useagent="yes"/>
 	
     <!-- This script sizes and positions the layout and its child visual elements. -->
     <position><![CDATA[
@@ -450,7 +543,7 @@
 
       ~both tables span the full width
       template[spSpcTemp].width = width
-	  template[spSpcTemp].height = height/2
+	  template[spSpcTemp].height = height/3
       template[spSpcTemp].visible = 1
 	  
       ~template[spSpcMenus].top = template[spSpcTemp].bottom + 30
@@ -463,7 +556,7 @@
 	  template[spSpcPerkTrait].width = width/2
 	  template[spSpcPerkTrait].height = 40
 	  
-	  template[spSpcPerkTrait].visible = agent.field[spTraitSelect].value
+	  template[spSpcPerkTrait].visible = agent.field[orTraitSelect].value
 	  
       if (template[spSpcPerkTrait].visible = 1) then
 	    portal[spChsLbl].top = template[spSpcPerkTrait].bottom + 10
@@ -473,32 +566,46 @@
 	  portal[spChsLbl].left = template[spSpcPerkTrait].left + 3
 	  portal[spChsLbl].width = myWidth
 	  portal[spChsLbl].height = 20
-	  portal[spChsLbl].visible = agent.field[spTraitSelect].value
+	  portal[spChsLbl].visible = agent.field[orTraitSelect].value
 	  
 	  portal[spChsTrait].top = portal[spChsLbl].top
 	  portal[spChsTrait].left = portal[spChsLbl].right + 5
 	  portal[spChsTrait].width = myWidth
 	  portal[spChsTrait].height = 20
-	  portal[spChsTrait].visible = agent.field[spTraitSelect].value
+	  portal[spChsTrait].visible = agent.field[orTraitSelect].value
 	  
 	  portal[spChsLbl2].top = portal[spChsLbl].top
 	  portal[spChsLbl2].left = portal[spChsTrait].right + 5
 	  portal[spChsLbl2].width = myWidth
 	  portal[spChsLbl2].height = 20
-	  portal[spChsLbl2].visible = agent.field[spTraitSelect].value
+	  portal[spChsLbl2].visible = agent.field[orTraitSelect].value
 	  
 	  portal[spChsTrait2].top = portal[spChsLbl2].top
 	  portal[spChsTrait2].left = portal[spChsLbl2].right + 5
 	  portal[spChsTrait2].width = myWidth
 	  portal[spChsTrait2].height = 20
-	  portal[spChsTrait2].visible = agent.field[spTraitSelect].value
+	  portal[spChsTrait2].visible = agent.field[orTraitSelect].value
 	  
-      template[spTagSkillMenu].top = portal[spChsLbl].bottom + 5
-      template[spTagSkillMenu].width = width
-	  template[spTagSkillMenu].height = 200
-      template[spTagSkillMenu].visible = 1
-  
-	  if (agent.field[spNumTraits].value = 1) then
+      template[orTagSkillMenu].top = portal[spChsLbl].bottom + 5
+      template[orTagSkillMenu].width = width
+	  template[orTagSkillMenu].height = 200
+      template[orTagSkillMenu].visible = 1
+	  autotop = template[orTagSkillMenu].bottom
+	  
+	  ~portal[spRobotArms].top = template[orTagSkillMenu].bottom + 5
+	  ~portal[spRobotArms].left = template[spSpcTemp].left + 3
+	  ~portal[spRobotArms].width = width - 5
+	  ~portal[spRobotArms].height = 20
+	  ~portal[spRobotArms].visible = #isrobot[]
+ 
+	  ~ Robot parts for Modding
+      perform portal[spRobotBody].autoplace[0]
+	  portal[spRobotBody].visible = #isrobot[]
+	  
+      perform portal[spRobotArms].autoplace[5]
+	  portal[spRobotArms].visible = #isrobot[]
+	  
+	  if (agent.field[orNumTraits].value = 1) then
 	    portal[spChsLbl2].visible = 0
 	    portal[spChsTrait2].visible = 0
 	  else
@@ -506,7 +613,7 @@
 	    portal[spChsTrait2].visible = portal[spChsTrait].visible
 	    endif
       
-	  if (agent.field[spPerkSelect].value = 1) then
+	  if (agent.field[orPerkSelect].value = 1) then
 	    portal[spChsLbl2].visible = 0
 	    portal[spChsTrait2].visible = 0
 	  else
@@ -518,17 +625,14 @@
 
     </layout>
 
-  <!-- sorcery panel
-        This is the "Sorcery" panel shown within Hero Lab.
-  -->
   <panel
     id="origin"
-    name="Species"
+    name="Origin"
     marginhorz="5"
     marginvert="5"
-    order="10"
-    agentcompset="Species"
-    agentlive="Species"
+    order="60"
+    agentcompset="Origin"
+    agentlive="Origin"
     agentname="name"
     >
     <live>!HideTab.origin</live>

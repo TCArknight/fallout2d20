@@ -194,6 +194,29 @@
       </portal>
 
     <portal
+      id="attrib"
+      style="lblNormal"
+      showinvalid="yes">
+      <label>
+        <labeltext><![CDATA[
+          ~set the color based on if career skill or not
+          if (tagcount[Skill.TagSkill] = 0) then
+            @text = "{text ffffff}"
+          else
+            @text = "{text 00ff00}"
+            endif
+          
+		  if (islinkage[attribute] <> 0) then
+            @text &= linkage[attribute].field[trtAbbrev].text
+		  else
+		    @text &= " "
+			endif
+			
+          ]]></labeltext>
+        </label>
+      </portal>
+
+    <portal
       id="value"
       style="incrSimple">
       <incrementer
@@ -263,6 +286,7 @@
       perform portal[name].centervert
       perform portal[value].centervert
       perform portal[lblvalue].centervert
+      perform portal[attrib].centervert
 
       ~position the info portal on the far right
       perform portal[info].alignedge[right,0]
@@ -270,10 +294,16 @@
       ~position the incrementer to the left of the info portal (plus a gap)
       perform portal[value].alignrel[rtol,info,-5]
       perform portal[lblvalue].alignrel[rtol,info,-10]
-
+	  
+	  if (hero.tagis[HeroType.Creature] <> 0) then
+        perform portal[attrib].alignrel[rtol,lblvalue,-10]
+	  else
+        perform portal[attrib].alignrel[rtol,value,-5]
+		endif
+		
       ~position the name on the left and make sure its width does not exceed the available space
       portal[name].left = 0
-      portal[name].width = minimum(portal[name].width,portal[value].left - portal[name].left - 5)
+      portal[name].width = minimum(portal[name].width,portal[attrib].left - portal[name].left - 5)
       ]]></position>
 
     </template>
@@ -316,7 +346,7 @@
 			  @text = signed(field[trtFinal].value) & " CD"
 			  endif
 		  else
-            @text = field[trtFinal].text
+            @text = field[trtFinalDisplay].text
 		    endif
           ]]></labeltext>
         </label>

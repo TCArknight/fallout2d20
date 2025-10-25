@@ -22,18 +22,18 @@
       type="derived">
       </field>
 
-    <!-- Prefix to be used for the race (e.g. "Race" or "Creature") -->
+    <!-- Prefix to be used for the race (e.g. "Origin" or "Creature") -->
     <field
-      id="acRacePref"
-      name="Race Prefix"
+      id="acOriginPref"
+      name="Origin Prefix"
       type="derived"
       maxlength="10">
       </field>
 	  
     <!-- Name to be used for the race -->
     <field
-      id="acRaceName"
-      name="Race Name"
+      id="acOriginName"
+      name="Origin Name"
       type="derived"
       maxlength="50">
       </field>
@@ -175,8 +175,8 @@
 
     <!-- Power point summary for display -->
     <field
-      id="acPPSumm"
-      name="Power Summary"
+      id="acLPSumm"
+      name="Luck Point Summary"
       type="derived"
       maxfinal="50">
       <!-- Calculate a value that is based on all the fields referenced by the
@@ -185,12 +185,12 @@
       -->
       <calculate phase="Render" priority="1000"><![CDATA[
         ~make sure this value consists of the elements that could cause the summary to change
-        @value = hero.child[trkPower].field[trkLeft].value * 100 + hero.child[trkPower].field[trkMax].value
+        @value = hero.child[trkLuckPoints].field[trkLeft].value * 100 + hero.child[trkLuckPoints].field[trkMax].value
         ]]></calculate>
       <!-- Final value for display shows the current and maximum power points.
       -->
       <finalize><![CDATA[
-        @text = hero.child[trkPower].field[trkUser].value & " / " & hero.child[trkPower].field[trkMax].value
+        @text = hero.child[trkLuckPoints].field[trkUser].value & " / " & hero.child[trkLuckPoints].field[trkMax].value
         ]]></finalize>
       </field>
 
@@ -207,6 +207,14 @@
       name="Attribute Points"
       type="user"
       defvalue="12">
+      </field>
+	  
+    <!-- Skill maximum -->
+    <field
+      id="acSkillMax"
+      name="Skill Max"
+      type="derived"
+      defvalue="6">
       </field>
 	  
     <!-- Starting ability slots to allocate -->
@@ -266,6 +274,98 @@
       </field>	
 	  
     <!-- Hit Location DR for the character -->
+	  
+    <field
+      id="acOpticDRPhys"
+      name="Optics - Physical DR"
+      type="derived">
+      </field>	  
+    <field
+      id="acOpticDREner"
+      name="Optics - Energy DR"
+      type="derived">
+      </field>
+    <field
+      id="acOpticDRRad"
+      name="Optics - Radiation DR"
+      type="derived">
+      </field>
+    <field
+      id="acMainBodyDRPhys"
+      name="Main Body - Physical DR"
+      type="derived">
+      </field>	  
+    <field
+      id="acMainBodyDREner"
+      name="Main Body - Energy DR"
+      type="derived">
+      </field>
+    <field
+      id="acMainBodyDRRad"
+      name="Main Body - Radiation DR"
+      type="derived">
+      </field>
+    <field
+      id="acArm1DRPhys"
+      name="Arm 1 - Physical DR"
+      type="derived">
+      </field>	  
+    <field
+      id="acArm1DREner"
+      name="Arm 1 - Energy DR"
+      type="derived">
+      </field>
+    <field
+      id="acArm1DRRad"
+      name="Arm 1 - Radiation DR"
+      type="derived">
+      </field>
+    <field
+      id="acArm2DRPhys"
+      name="Arm 2 - Physical DR"
+      type="derived">
+      </field>	  
+    <field
+      id="acArm2DREner"
+      name="Arm 2 - Energy DR"
+      type="derived">
+      </field>
+    <field
+      id="acArm2DRRad"
+      name="Arm 2 - Radiation DR"
+      type="derived">
+      </field>
+    <field
+      id="acArm3DRPhys"
+      name="Arm 3 - Physical DR"
+      type="derived">
+      </field>	  
+    <field
+      id="acArm3DREner"
+      name="Arm 3 - Energy DR"
+      type="derived">
+      </field>
+    <field
+      id="acArm3DRRad"
+      name="Arm 3 - Radiation DR"
+      type="derived">
+      </field>
+    <field
+      id="acThrusterDRPhys"
+      name="Thruster - Physical DR"
+      type="derived">
+      </field>	  
+    <field
+      id="acThrusterDREner"
+      name="Thruster - Energy DR"
+      type="derived">
+      </field>
+    <field
+      id="acThrusterDRRad"
+      name="Thruster - Radiation DR"
+      type="derived">
+      </field>
+	  
     <field
       id="acHeadDRPhys"
       name="Head - Physical DR"
@@ -356,6 +456,23 @@
       name="Leg (Right) - Radiation DR"
       type="derived">
       </field>
+
+    <!-- Encumbrance-related fields -->
+    <field
+      id="acCarryCurrent"
+      name="Current Weight Carried"
+      type="derived"
+	  decimals="2"
+      defvalue="0">
+      </field>
+
+    <field
+      id="acCarryMax"
+      name="Maximum Carry Weight"
+      type="derived"
+	  decimals="2"
+      defvalue="0">
+      </field>
 	  
     <!-- Craeture Fields -->
     <field
@@ -404,6 +521,15 @@
       elseif (field[acHPNow].value = 0) then
         perform hero.assign[Hero.Dead]
         endif
+	  
+	  if (hero.tagis[Hero.RadImmune] <> 0) then
+	    perform hero.child[trResistRads].assign[Immune.Radiation]
+	    endif
+	
+	  if (hero.tagis[Hero.PoiImmune] <> 0) then
+	    perform hero.child[trResistPoison].assign[Immune.Poison]
+	    endif
+		
       ]]></eval>
 
     <!-- Copy the first user image for use in the TacCon -->
@@ -426,14 +552,14 @@
 	  
       perform field[acType].chosen.forward[CharType.?]
       perform field[acType].chosen.forward[HeroType.?]
-
+		
       if (#iscreature[] = 0) then
 	    field[acStartAttr].value = 12
 		endif
 		
       ]]></eval>
 	  
-    <eval value="5" phase="Effects" priority="149" name="Prepare First Copy"><![CDATA[
+    <eval value="6" phase="Effects" priority="149" name="Prepare First Copy"><![CDATA[
       ~This eval script is meant to foreach through all the class specials
       ~and mark each as a FirstCopy or not. We do this with a foreach rather
       ~than a component script so that we can proceed from the lower level
@@ -463,34 +589,43 @@
       ]]></eval>
 
     <!-- Synthesize the prefix and name to be shown for the race -->
-    <eval index="6" phase="Render" priority="1000"><![CDATA[
+    <eval index="7" phase="Render" priority="1000"><![CDATA[
       if (hero.tagis[HeroType.Creature] <> 0) then
-        field[acRacePref].text = "Creature"
-        field[acRaceName].text = hero.findchild[Creature].field[name].text
+        field[acOriginPref].text = "Creature"
+        field[acOriginName].text = hero.findchild[Creature].field[name].text
       else
-        field[acRacePref].text = "Race"
-        field[acRaceName].text = hero.findchild[Species].field[shortname].text
+        field[acOriginPref].text = "Origin"
+        field[acOriginName].text = hero.findchild[Origin].field[shortname].text
         endif
 		
-      if (field[acRaceName].isempty <> 0) then
-        field[acRaceName].text = "-none-"
+      if (field[acOriginName].isempty <> 0) then
+        field[acOriginName].text = "-none-"
         endif
       ]]></eval>
 	  
-    <!-- Timing: before the existence expression on the baRace table in
+    <!-- Timing: before the existence expression on the baOrigin table in
        tab_basics.dat, which is currently at Initialize/10. That existence
        expression needs to come before the containerreq on rHuman, which is
        at Initialize/500 -->
-	<eval index="7" phase="Setup" priority="510" name="Process MinionType.?"><![CDATA[
+	<eval index="8" phase="Setup" priority="510" name="Process MinionType.?"><![CDATA[
 	  if (hero.tagis[MinionType.Creature] <> 0) then
 	    perform hero.delete[CharType.typHero]
 	    perform hero.delete[HeroType.PC]
-		perform hero.assign[Hero.SetRace]
+		perform hero.assign[Hero.SetOrigin]
 		perform hero.assign[Hero.Minion]
 		perform hero.assign[CharType.typCreature]
 		perform hero.assign[HeroType.Creature]
 		endif
 	  ]]></eval>
+	  
+    <!-- activate our selected character type -->
+    <eval index="9" phase="Setup" priority="5000"><![CDATA[
+
+      if (hero.tagis[Hero.SkillLimit?] <> 0) then
+	    field[acSkillMax].value = hero.tagvalue[Hero.SkillLimit?]
+		endif
+		
+      ]]></eval>
     </component>
 
 

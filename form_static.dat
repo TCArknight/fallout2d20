@@ -18,7 +18,7 @@
 <document signature="Hero Lab Data">
 
 
-  <!-- stRace portal
+  <!-- stOrigin portal
         Displays a chooser wherein the user can select the race for the character.
 
         We use the "LargeItem" template for selecting the adjustments, since all we
@@ -28,18 +28,18 @@
         race is yet selected, a prompt it shown with appropriate color highlighting.
   -->
   <portal
-    id="stRace"
+    id="stOrigin"
     style="chsNormal"
     width="110">
     <chooser_table
-      component="Species"
+      component="Origin"
       choosetemplate="LargeItem">
       <candidate><![CDATA[!component.Minion & !component.Creature]]></candidate>
       <chosen><![CDATA[
         if (@ispick = 0) then
           @text = "{text clrwarning}Select Origin"
         else
-          @text = "Origin: " & field[name].text
+          @text = field[name].text
           endif
         ]]></chosen>
       <titlebar><![CDATA[
@@ -49,11 +49,11 @@
     </portal>
 	
   <portal
-    id="RaceStatic"
+    id="OriginStatic"
     style="lblStatic">
       <label>
         <labeltext><![CDATA[
-          @text = field[acRacePref].text & ": "  & herofield[acRaceName].text
+          @text = field[acOriginPref].text & ": "  & herofield[acOriginName].text
           ]]></labeltext>
         </label>
     </portal>	
@@ -63,14 +63,14 @@
     style="lblStatic">
     <label>
       <labeltext><![CDATA[
-        @text = field[acRacePref].text & ": " & herofield[acRaceName].text
+        @text = field[acOriginPref].text & ": " & herofield[acOriginName].text
         ]]></labeltext>
       </label>
     </portal>
 	
   <!-- stCreature portal
         Displays a chooser wherein the user can select the type for the creature.
-        Identical to "stRace" except for the contents.
+        Identical to "stOrigin" except for the contents.
   -->
   <portal
     id="stCreature"
@@ -85,7 +85,7 @@
         if (@ispick = 0) then
           @text = "{text clrwarning}Select Creature Type"
         else
-          @text = herofield[acRacePref].text & ": " & field[name].text
+          @text = herofield[acOriginPref].text & ": " & field[name].text
           endif
         ]]></chosen>
       <titlebar><![CDATA[
@@ -172,7 +172,7 @@
       style="lblStatic">
       <label>
         <labeltext><![CDATA[
-          @text = "PP: " & herofield[acPPSumm].text
+          @text = "LP: " & herofield[acLPSumm].text
           ]]></labeltext>
         </label>
       </portal>
@@ -236,8 +236,8 @@
   -->
   <layout
     id="static">
-    <portalref portal="stRace" taborder="20"/>
-    <portalref portal="RaceStatic" taborder="30"/>
+    <portalref portal="stOrigin" taborder="20"/>
+    <portalref portal="OriginStatic" taborder="30"/>
     <portalref portal="CreaStatic" taborder="30"/>
     <portalref portal="stCreature" taborder="30"/>
     <templateref template="stName" thing="heroname" taborder="10"/>
@@ -246,23 +246,23 @@
     <!-- This script sizes and positions the layout and its child visual elements. -->
     <position><![CDATA[
 	  ~determine whether the race or creature chooser is visible
-      portal[RaceStatic].visible = 0
+      portal[OriginStatic].visible = 0
       portal[CreaStatic].visible = 0
 	  
 	  if (hero.tagis[HeroType.Creature] <> 0) then
-        portal[stRace].visible = 0
-        if (hero.tagis[Hero.SetRace] <> 0) then
+        portal[stOrigin].visible = 0
+        if (hero.tagis[Hero.SetOrigin] <> 0) then
           portal[stCreature].visible = 0
           portal[CreaStatic].visible = 1
           endif          
       else
-        if (hero.tagis[Hero.NoRace] <> 0) then
-          portal[stRace].visible = 0
+        if (hero.tagis[Hero.NoOrigin] <> 0) then
+          portal[stOrigin].visible = 0
           endif
         portal[stCreature].visible = 0
-        if (hero.tagis[Hide.RaceChoose] <> 0) then
-          portal[stRace].visible = 0
-          portal[RaceStatic].visible = 1
+        if (hero.tagis[Hide.OriginChoose] <> 0) then
+          portal[stOrigin].visible = 0
+          portal[OriginStatic].visible = 1
           endif          
         endif
 		
@@ -277,12 +277,12 @@
       var x as number
 	  x = template[stName].right + 20
   
-      if (portal[stRace].visible <> 0) then
-        portal[stRace].left = x
-        x = portal[stRace].right + 15
-      elseif (portal[RaceStatic].visible <> 0) then
-        portal[RaceStatic].left = x
-        x = portal[RaceStatic].right + 15
+      if (portal[stOrigin].visible <> 0) then
+        portal[stOrigin].left = x
+        x = portal[stOrigin].right + 15
+      elseif (portal[OriginStatic].visible <> 0) then
+        portal[OriginStatic].left = x
+        x = portal[OriginStatic].right + 15
       elseif (portal[stCreature].visible <> 0) then
         portal[stCreature].left = x
         x = portal[stCreature].right + 15
@@ -302,7 +302,7 @@
       ~center all visual elements vertically
       ~Note: We can't do this until after we've calculated the heights for both
       ~       templates, which is done when we render them.
-      portal[stRace].top = (height - portal[stRace].height) / 2
+      portal[stOrigin].top = (height - portal[stOrigin].height) / 2
       template[stName].top = (height - template[stName].height) / 2
       template[stActor].top = (height - template[stActor].height) / 2
       ]]></position>

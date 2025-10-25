@@ -124,7 +124,7 @@
       id="grNotes"
       name="Notes"
       type="derived"
-      maxlength="300">
+      maxlength="500">
       </field>
 		  
     <!-- How common is the item? -->
@@ -172,9 +172,22 @@
       doneif (tagis[thing.holder_top] <> 0)
 
       ~accrue the net weight of this piece of gear into the character
-      ~#resspent[resourceid] += field[gearNet].value
+      #traitbonus[trCurrentCarry] += field[gearNet].value
       ]]></eval>
 
+    <!-- Some pieces of gear require modifications -->
+    <evalrule index="1" phase="Validate" priority="10000" message="Modification Required!"	><![CDATA[
+      ~ if this gear doesn't have a gizmo to handle the mod, we're good.
+      ~ validif (isgizmo = 0)
+	  
+	  ~ if we don't require a mod, we're good.
+	  validif (tagis[Equipment.ModRequired] = 0)
+
+	  validif (tagis[ItemModSelected.?] <> 0)
+	  
+      ~mark the tab as invalid
+      linkvalid = 0
+      ]]></evalrule>
     </component>
 
 
@@ -264,13 +277,13 @@
       doneif (field[grIsEquip].value = 0)
 
       ~if the equipment does not require hands, there's nothing to do
-      doneif (tagis[Equipment.Hand] = 0)
+      doneif (tagis[Equipment.NoHands] <> 0)
 
       ~tell the hero we've got at least one hand used
       perform hero.assign[Hero.Hand]
 
       ~if the equipment is two-handed, add another hand
-      if (tagis[Equipment.TwoHand] <> 0) then
+      if (tagis[Quality.TwoHanded] <> 0) then
         perform hero.assign[Hero.Hand]
         endif
       ]]></eval>
@@ -324,7 +337,7 @@
       type="derived"
       minvalue="0">
       </field>
-
+	  
     <!-- Synthesized notes about the weapon -->
     <field
       id="wpEffects"
@@ -332,6 +345,7 @@
       type="derived"
       maxlength="75">
       </field>
+	  
     <field
       id="wpQualities"
       name="Qualities"
@@ -359,7 +373,7 @@
       id="wpSpecial"
       name="Special"
       type="derived"
-      maxlength="200">
+      maxlength="300">
       </field>
 
     <!-- Synthesized notes about the weapon -->
@@ -367,7 +381,7 @@
       id="wpNotes"
       name="Notes"
       type="derived"
-      maxlength="250">
+      maxlength="500">
       </field>
 
     <!-- Net attack roll for weapon -->
@@ -390,7 +404,12 @@
       name="Weapon Penalty"
       type="derived">
       </field>
-	  
+	
+    <!-- Each weapon has an identity used to limit mods to that specific weapon -->
+    <identity group="ItemModSpecWpn"/>
+
+    <shadow target="hero">Helper.Shadow</shadow>
+	
     <!-- Weapons require one hand by default (unless natural) -->
     <tag group="Equipment" tag="Hand"/>
 
@@ -449,15 +468,17 @@
 	  var attrVal as number
 	  
 	  ~ by default, ranged weapons use agility
-	  if (tagis[component.WeapRange] <> 0) then
+	  if (tagis[component.WeaponRanged] <> 0) then
 	    attrVal = #trait[attrAgi]
-	  elseif (tagis[component.WeapMelee] <> 0) then
+	  elseif (tagis[component.WeaponMelee] <> 0) then
 	    attrVal = #trait[attrStr] 
 		endif
 	  
 	  ~ skill used is by weapon type
 	  if (tagis[WeaponType.BigGun] <> 0) then
 	    skillRanks = #trait[skBigGuns]
+	  elseif (tagis[WeaponType.Bow] <> 0) then
+	    skillRanks = #trait[skAthletics]
 	  elseif (tagis[WeaponType.EnergyWpn] <> 0) then
 	    skillRanks = #trait[skEnergyWpns]
 	  elseif (tagis[WeaponType.Explosive] <> 0) then
@@ -477,6 +498,16 @@
 	  field[wpNetAtk].value += attrVal + skillRanks
       field[wpNetAtk].value += field[wpBonus].value + field[wpPenalty].value
       ]]></eval>
+
+    <eval index="5" phase="Initialize" priority="5000"><![CDATA[
+	
+      ~if the minimum strength is satisfied, there's nothing to do
+      doneif (tagis[DamageOverride.?] = 0)
+
+      ~apply any penalty required with the specific weapon
+      field[wpDamage].value = tagvalue[DamageOverride.?]
+	  
+      ]]></eval>
 	  
     <!-- Check the strength requirement, which we only treat as a problem for things. -->
     <prereq message="Strength requirement not met.">
@@ -493,7 +524,7 @@
     </component>
 
 
-  <!-- WeapRange component
+  <!-- WeaponRanged component
         Ranged weapons derive from this component. They add range distances for three
         different range classifications. For simplicity, a text-based version of the
         ranges is automatically generated for easy use in displaying the weapon.
@@ -501,7 +532,7 @@
         skill.
   -->
   <component
-    id="WeapRange"
+    id="WeaponRanged"
     name="Ranged Weapon"
     autocompset="no">
 
@@ -550,13 +581,12 @@
         ]]></evalrule>
     </component>
 
-
-  <!-- WeapMelee component
+  <!-- WeaponMelee component
         Melee weapons derive from this component. Melee weapons auto-calculate their
         net attack value based on the Melee skill.
   -->
   <component
-    id="WeapMelee"
+    id="WeaponMelee"
     name="Melee Weapon"
     autocompset="no">
 
@@ -567,290 +597,115 @@
     <eval index="1" phase="Setup" priority="5000"><![CDATA[
       perform assign[Armory.Melee]
       ]]></eval>
-
-    </component>
-
-
-  <!-- Defense component
-        All armor and shields derive from this component. Defensive gear tracks a
-        defense rating and a strength requirement. The defense rating is added to the
-        character's overall Defense trait when the gear is equipped.
-  -->
-  <component
-    id="Defense"
-    name="Defense"
-    autocompset="no"
-    panellink="armory"
-    ispublic="no">
-
-    <!-- Defense adjustment conferred by the equipment -->
-    <field
-      id="defPhysical"
-      name="Physical DR Adjustment"
-      type="derived">
-      </field>
-    <field
-      id="defEnergy"
-      name="Energy DR Adjustment"
-      type="derived">
-      </field>
-	<field
-      id="defRadiation"
-      name="Radiation DR Adjustment"
-      type="derived">
-      </field>
-    <!-- Minimum strength required to use the equipment -->
-    <field
-      id="defStrReq"
-      name="Minimum Strength"
-      type="static"
-	  defvalue="0">
-      </field>
-
-    <!-- If equipped and the minimum strength isn't satisfied, apply any penalty and
-        mark ourselves as not satisfying the requirement -->
-    <eval index="1" phase="Final" priority="5000"><![CDATA[
-      ~if the minimum strength is satisfied, there's nothing to do
-      doneif (field[defStrReq].value <= #trait[attrStr])
-
-      ~assign a tag to indicate the requirement isn't met
-      perform assign[Helper.BadStrReq]
-
-      ~if not equipped, there's nothing more to do
-      doneif (field[grIsEquip].value = 0)
-
-      ~apply any general penalty required (e.g. defense penalties or the like)
-      ~.... add code here ....
+	
+	<eval index="2" phase="Final" priority="5000"><![CDATA[
+      field[wpDamage].value += #trait[trMeleeDmg]
       ]]></eval>
-
-    <!-- Apply effects of the equipped armor/shield -->
-    <eval index="2" phase="PreTraits" priority="5000">
-      <before name="Calc trtFinal"/>
-      <after name="Equipped"/><![CDATA[
-      ~if this gear is not equipped, skip it
-      doneif (field[grIsEquip].value = 0)
-
-      ~apply the appropriate trait adjustments for the equipment
-      ~#traitbonus[trDefense] += field[defPhysical].value
-	  
-	  if (#isheadarmor[] <> 0) then
-		#headDRPhys[] += field[defPhysical].value
-		#headDREner[] += field[defEnergy].value
-		#headDRRad[] += field[defRadiation].value
-	    endif
-		
-      if (#istorsoarmor[] <> 0) then
-	    ~#traitbonus[trResistPhys] += field[defPhysical].value
-		#torsoDRPhys[] += field[defPhysical].value
-	    ~#traitbonus[trResistEner] += field[defEnergy].value
-		#torsoDREner[] += field[defEnergy].value
-	    ~#traitbonus[trResistRads] += field[defRadiation].value
-		#torsoDRRad[] += field[defRadiation].value
-	    endif
-	  
-	  if (#isleftarmarmor[] <> 0) then
-		#armleftDRPhys[] += field[defPhysical].value
-		#armleftDREner[] += field[defEnergy].value
-		#armleftDRRad[] += field[defRadiation].value
-	    endif
-	  
-	  if (#isrightarmarmor[] <> 0) then
-		#armrightDRPhys[] += field[defPhysical].value
-		#armrightDREner[] += field[defEnergy].value
-		#armrightDRRad[] += field[defRadiation].value
-	    endif
-	  
-	  if (#isleftlegarmor[] <> 0) then
-		#legleftDRPhys[] += field[defPhysical].value
-		#legleftDREner[] += field[defEnergy].value
-		#legleftDRRad[] += field[defRadiation].value
-	    endif
-	  
-	  if (#isrightlegarmor[] <> 0) then
-		#legrightDRPhys[] += field[defPhysical].value
-		#legrightDREner[] += field[defEnergy].value
-		#legrightDRRad[] += field[defRadiation].value
-	    endif
-      ]]></eval>
-
-    <!-- Check the strength requirement, which we only treat as a problem for things. -->
-    <prereq message="Strength requirement not met.">
-      <validate><![CDATA[
-        ~if this is a pick, we're valid
-        ~NOTE! We assume that equipping an item without the strength just applies penalties.
-        validif (@ispick <> 0)
-
-        ~verify whether we meet the strength requirement
-        validif (#trait[attrStr] >= altthing.field[defStrReq].value)
-        ]]></validate>
-      </prereq>
-
-    </component>
-
-
-  <!-- Armor component
-        Armor derives from this component. The tracking of multiple pieces of armor
-        on the character is automatically managed.
-  -->
-  <component
-    id="Armor"
-    name="Armor"
-    autocompset="no">
-
-    <!-- Each piece of armor needs its own identity tag to detect multiple pieces being equipped -->
-    <identity group="Armor"/>
-
-    <!-- All armor gets the same tag for sorting purposes -->
-    <tag group="Armory" tag="Armor"/>
-
-    <!-- If we're equipped and not a natural form, track the armor on the actor -->
-    <eval index="1" phase="Setup" priority="5000" name="Equip Armor"><![CDATA[
-      if (field[grIsEquip].value > 0) then
-        if (tagis[Equipment.Natural] = 0) then
-          perform forward[Armor.?]
-          endif
-        endif
-      ]]></eval>
-
-    <!-- If multiple pieces of armor are equipped, mark ourselves invalid but don't
-        flag a separate validation error for each piece -->
-    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
-      ~if this gear is not equipped, we're valid
-      validif (field[grIsEquip].value = 0)
-
-      ~if there are NOT multiple pieces of armor equipped, we're valid
-      validif (hero.tagcount[Armor.?] <= 1)
-
-      ~mark the tab as invalid
-      linkvalid = 0
-      ]]></evalrule>
-
-    </component>
-
-
-  <!-- Shield component
-        Shields derive from this component. The tracking of multiple shields on the
-        character is automatically managed.
-  -->
-  <component
-    id="Shield"
-    name="Shield"
-    autocompset="no">
-
-    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
-    <identity group="Shield"/>
-
-    <!-- All shields get the same tag for sorting purposes -->
-    <tag group="Armory" tag="Shield"/>
-
-    <!-- Shield require one hand by default -->
-    <tag group="Equipment" tag="Hand"/>
-
-    <!-- If we're equipped, track the shield on the actor -->
-    <eval index="1" phase="Setup" priority="5000" name="Equip Shield"><![CDATA[
-      if (field[grIsEquip].value > 0) then
-        perform forward[Shield.?]
-        endif
-      ]]></eval>
-
-    <!-- If multiple shields are equipped, mark ourselves invalid but don't
-        flag a separate validation error for each piece -->
-    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
-      ~if this gear is not equipped, we're valid
-      validif (field[grIsEquip].value = 0)
-
-      ~if there are NOT multiple shields equipped, we're valid
-      validif (hero.tagcount[Shield.?] <= 1)
-
-      ~mark the tab as invalid
-      linkvalid = 0
-      ]]></evalrule>
-
-    </component>
-
-
-  <!-- Clothing component
-        Clothing armor derives from this component. 
-  -->
-  <component
-    id="Clothing"
-    name="Clothing"
-    autocompset="no">
-
-    <!-- Is the gear equipped? -->
-    <field
-      id="grIsOutfit"
-      name="Is an Outfit?"
-      type="user"
-      minvalue="0"
-      maxvalue="1">
-      </field>
-	  
-    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
-    <identity group="Clothing"/>
-
-    <!-- All shields get the same tag for sorting purposes -->
-    <tag group="Armory" tag="Clothing"/>
-    <tag group="ArmorType" tag="Clothing"/>
-
-    <!-- If we're equipped, track the shield on the actor -->
-    <eval index="1" phase="Setup" priority="5000" name="Equip Clothing"><![CDATA[
-      if (field[grIsEquip].value > 0) then
-        perform forward[Clothing.?]
-        endif
-	  if (field[grIsOutfit].value > 0) then
-	    perform delete[ArmorType.?]
-	    perform assign[ArmorType.Outfit]
-	    endif
-      ]]></eval>
-
-    <!-- If multiple shields are equipped, mark ourselves invalid but don't
-        flag a separate validation error for each piece -->
-    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
-      ~if this gear is not equipped, we're valid
-      validif (field[grIsEquip].value = 0)
-
-      ~if there are NOT multiple shields equipped, we're valid
-      validif (hero.tagcount[Clothing.?] <= 1)
-
-      ~mark the tab as invalid
-      linkvalid = 0
-      ]]></evalrule>
 
     </component>
 	
+  <!-- WeaponEnergy component
+        Energy weapons derive from this component.
+  -->
   <component
-    id="Headgear"
-    name="Headgear"
+    id="WeaponEnergy"
+    name="Energy Weapon"
     autocompset="no">
 
-    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
-    <identity group="Headgear"/>
-
-    <!-- All shields get the same tag for sorting purposes -->
-    <tag group="Armory" tag="Clothing"/>
-
-    <!-- If we're equipped, track the shield on the actor -->
-    <eval index="1" phase="Setup" priority="5000" name="Equip Clothing"><![CDATA[
-      if (field[grIsEquip].value > 0) then
-        perform forward[Headgear.?]
-        endif
+    <identity group="WeaponEnergy"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
       ]]></eval>
 
-    <!-- If multiple shields are equipped, mark ourselves invalid but don't
-        flag a separate validation error for each piece -->
-    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
-      ~if this gear is not equipped, we're valid
-      validif (field[grIsEquip].value = 0)
+    </component>
+	
+  <!-- WeaponSmallGun component
+        Small Gun weapons derive from this component.
+  -->
+  <component
+    id="WeaponSmallGun"
+    name="Small Gun Weapon"
+    autocompset="no">
 
-      ~if there are NOT multiple shields equipped, we're valid
-      validif (hero.tagcount[Headgear.?] <= 1)
-
-      ~mark the tab as invalid
-      linkvalid = 0
-      ]]></evalrule>
+    <identity group="WeaponSmallGun"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
 
     </component>
+ 
+  <!-- WeaponBigGun component
+        Big Gun weapons derive from this component.
+  -->
+ <component
+    id="WeaponBigGun"
+    name="Big Gun Weapon"
+    autocompset="no">
+
+    <identity group="WeaponBigGun"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+
+  <!-- WeaponThrowing component
+        Thrown weapons derive from this component.
+  -->
+  <component
+    id="WeaponThrowing"
+    name="Throwing Weapon"
+    autocompset="no">
+
+    <identity group="WeaponThrowing"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+ 
+  <!-- WeaponBigGun component
+        Big Gun weapons derive from this component.
+  -->
+ <component
+    id="WeaponBow"
+    name="Bow Weapon"
+    autocompset="no">
+
+    <identity group="WeaponBow"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+	
+  <!-- WeaponExplosive component
+        Explosive weapons derive from this component.
+  -->
+  <component
+    id="WeaponExplosive"
+    name="Explosives"
+    autocompset="no">
+
+    <identity group="WeaponExplosive"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+
   <!-- Ammunition component
         Bullets and the like derive from this component. Ammunition blends gear with
         a tracker that lets the user monitor the consumption of the ammunition.
@@ -918,550 +773,597 @@
     </component>
 
 	
-  <!-- ItemMod component -->
-  <component
-    id="ItemMod"
-    name="Item Modifications"
-    autocompset="no">
-	
-    <!-- Activation state of ability - we're not activated by default -->
-    <field
-      id="imodActive"
-      name="Is Activated?"
-      type="user"
-      minvalue="0"
-      maxvalue="1">
-      </field>
-	  
-    <field
-      id="imodRarity"
-      name="Rarity"
-      type="derived"
-      minvalue="0"
-      maxvalue="10">
-      </field>
-	  
-    <field
-      id="imodHPCost"
-      name="HP Cost of the Item"
-      type="derived">
-      </field>
-	  
-    <field
-      id="imodCost"
-      name="Cost of the Mod"
-      type="derived">
-      </field>
-
-    <field
-      id="imodPaid"
-      name="Amount Paid for the Item"
-      type="user">
-      </field>
-
-    <!-- Manage an optional user-assigned name for custom equipment -->
-    <field
-      id="imodUserNm"
-      name="User Name"
-      maxlength="100"
-      type="user">
-      </field>
- 
-    <field
-      id="imodNamePrefix"
-      name="Name Prefix"
-      type="derived"
-      maxlength="100">
-      </field>
-	  
-    <!-- This is to place a value for Crew Reduction -->
-    <field
-      id="imodValue"
-      name="Value"
-      type="user">
-      </field>
-
-    <!-- Manage an optional notes for custom equipment -->
-    <field
-      id="imodNotes"
-      name="Notes"
-      maxlength="250"
-      type="user">
-      </field>
-
-    <!-- Manage an optional notes for custom equipment -->
-    <field
-      id="imodExpr"
-      name="Mod Expression"
-      maxlength="500"
-      type="derived">
-      </field>
-	  
-    <!-- Damage bonus -->
-    <field
-      id="imodDmgBoTx"
-      name="Damage Bonus Text"
-      type="derived"
-      maxlength="5">
-      </field>
-
-    <identity group="ItemMod"/>
-    <identity group="Activated"/>
-	
-    <!-- Add the exclusion for Standard Modifications
-    <containerreq phase="Initialize" priority="500">
-      <match>Equipment.StandardMod</match>
-      !hero#Hero.NoStandardMods
-      </containerreq> -->
- 
-    <eval index="1" phase="Initialize" priority="400"><![CDATA[
-      ~empty script, but earlier than scripts on the picks in this gizmo
-      ]]></eval>
-   
-    <eval index="2" phase="Initialize" priority="500"><![CDATA[
-	  perform forward[Weapon.?]
-	  perform forward[ItemMod.?]
-      ]]></eval>
-	  
-    <!-- Set the actual slot cost and max duplicates for the item where it is based on the vehicle size
-    <eval index="3" phase="Setup" priority="5000" name="Modify slot cost and dups for Size"><![CDATA[
-   	  var VehSize   as number
-   	  var HalfSize  as number
-   	  var QuartSize as number
-   	  var TwiceSize as number
-   	  var NegHalfSz as number
-   	  var VehHull  as number
-   	  var HalfHull as number
-   	  var VehStrain  as number
-   	  var HalfStrain as number
-
-      if (ispick = 1) then
-        if (tagis[component.WeaponBase] = 0) then 
-          if (container.parent.tagis[component.Vehicle] <> 0) then 
-            VehSize = container.parent.field[vehSil].value
-            VehHull = container.parent.field[vehHullThreshold].value
-            field[grHardpointsOrig].value = field[grHardpointsUsed].value
-          
-            TwiceSize = VehSize * 2
-            HalfSize  = VehSize / 2
-            HalfSize  = round(HalfSize,0,1)
-            QuartSize  = VehSize / 4
-            QuartSize  = round(QuartSize,0,1)
-            NegHalfSz = HalfSize * -1
-     	    HalfHull = VehHull / 2
-     	    HalfHull = round(VehHull,0,1)
-     	      
-            endif
-          endif
-        endif
-      ]]></eval>   -->
-
-    <!-- Set the cost for use in the display header -->
-    <eval index="4" phase="Traits" name="Set Mod Cost" priority="6000"><![CDATA[
-	  ~ make sure we're on an item with a gizmo
-	  doneif (parent.isgizmo = 0)
-      
-	  parent.field[grCost].value += field[imodCost].value
-	  ~ parent.field[grHardpointsUsed].value += field[imodHPCost].value
-
-      ]]></eval>
-
-    <!-- This initializes and manages the user-generated name field,
-         the Notes field, the Trappings field, and sets up the item type text fields. -->
-    <eval index="5" phase="Initialize" name="Set User Name/Notes" priority="5000"><![CDATA[
-      if (field[imodUserNm].isempty = 0) then
-        trustme
-        parent.field[grUserName].text = field[imodUserNm].text
-        endif
-
-      ~notes
-      if (field[imodNotes].isempty = 0) then
-        trustme
-        parent.field[grNotes].text = splice(field[grNotes].text,field[imodNotes].text,"; ")
-        endif
-
-      ]]></eval>
-	  
-    <!-- If the mod is activated, designate it appropriately -->
-    <eval index="6" phase="Setup" priority="100"><![CDATA[
-      ~if we're not able to be activated, we don't qualify
-      doneif (tagis[User.Activation] = 0)
-
-      ~if we've been activated by the user, mark ourselves as activated; in addition,
-      ~forward our identity tag to our parent actor; this allows the actor to track
-      ~when abilities are activated and reflect the state to the user
-      if (field[imodActive].value <> 0) then
-        perform assign[Helper.Activated]
-        perform forward[Activated.?]
-        endif
-      ]]></eval>
-	  
-    <evalrule index="1" phase="Validate" priority="9000" message="Modification exceeds limit on number of uses per item."><![CDATA[
-      var totaluses as number
-
-      ~if (empty(field[grDupMax].text) = 1) then
-      ~  @valid = 1
-      ~  endif
-
-      ~totaluses = container.intersect[ItemMod,ItemMod,counttarget]
-
-      ~if (totaluses <= field[grDupMax].text) then
-      @valid = 1
-      ~  endif
-      ]]></evalrule>
-    </component>
-		
-  <component
-    id="ItemModHelper"
-    name="Item Mod Helper"
-	autocompset="yes">
-	
-    <field
-      id="imhItemName"
-      name="Item Name"
-      maxlength="100"
-      type="derived">
-      </field>
-	
-    <field
-      id="imhUserName"
-      name="Item Name"
-      maxlength="100"
-      type="user">
-      </field>	
-	  	  
-    <field
-      id="imhExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived">
-      </field>
-	  
-    <field
-      id="imhGearModExpr"
-      name="Gear Mod Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="component.GearMod">
-      </field>
-	  
-    <field
-      id="imhRangedModExpr"
-      name="Construction Type Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="component.RangedMod">
-      </field>
-
-    <field
-      id="imhUpgradeExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.Upgrade">
-      </field>	
-
-    <field
-      id="imhClothingExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.Clothing">
-      </field>
-	  
-    <field
-      id="imhRMReceiverExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.RangedReceiver">
-      </field>	
-
-    <field
-      id="imhRMBarrelExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.RangedBarrel">
-      </field>
-
-    <field
-      id="imhRMGripExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.RangedGrip">
-      </field>
-
-    <field
-      id="imhRMMagExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.RangedMag">
-      </field>	 
-
-    <field
-      id="imhRMSightsExpr"
-      name="Expression"
-      maxlength="500"
-	  defvalue="ItemModCat.RangedStock"
-      type="derived">
-      </field>	  
-
-    <field
-      id="imhRMMuzzleExpr"
-      name="Expression"
-      maxlength="500"
-	  defvalue="ItemModCat.RangedMuzzle"
-      type="derived">
-      </field>
-
-    <field
-      id="imhRMStockExpr"
-      name="Expression"
-      maxlength="500"
-	  defvalue="ItemModCat.RangedStock"
-      type="derived">
-      </field>
-
-    <field
-      id="imhCapacitorExpr"
-      name="Expression"
-      maxlength="500"
-      type="derived"
-	  defvalue="ItemModCat.Capacitor">
-      </field>
-	  
-    <field
-      id="imhMaxHP"
-      name="Max Hardpoints"
-      type="derived">
-      </field>
-	
-    <field
-      id="imhUsedHP"
-      name="Used Hardpoints"
-      type="derived">
-      </field>
-
-    <field
-      id="imhImpMaterial"
-      name="Implement Material"
-      maxlength="500"
-      type="derived"
-	  defvalue="component.Material">
-      </field>  
-	  
-    <eval index="1" phase="Initialize" priority="2100" name="Build Ranged Mod Expr" ><![CDATA[
-      ~ make sure we have a parent to grab tags from
-	  doneif (parent.isgizmo = 0)
-	  
-	  var temp as string
-	  
-	  var upgradeTags as string
-	  var clothTags as string
-	  var rmModTags as string
-	  var capTags as string
-	  
-	  clothTags = parent.tagids[ClothingMod.?," | "]
-	  upgradeTags = parent.tagids[MeleeMod.?," | "]
-	  rmModTags = parent.tagids[RangedMod.?," | "]
-	  capTags = parent.tagids[CapacitorMod.?," | "]
-	  
-	  perform forward[ItemMod.ItemModHelper]
-
-      if (empty(clothTags) = 0) then
-	    field[imhClothingExpr].text = "ItemModCat.Clothing & (" & clothTags & ")"
-		endif
-		
-	  if (empty(upgradeTags) = 0) then
-	    field[imhUpgradeExpr].text = "ItemModCat.Upgrade & (" & upgradeTags & ")"
-		endif
-	  
-	  if (empty(capTags) = 0) then
-	    field[imhCapacitorExpr].text = "ItemModCat.Capacitor & (" & capTags & ")"
-		endif
-		
-	  if (empty(rmModTags) = 0) then
-	    field[imhRMReceiverExpr].text = "ItemModCat.RangedReceiver & (" & rmModTags & ")"
-	    field[imhRMBarrelExpr].text = "ItemModCat.RangedBarrel & (" & rmModTags & ")"
-	    field[imhRMMagExpr].text = "ItemModCat.RangedMag & (" & rmModTags & ")"
-        field[imhRMGripExpr].text = "ItemModCat.RangedGrip & (" & rmModTags & ")"
-	    field[imhRMSightsExpr].text = "ItemModCat.RangedSights & (" & rmModTags & ")"
-	    field[imhRMMuzzleExpr].text = "ItemModCat.RangedMuzzle & (" & rmModTags & ")"
-	    field[imhRMStockExpr].text = "ItemModCat.RangedStock & (" & rmModTags & ")"
-		endif
-
-      ]]></eval>
-	  
-	<eval index="2" phase="Render" priority="10000"><![CDATA[
-	  ~ notify parent.field[name].text
-	  field[imhItemName].text = parent.field[name].text
-      ]]></eval> 
-	
-	<eval index="3" phase="Setup" priority="5000"><![CDATA[
-	  ~ notify parent.field[name].text
-	  trustme
-	  parent.field[UserName].text = field[imhUserName].text 
-      ]]></eval>
- 
-    <eval index="4" phase="Initialize" priority="100"><![CDATA[
-      ~empty script, but earlier than scripts on the picks in this gizmo
-      ]]></eval>
-	  
-    <!-- <eval index="2" phase="Final" priority="1000"><![CDATA[
-	  ~ compile all item mod notes and transfer to parent
-	  var itmNotes as string
-	  
-	  foreach pick in container from ItemMod 
-	    itmNotes = splice(itmNotes,eachpick.field[name].text,", ")
-	    nexteach
-      
-	  doneif (empty(itmNotes) <> 0)
-	  
-	  ~ parent.field[grNotes].text = "Item Stress (" & itmNotes & ")"
-	  
-	  notify parent.field[name].text & " - " & itmNotes
-	  
-      ]]></eval>  -->
-	  
-    </component>
-
-  <!-- GearMod component
-        Melee weapons derive from this component. Melee weapons auto-calculate their
-        net attack value based on the Melee skill.
+  <!-- Defense component
+        All armor and shields derive from this component. Defensive gear tracks a
+        defense rating and a strength requirement. The defense rating is added to the
+        character's overall Defense trait when the gear is equipped.
   -->
   <component
-    id="GearMod"
-    name="Gear Modification"
-    autocompset="no">
+    id="Defense"
+    name="Defense"
+    autocompset="no"
+    panellink="armory"
+    ispublic="no">
 
- 
+    <!-- Defense adjustment conferred by the equipment -->
     <field
-      id="modNamePrefix"
-      name="Name Prefix"
-      type="derived"
-      maxlength="100">
+      id="defPhysical"
+      name="Physical DR Adjustment"
+      type="derived">
+      </field>
+    <field
+      id="defEnergy"
+      name="Energy DR Adjustment"
+      type="derived">
+      </field>
+	<field
+      id="defRadiation"
+      name="Radiation DR Adjustment"
+      type="derived">
       </field>
 	  
-    <!-- Gear cost -->
+    <!-- Minimum strength required to use the equipment -->
     <field
-      id="modCost"
-      name="Cost"
-      minvalue="0"
-      defvalue="0"
-      type="derived">
-    </field>
+      id="defStrReq"
+      name="Minimum Strength"
+      type="static"
+	  defvalue="0">
+      </field>
 
-    <!-- Gear cost -->
+    <!-- Special details about the weapon -->
     <field
-      id="modWeight"
-      name="Weight"
-      defvalue="0"
-      type="derived">
-    </field>	
-	
-    <eval index="1" phase="Setup" priority="5000"><![CDATA[
-      ~ get ItemModCat tag on the mod
-	  var cat as string
-	  cat = tagids[ItemModCat.?,"|"]
-	  cat = replace(cat,"ItemModCat.","ItemModSelected.",0)
+      id="defSpecial"
+      name="Special"
+      type="derived"
+      maxlength="500">
+      </field>
+
+    <!-- Synthesized notes about the defense -->
+    <field
+      id="defNotes"
+      name="Notes"
+      type="derived"
+      maxlength="500">
+      </field>
+
+    <!-- If equipped and the minimum strength isn't satisfied, apply any penalty and
+        mark ourselves as not satisfying the requirement -->
+    <eval index="1" phase="Final" priority="5000"><![CDATA[
+      ~if the minimum strength is satisfied, there's nothing to do
+      doneif (field[defStrReq].value <= #trait[attrStr])
+
+      ~assign a tag to indicate the requirement isn't met
+      perform assign[Helper.BadStrReq]
+
+      ~if not equipped, there's nothing more to do
+      doneif (field[grIsEquip].value = 0)
+
+      ~apply any general penalty required (e.g. defense penalties or the like)
+      ~.... add code here ....
+      ]]></eval>
+
+    <!-- Apply effects of the equipped armor/shield -->
+    <eval index="2" phase="PreTraits" priority="5000">
+      <before name="Calc trtFinal"/>
+      <after name="Equipped"/><![CDATA[
+      ~if this gear is not equipped, skip it
+      doneif (field[grIsEquip].value = 0)
+
+      ~apply the appropriate trait adjustments for the equipment
+      ~#traitbonus[trDefense] += field[defPhysical].value
 	  
-	  perform parent.assignstr[cat]
-	  if (tagis[Helper.CostRebate] <> 0) then
-	    parent.field[grCost].value -= field[modCost].value
-	  else
-	    parent.field[grCost].value += field[modCost].value
+	  if (#isheadarmor[] <> 0) then
+		#headDRPhys[] += field[defPhysical].value
+		#headDREner[] += field[defEnergy].value
+		#headDRRad[] += field[defRadiation].value
 	    endif
 		
-      ]]></eval>
-	
-    <eval index="2" phase="Render" priority="5000"><![CDATA[
-      ~ set prefixed name
-	  var name as string
-	  doneif (field[modNamePrefix].isempty <> 0)
-	  
-	  name = field[modNamePrefix].text & " "
-	  name &= parent.field[name].text
-	  
-	  parent.field[livename].text = name
-	  
-      ]]></eval>
-    </component>
-	
-  <component
-    id="ClothingMod"
-    name="Clothing Modification"
-    autocompset="no">
-
-    <identity group="ClothingMod"/> 
-	
-    <eval index="1" phase="Setup" priority="5000"><![CDATA[
-      ~ dummy
-	  
-      ]]></eval>
-
-    </component>	
-  <component
-    id="CapacitorMod"
-    name="Capacitor Energy Modification"
-    autocompset="no">
-
-    <identity group="CapacitorMod"/> 
-	
-    <eval index="1" phase="Setup" priority="5000"><![CDATA[
-      ~ dummy
-	  
-      ]]></eval>
-
-    </component>
-  <component
-    id="MeleeMod"
-    name="Melee Weapon Modification"
-    autocompset="no">
-
-    <identity group="MeleeMod"/> 
-	
-    <eval index="1" phase="Setup" priority="5000"><![CDATA[
-      ~ dummy
-	  
-      ]]></eval>
-
-    </component>
-	
-  <component
-    id="RangedMod"
-    name="Ranged Weapon Modification"
-    autocompset="no">
-
-    <identity group="RangedMod"/> 
-	
-    <eval index="1" phase="Render" priority="5000"><![CDATA[
-	  doneif (parent.isgizmo = 0)
-	  
-	  if (tagis[ItemModCat.RangedStock] <> 0) then
-	    if (parent.field[livename].isempty = 0) then
-	      parent.field[livename].text &= " Rifle"
-		else 
-		  parent.field[livename].text = parent.field[name].text & " Rifle"
-		  endif
+      if (#istorsoarmor[] <> 0) then
+		#torsoDRPhys[] += field[defPhysical].value
+		#torsoDREner[] += field[defEnergy].value
+		#torsoDRRad[] += field[defRadiation].value
 	    endif
+	  
+	  if (#isleftarmarmor[] <> 0) then
+		#armleftDRPhys[] += field[defPhysical].value
+		#armleftDREner[] += field[defEnergy].value
+		#armleftDRRad[] += field[defRadiation].value
+	    endif
+	  
+	  if (#isrightarmarmor[] <> 0) then
+		#armrightDRPhys[] += field[defPhysical].value
+		#armrightDREner[] += field[defEnergy].value
+		#armrightDRRad[] += field[defRadiation].value
+	    endif
+	  
+	  if (#isleftlegarmor[] <> 0) then
+		#legleftDRPhys[] += field[defPhysical].value
+		#legleftDREner[] += field[defEnergy].value
+		#legleftDRRad[] += field[defRadiation].value
+	    endif
+	  
+	  if (#isrightlegarmor[] <> 0) then
+		#legrightDRPhys[] += field[defPhysical].value
+		#legrightDREner[] += field[defEnergy].value
+		#legrightDRRad[] += field[defRadiation].value
+	    endif
+		
+      if (#isopticsarmor[] <> 0) then
+		#opticDRPhys[] += field[defPhysical].value
+		#opticDREner[] += field[defEnergy].value
+		#opticDRRad[] += field[defRadiation].value
+	    endif
+		
+      if (#ismainbodyarmor[] <> 0) then
+		#mainbodyDRPhys[] += field[defPhysical].value
+		#mainbodyDREner[] += field[defEnergy].value
+		#mainbodyDRRad[] += field[defRadiation].value
+	    endif
+		
+      if (#isthrusterarmor[] <> 0) then
+		#thrusterDRPhys[] += field[defPhysical].value
+		#thrusterDREner[] += field[defEnergy].value
+		#thrusterDRRad[] += field[defRadiation].value
+	    endif
+		
+      if (#isarm1armor[] <> 0) then
+		#arm1DRPhys[] += field[defPhysical].value
+		#arm1DREner[] += field[defEnergy].value
+		#arm1DRRad[] += field[defRadiation].value
+	    endif
+		
+      if (#isarm2armor[] <> 0) then
+		#arm2DRPhys[] += field[defPhysical].value
+		#arm2DREner[] += field[defEnergy].value
+		#arm2DRRad[] += field[defRadiation].value
+	    endif
+		
+      if (#isarm3armor[] <> 0) then
+		#arm3DRPhys[] += field[defPhysical].value
+		#arm3DREner[] += field[defEnergy].value
+		#arm3DRRad[] += field[defRadiation].value
+	    endif
+		
+		
+      ]]></eval>
+
+    <!-- Assign any derived special notes to the appropriate field -->
+    <eval index="3" phase="Render" priority="1000"><![CDATA[
+      var effects as string
+      var qualities as string
+      var special as string
+	  
+      ~append any special attributes appropriately (if any)
+      var attribs as string
+      attribs = tagnames[ArmorSpecial.?,", "]
+      special = splice(special,attribs,", ")
+
+      ~append any special details for this weapon
+      special = splice(special,field[defSpecial].text,", ")
+
+      ~we've synthesized the notes for the weapon
+      field[defNotes].text = special
+      ]]></eval>
+
+    <!-- Check the strength requirement, which we only treat as a problem for things. -->
+    <prereq message="Strength requirement not met.">
+      <validate><![CDATA[
+        ~if this is a pick, we're valid
+        ~NOTE! We assume that equipping an item without the strength just applies penalties.
+        validif (@ispick <> 0)
+
+        ~verify whether we meet the strength requirement
+        validif (#trait[attrStr] >= altthing.field[defStrReq].value)
+        ]]></validate>
+      </prereq>
+
+    </component>
+
+  <!-- Armor component
+        Armor derives from this component. The tracking of multiple pieces of armor
+        on the character is automatically managed.
+  -->
+  <component
+    id="Armor"
+    name="Armor"
+    autocompset="no">
+
+    <!-- Each piece of armor needs its own identity tag to detect multiple pieces being equipped -->
+    <identity group="Armor"/>
+	
+    <!-- Each weapon has an identity used to limit mods to that specific weapon -->
+    <identity group="ItemModSpecArmor"/>
+
+    <!-- All armor gets the same tag for sorting purposes -->
+    <tag group="Armory" tag="Armor"/>
+
+    <!-- If we're equipped and not a natural form, track the armor on the actor -->
+    <eval index="1" phase="Setup" priority="5000" name="Equip Armor"><![CDATA[
+      if (field[grIsEquip].value > 0) then
+        if (tagis[Equipment.Natural] = 0) then
+          perform forward[Armor.?]
+          endif
+        endif
+      ]]></eval>
+
+    <!-- If we're equipped and not a natural form, track the armor on the actor -->
+    <eval index="1" phase="Setup" priority="5000" name="Show Location On Hero"><![CDATA[
+	  var locTag as string
+	  locTag = tagids[ArmorLoc.?,"|"]
+	  locTag = replace(locTag,"ArmorLoc.","ArmorWornOn.",0)
+	  
+      if (field[grIsEquip].value > 0) then
+        if (tagis[Equipment.Natural] = 0) then
+          perform hero.assignstr[locTag]
+          endif
+        endif
+      ]]></eval>
+
+    <!-- If multiple pieces of armor are equipped, mark ourselves invalid but don't
+        flag a separate validation error for each piece -->
+    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
+      ~if this gear is not equipped, we're valid
+      validif (field[grIsEquip].value = 0)
+
+      ~if there are NOT multiple pieces of armor equipped, we're valid
+      validif (hero.tagcount[Armor.?] <= 1)
+
+      ~mark the tab as invalid
+      linkvalid = 0
+      ]]></evalrule>
+
+    </component>
+
+  <!-- Shield component
+        Shields derive from this component. The tracking of multiple shields on the
+        character is automatically managed.
+  -->
+  <component
+    id="Shield"
+    name="Shield"
+    autocompset="no">
+
+    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
+    <identity group="Shield"/>
+
+    <!-- All shields get the same tag for sorting purposes -->
+    <tag group="Armory" tag="Shield"/>
+
+    <!-- Shield require one hand by default -->
+    <tag group="Equipment" tag="Hand"/>
+
+    <!-- If we're equipped, track the shield on the actor -->
+    <eval index="1" phase="Setup" priority="5000" name="Equip Shield"><![CDATA[
+      if (field[grIsEquip].value > 0) then
+        perform forward[Shield.?]
+        endif
+      ]]></eval>
+
+    <!-- If multiple shields are equipped, mark ourselves invalid but don't
+        flag a separate validation error for each piece -->
+    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
+      ~if this gear is not equipped, we're valid
+      validif (field[grIsEquip].value = 0)
+
+      ~if there are NOT multiple shields equipped, we're valid
+      validif (hero.tagcount[Shield.?] <= 1)
+
+      ~mark the tab as invalid
+      linkvalid = 0
+      ]]></evalrule>
+
+    </component>
+
+  <!-- Apparel component
+        Any Apparel derive from this component. This includes Clothing, Outfit and
+		Headgear.
+  -->
+  <component
+    id="Apparel"
+    name="Base Apparel"
+    autocompset="no">
+
+    <identity group="Apparel"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
       ]]></eval>
 
     </component>
+
+  <!-- Clothing component
+        Clothing armor derives from this component. 
+  -->
+  <component
+    id="Clothing"
+    name="Clothing"
+    autocompset="no">
+	  
+    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
+    <identity group="Clothing"/>
+	
+    <!-- Each weapon has an identity used to limit mods to that specific weapon -->
+    <identity group="ItemModSpecArmor"/>
+
+    <!-- All shields get the same tag for sorting purposes -->
+    <tag group="Armory" tag="Clothing"/>
+    <tag group="ArmorType" tag="ApparelClothing"/>
+	  
+    <!-- If we're equipped, track the shield on the actor -->
+    <eval index="1" phase="Setup" priority="5000" name="Equip Clothing"><![CDATA[
+      if (field[grIsEquip].value > 0) then
+        perform forward[Clothing.?]
+        endif
+      ]]></eval>
+
+    <!-- If multiple shields are equipped, mark ourselves invalid but don't
+        flag a separate validation error for each piece -->
+    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
+      ~if this gear is not equipped, we're valid
+      validif (field[grIsEquip].value = 0)
+
+      ~if there are NOT multiple shields equipped, we're valid
+      validif (hero.tagcount[Clothing.?] <= 1)
+
+      ~mark the tab as invalid
+      linkvalid = 0
+      ]]></evalrule>
+
+    </component>
+	
+	  <!-- Outfit component
+        Clothing armor derives from this component. 
+  -->
+  <component
+    id="Outfit"
+    name="Outfit"
+    autocompset="no">
+	  
+    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
+    <identity group="Outfit"/>
+	
+    <!-- Each weapon has an identity used to limit mods to that specific weapon -->
+    <identity group="ItemModSpecArmor"/>
+
+    <!-- All shields get the same tag for sorting purposes -->
+    <tag group="Armory" tag="Clothing"/>
+    <tag group="Equipment" tag="Outfit"/>
+    <tag group="ArmorType" tag="ApparelOutfit"/>
+	  
+    <!-- If we're equipped, track the shield on the actor -->
+    <eval index="1" phase="Setup" priority="5000" name="Equip Outfit"><![CDATA[
+      if (field[grIsEquip].value > 0) then
+        perform forward[Outfit.?]
+        endif
+		
+      ]]></eval>
+
+    <!-- If multiple shields are equipped, mark ourselves invalid but don't
+        flag a separate validation error for each piece -->
+    <evalrule index="1" phase="Validate" priority="10000" message="?" issilent="yes"><![CDATA[
+      ~if this gear is not equipped, we're valid
+      validif (field[grIsEquip].value = 0)
+
+      ~if there are NOT multiple shields equipped, we're valid
+      validif (hero.tagcount[Clothing.?] <= 1)
+
+      ~mark the tab as invalid
+      linkvalid = 0
+      ]]></evalrule>
+
+    </component>
+	
+  <component
+    id="Headgear"
+    name="Headgear"
+    autocompset="no">
+
+    <!-- Each shield needs its own identity tag to detect multiple shields being equipped -->
+    <identity group="Headgear"/>
+
+    <!-- All shields get the same tag for sorting purposes -->
+    <tag group="Armory" tag="Clothing"/>
+    <tag group="ArmorType" tag="ApparelHeadgear"/>
+
+    <!-- If we're equipped, track the shield on the actor -->
+    <eval index="1" phase="Setup" priority="5000" name="Equip Clothing"><![CDATA[
+      if (field[grIsEquip].value > 0) then
+        perform forward[Headgear.?]
+        endif
+      ]]></eval>
+
+    <!-- If multiple headgear are equipped, mark ourselves invalid but don't
+        flag a separate validation error for each piece -->
+    <evalrule index="1" phase="Validate" priority="10000" message="Too many pieces of headgear equipped!" issilent="yes"><![CDATA[
+      ~if this gear is not equipped, we're valid
+      validif (field[grIsEquip].value = 0)
+
+      ~if there are NOT multiple headgear equipped, we're valid
+      validif (hero.tagcount[Headgear.?] <= 1)
+
+      ~mark the tab as invalid
+      linkvalid = 0
+      ]]></evalrule>
+
+    </component>
+
+  <!-- PowerArmorBase component
+        Base Power Armor component
+  -->
+  <component
+    id="PowerArmorBase"
+    name="Base Power Armor"
+    autocompset="no">
+
+    <identity group="PowerArmor"/> 
+    <identity group="PowerArmorBase"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+      ~ the frame is the key to PA, so indicate on the Hero
+	  perform forward[PowerArmor.?]
+	  
+	  ~ Frames are equippable so remove the NoHands tag
+	  perform delete[Equipment.NoHands]
+      ]]></eval>
+
+    </component>
+	
+  <component
+    id="PowerArmor"
+    name="Power Armor Part"
+    autocompset="no">
+	
+	<field
+      id="paHealthPoints"
+      name="Health Points"
+      type="derived">
+      </field>
+	
+	<field
+      id="paComponents"
+      name="Installed Components"
+      type="derived"
+      maxlength="300">
+      </field>
+	
+    <identity group="ItemModSpecPwrArm"/>
+	
+    <tag group="Equipment" tag="NoHands"/>
+		
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      
+	  ~ dummy
+      ]]></eval>
+	  
+    <!-- Each talent costs 1 slot --> 
+    <eval index="3" phase="Traits" priority="10000">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+      ~dummy
+      
+      ]]></eval> 
+	  
+    </component>
+
+  <component
+    id="Robot"
+    name="Robot Body Part"
+    autocompset="no"
+	panellink="origin">
+
+    <identity group="RobotPart"/> 
+    <identity group="RobotHasPart"/> 
+	
+    <shadow target="hero">Helper.Shadow</shadow>
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      perform forward[RobotHasPart.?]
+      ]]></eval>
+	  
+    <!-- Each talent costs 1 slot --> 
+    <eval index="3" phase="Traits" priority="10000">
+      <before name="Calc resLeft"/>
+      <after name="Bound trtUser"/><![CDATA[
+      ~if this skill is not added directly to the hero (i.e. an advance), skip it entirely
+      doneif (origin.ishero = 0)
+
+      ~adjust the resource appropriately
+	  ~ decrement part resource
+	  if (tagis[RobotBody.Arm] <> 0) then
+	    hero.child[resRobotArms].field[resSpent].value += 1
+	    endif
+      
+	  if (tagis[RobotBody.Body] <> 0) then
+	    hero.child[resRobotBody].field[resSpent].value += 1
+	    endif
+      ]]></eval> 
+	  
+    </component>	
 	
   <!-- Define various component sets associated with the components defined above.
   -->
 
   <!-- No compsets are auto-defined for the component -->
-
+  <!-- Explosive - Explosive ranged weapons -->
+  <compset
+    id="Explosive"
+    stackable="yes">
+    <compref component="WeaponBase"/>
+    <compref component="WeaponExplosive"/>
+    <compref component="WeaponRanged"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
+  <!-- Big Guns - big gun style ranged weapons -->
+  <compset
+    id="Bow"
+    stackable="yes">
+    <compref component="WeaponBase"/>
+    <compref component="WeaponBow"/>
+    <compref component="WeaponRanged"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
+  <!-- Small Guns - small gun style ranged weapons -->
+  <compset
+    id="SmallGun"
+    stackable="yes">
+    <compref component="WeaponBase"/>
+    <compref component="WeaponSmallGun"/>
+    <compref component="WeaponRanged"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
+  <!-- Big Guns - big gun style ranged weapons -->
+  <compset
+    id="BigGun"
+    stackable="yes">
+    <compref component="WeaponBase"/>
+    <compref component="WeaponBigGun"/>
+    <compref component="WeaponRanged"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
+  <!-- Energy - energy-based ranged weapons -->
+  <compset
+    id="Throwing"
+    stackable="yes">
+    <compref component="WeaponBase"/>
+    <compref component="WeaponThrowing"/>
+    <compref component="WeaponRanged"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
+  <!-- Energy - energy-based ranged weapons -->
+  <compset
+    id="Energy"
+    stackable="yes">
+    <compref component="WeaponBase"/>
+    <compref component="WeaponEnergy"/>
+    <compref component="WeaponRanged"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
   <!-- Ranged - ranged weapons -->
   <compset
     id="Ranged"
     stackable="yes">
     <compref component="WeaponBase"/>
-    <compref component="WeapRange"/>
+    <compref component="WeaponRanged"/>
     <compref component="Equippable"/>
     <compref component="Gear"/>
     <compref component="Custom"/>
@@ -1472,7 +1374,7 @@
     id="Melee"
     stackable="yes">
     <compref component="WeaponBase"/>
-    <compref component="WeapMelee"/>
+    <compref component="WeaponMelee"/>
     <compref component="Equippable"/>
     <compref component="Gear"/>
     <compref component="Custom"/>
@@ -1508,11 +1410,24 @@
     <compref component="Gear"/>
     </compset>
 
-  <!-- Shield -->
+  <!-- Clothing -->
   <compset
     id="Clothing"
     stackable="yes">
     <compref component="Clothing"/>
+    <compref component="Apparel"/>
+    <compref component="Defense"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>
+	
+  <!-- Outfit -->
+  <compset
+    id="Outfit"
+    stackable="yes">
+    <compref component="Outfit"/>
+    <compref component="Apparel"/>
     <compref component="Defense"/>
     <compref component="Equippable"/>
     <compref component="Gear"/>
@@ -1523,6 +1438,7 @@
     id="Headgear"
     stackable="yes">
     <compref component="Headgear"/>
+    <compref component="Apparel"/>
     <compref component="Defense"/>
     <compref component="Equippable"/>
     <compref component="Gear"/>
@@ -1564,45 +1480,33 @@
     <compref component="Vehicle"/>
     <compref component="Gear"/>
     </compset>
-	
-  <compset
-    id="ItemMod">
-    <compref component="ItemMod"/>
-    </compset>
-	
-  <compset
-    id="GearMod">
-    <compref component="GearMod"/>
-    </compset>
 
+  <!-- Robot Body -->
   <compset
-    id="ClothingMod">
-    <compref component="ClothingMod"/>
-    <compref component="GearMod"/>
+    id="Robot">
+    <compref component="Robot"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>	
+
+  <!-- Power Armor -->
+  <compset
+    id="PowerArmorBase">
+    <compref component="PowerArmor"/>
+    <compref component="PowerArmorBase"/>
+    <compref component="Defense"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
     </compset>	
 	
   <compset
-    id="CapacitorMod">
-    <compref component="CapacitorMod"/>
-    <compref component="GearMod"/>
-    </compset>
-	
-  <compset
-    id="RangedMod">
-    <compref component="RangedMod"/>
-    <compref component="GearMod"/>
-    </compset>
-	
-  <compset
-    id="MeleeMod">
-    <compref component="MeleeMod"/>
-    <compref component="GearMod"/>
-    </compset>
+    id="PowerArmor">
+    <compref component="PowerArmor"/>
+    <compref component="Defense"/>
+    <compref component="Equippable"/>
+    <compref component="Gear"/>
+    <compref component="Custom"/>
+    </compset>	
 
-  <!-- form="itemmodgiz"> -->
-  <entity
-    id="ItemMods"
-    form="itemmodgiz">
-      <bootstrap thing="ItemModHelper"/>
-    </entity>
   </document>

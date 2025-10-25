@@ -1,348 +1,105 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<!-- This file contains the assortment of skills for the game system. Note that each
-      skill is linked to an associated attribute for the character. This linkage allows
-      the value of the skill to easily incorporate the effects of the linked attribute
-      via a script on the component.
--->
-
 <document signature="Hero Lab Data">
-
-  <!-- -->
-  <thing
-    id="skAthletics"
-    name="Athletics"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Lifting, pushing, pulling, jumping, running, and swimming">
+  <thing id="skAthletics" name="Athletics" description="Athletics describes your ability to apply your physical strength and agility, know your limits, but also how to focus during physical exertion.\n\nIts default S.P.E.C.I.A.L. attribute is Strength but it can also be used with Agility or Endurance when facing physical adversity. You might use Athletics when trying to push, pull, or lift objects, jump, climb, swim, or run." compset="Skill" summary="Lifting, pushing, pulling, jumping, running, and swimming" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Sam"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrStr"/>
     </thing>
-	
-  <!-- -->
-  <thing
-    id="skBarter"
-    name="Barter"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="">
+  <thing id="skBarter" name="Barter" description="Barter describes your skill with money: how savvy you are with your wealth, how easily you can make deals, or how easily you can negotiate someone down on price.\n\nIts default S.P.E.C.I.A.L. attribute is Charisma but could also be used with Perception to see how willing someone might be to change their demands, or Intelligence to know the true caps value of something. You might use Barter trying to buy or sell items, or negotiate the cost of a service." compset="Skill" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Bar"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrCha"/>
     </thing>
-	
-  <!-- -->
-  <thing
-    id="skBigGuns"
-    name="Big Guns"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Using heavy weapons such as miniguns, Fat Mans, gatling lasers, and gauss weapons">
+  <thing id="skBigGuns" name="Big Guns" description="Big Guns is the skill that describes the training to use large weapons, from Fat Mans to gatling lasers, and everything in between.\n\nIts default S.P.E.C.I.A.L. attribute is Endurance but could also be used with Strength when you need to brace a weapon, or Agility when precision matters. You use Big Guns with weapons like miniguns, rocket launchers, Fat Mans, and gatling lasers." compset="Skill" summary="Using heavy weapons such as miniguns, Fat Mans, gatling lasers, and gauss weapons" uniqueness="unique">
     <fieldval field="trtAbbrev" value="BigG"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrEnd"/>
     </thing>
-	
-  <!-- -->
-  <thing
-    id="skEnergyWpns"
-    name="Energy Weapons"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Using energy weapons such as laser guns, plasma guns, and gauss weapons">
+  <thing id="skEnergyWpns" name="Energy Weapons" description="Energy Weapons is the skill to use any time you fire energy-based firearms like laser guns, plasma guns, gauss weaponry, and any other small arm that fires a bolt of energy.\n\nIts default S.P.E.C.I.A.L. attribute is Perception but could be used with Intelligence if you were trying to modify and repair an energy weapon, or Agility when you are trying to disarm a trap that uses an energy weapon. You use Energy Weapons with weapons like laser pistols, plasma rifles, the gauss rifle, the microwave emitter, or a laser musket." compset="Skill" summary="Using energy weapons such as laser guns, plasma guns, and gauss weapons" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Ener"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrPer"/>
     </thing>
-	
-  <!-- -->
-  <thing
-    id="skExplosives"
-    name="Explosives"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Blowing things up, or stopping them from doing that">
+  <thing id="skExplosives" name="Explosives" description="Whether you throw them, place them as a trap, or remotely detonate them, you use the Explosives skill with any kind of explosive device.\n\nIts default S.P.E.C.I.A.L. attribute is Perception but you can also use Strength to throw a grenade as far as you can, or Agility to try to get close to a mine without setting it off. You use Explosives with frag grenades and mines, Molotov cocktails, Nuka grenades, plasma grenades, pulse grenades, mines, and dynamite." compset="Skill" summary="Blowing things up, or stopping them from doing that" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Ener"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrPer"/>
     </thing>
-
-  <thing
-    id="skLockpick"
-    name="Lockpick"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Opening locks without the key">
+  <thing id="skLockpick" name="Lockpick" description="The Lockpick skill reflects your knowledge of manipulating physical locks and opening them without a key.\n\nIts default S.P.E.C.I.A.L. attribute is Perception but could be used with Agility, or Strength if you’re trying to force a door open without breaking the lock. You might use Lockpick to break into a safe, or open a locked door." compset="Skill" summary="Opening locks without the key" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Ener"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrPer"/>
     </thing>
-
-  <thing
-    id="skMedicine"
-    name="Medicine"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Healing people and stabilizing the dying">
+  <thing id="skMedicine" name="Medicine" description="Medicine is the skill that covers all medical application and knowledge, from first aid to pharmacology, surgery, and healing radiation poisoning.\n\nIts default S.P.E.C.I.A.L. attribute is Intelligence, but you might use Agility to perform surgery, or Charisma to counsel a companion. You use Medicine to stabilize your companions in combat, and help heal their injuries." compset="Skill" summary="Healing people and stabilizing the dying" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Med"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrInt"/>
     </thing>
-
-  <thing
-    id="skMelee"
-    name="Melee Weapons"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Fighting people with bats, clubs, knives, boards, wrenches, and sledges">
+  <thing id="skMelee" name="Melee Weapons" description="The Melee Weapons skill describes how able you are to inflict damage and deflect blows with one-handed and two-handed melee weapons.\n\nIts default S.P.E.C.I.A.L. attribute is Strength but you might use Agility to parry a melee attack, or Charisma to threaten someone. You use Melee Weapons to make melee attacks in combat." compset="Skill" summary="Fighting people with bats, clubs, knives, boards, wrenches, and sledges" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Mel"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrStr"/>
     </thing>
-
-  <thing
-    id="skPilot"
-    name="Pilot"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Flying and driving">
+  <thing id="skPilot" name="Pilot" description="The Pilot skill covers your ability to operate vehicles, from buggies and motorcycles, to Vertibirds and tanks.\n\nIts default S.P.E.C.I.A.L. attribute is Perception but you might use Strength to pull a buggy out of a skid, or Agility to land a Vertibird within a tight landing zone. You use Pilot to drive any ground vehicles, or pilot any flying vehicles." compset="Skill" summary="Flying and driving" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Pilot"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrPer"/>
     </thing>
-
-  <thing
-    id="skRepair"
-    name="Repair"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Fixing stuff, crafting things, and building machines">
+  <thing id="skRepair" name="Repair" description="Building and repairing items, from guns to buildings, simple traps to complex mechanisms, fall under the Repair skill.\n\nIts default S.P.E.C.I.A.L. attribute is Intelligence but you might use Strength to get some heavy machinery operating again, or Perception to investigate a problem with an engine. You use Repair to fix and modify weapons, repair robots, craft items from scratch, or build defenses." compset="Skill" summary="Fixing stuff, crafting things, and building machines" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Rep"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrInt"/>
     </thing>
-
-  <thing
-    id="skScience"
-    name="Science"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Hacking, programming, and brewing chems">
+  <thing id="skScience" name="Science" description="The Science skill covers academic and practical knowledge, but is practically applied in the wasteland through computer coding, robotic programming, and brewing chems.\n\nIts default S.P.E.C.I.A.L. attribute is Intelligence but you might use it with Perception to observe a test subject, or Charisma to convince people of something using your scientific knowledge. You use Science to hack computers, brew chems, and solve problems with science!" compset="Skill" summary="Hacking, programming, and brewing chems" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Sci"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrInt"/>
     </thing>
-
-  <thing
-    id="skSmallGuns"
-    name="Small Guns"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Shooting people with pistols, rifles, and shotguns">
+  <thing id="skSmallGuns" name="Small Guns" description="The Small Guns skill describes your accuracy and working knowledge of single-shot and automatic pistols, rifles, and shotguns.\n\nIts default S.P.E.C.I.A.L. attribute is Agility but you might use it with Charisma to hold someone at gunpoint or Endurance to remain trained on a target. You use Small Guns to make ranged attacks in combat with pistols, rifles, and shotguns." compset="Skill" summary="Shooting people with pistols, rifles, and shotguns" uniqueness="unique">
     <fieldval field="trtAbbrev" value="SmlG"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrAgi"/>
     </thing>
-
-  <thing
-    id="skSneak"
-    name="Sneak"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Moving quietly and staying hidden">
+  <thing id="skSneak" name="Sneak" description="The Sneak skill covers stealthy movement and any physical actions you take not to be noticed.\n\nIts default S.P.E.C.I.A.L. attribute is Agility but you might use it with Perception to find enemies hiding in ambush, or Intelligence to case a building. You use Sneak to move silently or stay hidden." compset="Skill" summary="Moving quietly and staying hidden" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Sne"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrAgi"/>
     </thing>
-
-  <thing
-    id="skSpeech"
-    name="Speech"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Making friends, influencing people, and lying to them if you have to">
+  <thing id="skSpeech" name="Speech" description="The Speech skill covers the techniques you’ve learned to communicate with other people, convincing them with strong arguments, or lying to them and not getting caught.\n\nIts default S.P.E.C.I.A.L. attribute is Charisma but you might use it with Intelligence to write a speech, or Perception to figure out how susceptible your mark might be to your lie. You use Speech to convince people of your arguments, inspire others, or convincingly deceive them." compset="Skill" summary="Making friends, influencing people, and lying to them if you have to" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Spe"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrCha"/>
     </thing>
-
-  <thing
-    id="skSurvival"
-    name="Survival"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Foraging, hunting, cooking, and enduring the wastes">
+  <thing id="skSurvival" name="Survival" description="The Survival skill covers all manner of practical bush craft, like hunting, foraging, fishing, building makeshift shelters, and lighting fires.\n\nIts default S.P.E.C.I.A.L. attribute is Endurance but you might also use it with Perception to figure out how long you have until nightfall, or Charisma to charm animals. You might use Survival to build a base camp, or test your resilience against malnourishment or dehydration." compset="Skill" summary="Foraging, hunting, cooking, and enduring the wastes" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Sur"/>
-
-    <!-- If this skill should be shown as an out-of-combat skill on the TacCon, assign this tag
-    <tag group="DashTacCon" tag="NonCombat"/>
-    -->
-
-    <!-- Specify the attribute to which this skill is linked -->
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrEnd"/>
     </thing>
-	
-  <!-- Throwing Skill -->
-  <thing
-    id="skThrowing"
-    name="Throwing"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Launching weapons from your hands, like spears or knives">
+  <thing id="skThrowing" name="Throwing" description="The Throwing skill describes your ability to effectively make attacks with thrown weapons like javelins, knives, and improvised weapons. Its default S.P.E.C.I.A.L. attribute is Agility but you might also use Strength with heavy objects or Perception to judge distance. You use Throwing to make thrown attacks with specific weapons." compset="Skill" summary="Launching weapons from your hands, like spears or knives" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Throw"/>
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrAgi"/>
     </thing>
-
-  <!-- Unarmed Skill
-        NOTE! This skill is included because melee weapons rely on it to calculate
-              attack values.
-  -->
-  <thing
-    id="skUnarmed"
-    name="Unarmed"
-    compset="Skill"
-    isunique="yes"
-    description="Description goes here"
-	summary="Fighting without a weapon by making unarmed attacks">
+  <thing id="skUnarmed" name="Unarmed" description="The Unarmed skill covers your ability to fight with your fists. Its default S.P.E.C.I.A.L. attribute is Strength but you might also use Agility, or Charisma when threatening or intimidating someone. You use the Unarmed skill to make unarmed attacks in combat." compset="Skill" summary="Fighting without a weapon by making unarmed attacks" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Unarm"/>
+    <tag group="HeroType" tag="PC"/>
     <link linkage="attribute" thing="attrStr"/>
     </thing>
-
-
-  <thing
-    id="skCreMelee"
-    name="Melee"
-    compset="Skill"
-    isunique="yes"
-    description="Melee is for all unarmed and melee attacks. All creatures have this.">
+  <thing id="skCreMelee" name="Melee" description="Melee is for all unarmed and melee attacks. All creatures have this." compset="Skill" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Mel"/>
-	
-    <!-- Tag as a creature skill -->
     <tag group="HeroType" tag="Creature"/>
     <tag group="Skill" tag="TagSkill"/>
-
-    <!-- Specify the attribute to which this skill is linked -->
     <link linkage="attribute" thing="attrBod"/>
     </thing>
-
-  <thing
-    id="skCreGuns"
-    name="Guns"
-    compset="Skill"
-    isunique="yes"
-    description="Guns is for all attacks with firearms, energy weapons, explosives, and throwing weapons. If a creature has a Guns rating of –, it cannot make ranged attacks at all.">
+  <thing id="skCreGuns" name="Guns" description="Guns is for all attacks with firearms, energy weapons, explosives, and throwing weapons. If a creature has a Guns rating of –, it cannot make ranged attacks at all." compset="Skill" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Gun"/>
-	
-    <!-- Tag as a creature skill -->
     <tag group="HeroType" tag="Creature"/>
     <tag group="Skill" tag="TagSkill"/>
     <tag group="Helper" tag="NoSkillValue"/>
-
-    <!-- Specify the attribute to which this skill is linked -->
     <link linkage="attribute" thing="attrBod"/>
     </thing>
-
-  <thing
-    id="skCreOther"
-    name="Other"
-    compset="Skill"
-    isunique="yes"
-    description="Other is for any other skill tests.">
+  <thing id="skCreOther" name="Other" description="Other is for any other skill tests." compset="Skill" uniqueness="unique">
     <fieldval field="trtAbbrev" value="Oth"/>
-
-    <!-- Tag as a creature skill -->
     <tag group="HeroType" tag="Creature"/>
-
-    <!-- Specify the attribute to which this skill is linked
-    <link linkage="attribute" thing="attrBod"/>  -->
-	
     </thing>
-	
   </document>

@@ -18,7 +18,57 @@
 <document signature="Hero Lab Data">
 	
   <!-- Item Mod portal -->
+  <portal
+    id="imRobotArmMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RobotMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRobotArmExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RobotArm</list>
+      <headertitle><![CDATA[		
+		@text = "Robot Arm Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
 
+  <!-- Item Mod portal -->
+  <portal
+    id="imRobotModuleMods"
+    style="tblNormal">
+    <table_dynamic
+      component="RobotMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhRobotModuleExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.RobotModule</list>
+      <headertitle><![CDATA[		
+		@text = "Robot Modules" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Module"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
   <portal
     id="imCapacitorMods"
     style="tblNormal">
@@ -73,7 +123,7 @@
     id="imUpgradeMods"
     style="tblNormal">
     <table_dynamic
-      component="MeleeMod"
+      component="UpgradeArmorMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -95,10 +145,135 @@
     </portal>
 	
   <portal
+    id="imMaterialMods"
+    style="tblNormal">
+    <table_dynamic
+      component="MaterialMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhMaterialExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.Material</list>
+      <headertitle><![CDATA[		
+		@text = "Material Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imMeleeMods"
+    style="tblNormal">
+    <table_dynamic
+      component="UpgradeMeleeMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhMelUpgradeExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.UpgradeMelee</list>
+      <headertitle><![CDATA[		
+		@text = "Melee Upgrade Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imPAUpMods"
+    style="tblNormal">
+    <table_dynamic
+      component="UpgradePAMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhPAUpgradeExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModSelected.UpgradePA</list>
+      <headertitle><![CDATA[		
+		@text = "Power Armor Upgrades" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imPASystemMods"
+    style="tblNormal">
+    <table_dynamic
+      component="SystemMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhPASystemExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModSelected.System</list>
+      <headertitle><![CDATA[		
+		@text = "Power Armor Systems" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imPAPlatingMods"
+    style="tblNormal">
+    <table_dynamic
+      component="PlatingMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhPAPlatingExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModSelected.Plating</list>
+      <headertitle><![CDATA[		
+		@text = "Power Armor Plating" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+	
+  <portal
     id="imRMRecMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -123,7 +298,7 @@
     id="imRMBarrelMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -148,7 +323,7 @@
     id="imRMGripMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -173,7 +348,7 @@
     id="imRMMagMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -198,7 +373,7 @@
     id="imRMSightsMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -223,7 +398,7 @@
     id="imRMMuzzleMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -248,7 +423,7 @@
     id="imRMStockMods"
     style="tblNormal">
     <table_dynamic
-      component="RangedMod"
+      component="UpgradeRangeMod"
       showtemplate="SimpleItem"
       choosetemplate="SimpleItem"
 	  choosesortset="ItemModCat"
@@ -265,6 +440,31 @@
         ]]></headertitle>
       <additem><![CDATA[
         @text = "Select Modification"
+        ]]></additem>
+      </table_dynamic>
+    </portal>
+
+  <portal
+    id="imFrameMods"
+    style="tblNormal">
+    <table_dynamic
+      component="FrameMod"
+      showtemplate="SimpleItem"
+      choosetemplate="SimpleItem"
+	  choosesortset="ItemModCat"
+      alwaysupdate="yes"
+      scrollable="yes"
+      showfrozenfixed="yes"
+      candidatepick="ItemModHelper"
+      candidatefield="imhFrameExpr"
+      addpick="ItemModHelper"
+      headerpick="ItemModHelper">
+	  <list>ItemModCat.Frame</list>
+      <headertitle><![CDATA[		
+		@text = "Frame Modifications" 
+        ]]></headertitle>
+      <additem><![CDATA[
+        @text = "Frame Modification"
         ]]></additem>
       </table_dynamic>
     </portal>
@@ -324,122 +524,9 @@
     </template>	
 
   <template
-    id="imAttachments"
-    name="Attachments"
-    compset="ItemMod"
-    marginhorz="3"
-    marginvert="2">
-
-    <portal
-      id="activate"
-      style="chkNormal"
-      tiptext="Click to activate or deactivate this ability.">
-      <checkbox
-        field="imodActive"
-        dynamicfield="name">
-        </checkbox>
-      </portal>
-	  
-    <portal
-      id="name"
-      style="lblNormal"
-      showinvalid="yes">
-      <label
-        field="name">
-        </label>
-      </portal>
-
-    <portal
-      id="info"
-      style="actInfo">
-      <action
-        action="info">
-        </action>
-      <mouseinfo/>
-      </portal>
-
-    <portal
-      id="delete"
-      style="actDelete"
-      tiptext="Click to delete this item">
-      <action
-        action="delete">
-        </action>
-      </portal>
-
-    <position><![CDATA[
-      ~set up our height based on our tallest portal
-      height = portal[info].height
-
-      ~if we've been assigned a non-default width for use when showing things, adopt
-      ~that width now
-      if (ispick = 0) then
-        var size as number
-        size = tagvalue[SimpleItem.width?]
-        if (size > 0) then
-          width = size
-          endif
-        endif
-
-      ~if this is a "sizing" calculation, we're done
-      doneif (issizing <> 0)
-
-      ~position our tallest portal at the top
-      portal[info].top = 0
-
-      ~center the other portals vertically
-      perform portal[activate].centervert
-      perform portal[delete].centervert
-
-      ~position the delete portal on the far right
-      perform portal[delete].alignedge[right,0]
-
-      ~position the info portal to the left of the delete button
-      perform portal[info].alignrel[rtol,delete,-8]
-
-      ~if we're showing a thing, the info and delete buttons are irrelevant, since
-      ~we should be showing within a chooser, in which case there's nothing to
-      ~delete and we have the description already visible
-      var edge as number
-      if (ispick = 0) then
-        portal[info].visible = 0
-        portal[delete].visible = 0
-        edge = width
-      else
-        edge = portal[info].left - 5
-        endif
-
-      ~position the name on the left and let it use all available space
-      portal[activate].left = 0
-      portal[activate].width = minimum(portal[activate].width,edge)
-      portal[name].left = 0
-      portal[name].width = minimum(portal[activate].width,edge)
-	  
-	  if (tagis[User.Activation] <> 0) then
-	    portal[activate].visible = 1
-		portal[name].visible = 0
-	  else
-	    portal[activate].visible = 0
-		portal[name].visible = 1
-	    endif
-
-      ~center the name if requested or this is a show-only thing
-      if (tagis[SimpleItem.CenterName] + tagis[thing.showonly] <> 0) then
-        perform portal[activate].centerhorz
-        endif
-
-      ~if this is an auto-added pick, change its font to indicate that fact
-      ~if (ispick + !candelete >= 2) then
-      ~  perform portal[activate].setstyle[lblAuto]
-      ~  endif
-      ]]></position>
-
-    </template>
-
-  <template
     id="imRangedModPick"
     name="Ranged Mods"
-    compset="RangedMod"
+    compset="UpgradeRangeMod"
     marginhorz="3"
     marginvert="2">
 	  
@@ -546,30 +633,63 @@
   <layout
     id="itemmodule">
     <!-- <portalref portal="imRangedMods" taborder="10"/> -->
-    <portalref portal="imCapacitorMods" taborder="20"/>
-    <portalref portal="imClothingMods" taborder="20"/>
-    <portalref portal="imUpgradeMods" taborder="20"/>
-    <portalref portal="imRMRecMods" taborder="20"/>
-    <portalref portal="imRMGripMods" taborder="20"/>
-    <portalref portal="imRMBarrelMods" taborder="20"/>
-    <portalref portal="imRMMagMods" taborder="20"/>
-    <portalref portal="imRMSightsMods" taborder="20"/>
-    <portalref portal="imRMMuzzleMods" taborder="20"/>
-    <portalref portal="imRMStockMods" taborder="20"/>
-    <templateref template="imTitleTemp" dynamic="yes" thing="ItemModHelper"/>
+    <portalref portal="imCapacitorMods" 	taborder="20"/>
+    <portalref portal="imClothingMods" 		taborder="20"/>
+    <portalref portal="imFrameMods" 		taborder="20"/>
+    <portalref portal="imMaterialMods" 		taborder="20"/>
+    <portalref portal="imUpgradeMods" 		taborder="20"/>
+    <portalref portal="imMeleeMods" 		taborder="20"/>
+    <portalref portal="imRMRecMods" 		taborder="20"/>
+    <portalref portal="imRMGripMods" 		taborder="20"/>
+    <portalref portal="imRMBarrelMods" 		taborder="20"/>
+    <portalref portal="imRMMagMods" 		taborder="20"/>
+    <portalref portal="imRMSightsMods" 		taborder="20"/>
+    <portalref portal="imRMMuzzleMods" 		taborder="20"/>
+    <portalref portal="imRMStockMods" 		taborder="20"/>
+    <portalref portal="imPAUpMods" 			taborder="20"/>
+    <portalref portal="imPASystemMods" 		taborder="20"/>
+    <portalref portal="imPAPlatingMods" 	taborder="20"/>
+    <portalref portal="imRobotModuleMods" 	taborder="20"/>
+    <portalref portal="imRobotArmMods" 		taborder="20"/>
+    <templateref template="imTitleTemp" 	dynamic="yes"	thing="ItemModHelper"/>
 	<!-- <templateref template="lpPromotion" dynamic="yes" taborder="30"/>  -->
 
     <!-- This script sizes and positions the layout and its child visual elements. -->
     <position><![CDATA[	 
-	
-      portal[imCapacitorMods].freeze = container.parent.tagis[ItemModSelected.Capacitor]
-	  portal[imCapacitorMods].visible = container.parent.tagis[ItemModCatAllowed.Capacitor]
 	  
       portal[imClothingMods].freeze = container.parent.tagis[ItemModSelected.Clothing]
 	  portal[imClothingMods].visible = container.parent.tagis[ItemModCatAllowed.Clothing]
-	
+
+      portal[imMaterialMods].freeze = container.parent.tagis[ItemModSelected.Material]
+	  portal[imMaterialMods].visible = container.parent.tagis[ItemModCatAllowed.Material]
+	  
       portal[imUpgradeMods].freeze = container.parent.tagis[ItemModSelected.Upgrade]
 	  portal[imUpgradeMods].visible = container.parent.tagis[ItemModCatAllowed.Upgrade]
+	  
+      portal[imMeleeMods].freeze = container.parent.tagis[ItemModSelected.UpgradeMelee]
+	  portal[imMeleeMods].visible = container.parent.tagis[ItemModCatAllowed.UpgradeMelee]
+	  
+      portal[imFrameMods].freeze = container.parent.tagis[ItemModSelected.Frame]
+	  portal[imFrameMods].visible = container.parent.tagis[ItemModCatAllowed.Frame]
+	   
+	  ~ Robot Arm Mods
+      portal[imRobotArmMods].freeze = container.parent.tagis[ItemModSelected.RobotArm]
+	  portal[imRobotArmMods].visible = container.parent.tagis[ItemModCatAllowed.RobotArm]
+	  
+	  ~ Robot Module Mods
+	  portal[imRobotModuleMods].visible = container.parent.tagis[ItemModCatAllowed.RobotModule]
+	  
+	  var ModuleAllow as number
+	  var ModuleCount as number
+	  ModuleAllow = container.parent.tagcount[RobotBody.ModuleAllowed]
+	  ModuleCount = container.parent.tagcount[ItemModSelected.RobotModule]
+	  if (ModuleCount = ModuleAllow) then
+        portal[imRobotModuleMods].freeze = 1
+	    endif
+	  
+	  ~ Capacitor Mods
+      portal[imCapacitorMods].freeze = container.parent.tagis[ItemModSelected.Capacitor]
+	  portal[imCapacitorMods].visible = container.parent.tagis[ItemModCatAllowed.Capacitor]
 	  
 	  ~ Only 1 Ranged weapon mod per category allowed
       portal[imRMRecMods].freeze = container.parent.tagis[ItemModSelected.RangedReceiver]
@@ -588,14 +708,53 @@
       portal[imRMMuzzleMods].visible = container.parent.tagis[ItemModCatAllowed.RangedMuzzle]
       portal[imRMStockMods].visible = container.parent.tagis[ItemModCatAllowed.RangedStock]
 	  
+	  portal[imPAUpMods].freeze = container.parent.tagis[ItemModSelected.UpgradePA]
+      portal[imPAUpMods].visible = container.parent.tagis[ItemModCatAllowed.UpgradePA]
+	  portal[imPASystemMods].freeze = container.parent.tagis[ItemModSelected.System]
+      portal[imPASystemMods].visible = container.parent.tagis[ItemModCatAllowed.System]
+	  portal[imPAPlatingMods].freeze = container.parent.tagis[ItemModSelected.Plating]
+      portal[imPAPlatingMods].visible = container.parent.tagis[ItemModCatAllowed.Plating]
+	  
 	  perform template[imTitleTemp].autoplace[0]
 	  
+	  if (container.parent.tagis[ItemModCatAllowed.RobotArm] <> 0) then
+	    perform portal[imRobotArmMods].autoplace[10]
+        endif
+	  
+	  if (container.parent.tagis[ItemModCatAllowed.RobotTorso] <> 0) then
+	    perform portal[imRobotModuleMods].autoplace[10]
+        endif
+		
 	  if (container.parent.tagis[ItemModCatAllowed.Capacitor] <> 0) then
 	    perform portal[imCapacitorMods].autoplace[10]
         endif
 		
+	  if (container.parent.tagis[ItemModCatAllowed.Frame] <> 0) then
+	    perform portal[imFrameMods].autoplace[10]
+        endif
+		
 	  if (container.parent.tagis[ItemModCatAllowed.Clothing] <> 0) then
 	    perform portal[imClothingMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.UpgradeMelee] <> 0) then
+	    perform portal[imMeleeMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.UpgradePA] <> 0) then
+	    perform portal[imPAUpMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.System] <> 0) then
+	    perform portal[imPASystemMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.Plating] <> 0) then
+	    perform portal[imPAPlatingMods].autoplace[10]
+        endif
+		
+	  if (container.parent.tagis[ItemModCatAllowed.Material] <> 0) then
+	    perform portal[imMaterialMods].autoplace[10]
         endif
 		
 	  if (container.parent.tagis[ItemModCatAllowed.Upgrade] <> 0) then
@@ -635,18 +794,6 @@
 
     </layout>
 
-
-  <!-- static form
-        This is the "static" form shown at the top of the main window within Hero
-        Lab.
-
-        NOTE! The unique id of this form is specially recognized by Hero Lab as
-        the form to be used across the top of the main window. A form with this
-        id is required within your data files.
-
-        NOTE! By default, this form is 40 pixels in height, and it must always be
-        set to be at least 40 pixels in height.
-  -->
   <form
     id="itemmodgiz"
     name="Item Mod">

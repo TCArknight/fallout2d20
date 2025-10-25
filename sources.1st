@@ -1,0 +1,56 @@
+ <?xml version="1.0" encoding="ISO-8859-1"?>
+
+<!-- This file contains all specifications pertaining to the operational control of
+      the data files. This includes usage pools, sources, sortsets, and other related
+      mechanisms.
+-->
+
+<document signature="Hero Lab Structure">
+	
+  <source
+    id="srcFalloutRPG"
+    name="Fallout RPG"
+    parent=""
+    reportable="no"
+	selectable="no"
+	sortorder="0"
+    description="Material for Fallout RPG using the 2d20 system from Modiphius">
+    </source> 	
+	
+  <source
+    id="srcFalloutGuides"
+    name="Guide Books"
+    parent="srcFalloutRPG"
+    reportable="no"
+	selectable="no"
+	sortorder="1"
+    description="Official Guide Books for Fallout RPG.">
+    </source>
+
+  <source
+    id="srcFalloutCore"
+    name="Fallout RPG - Core"
+    parent="srcFalloutRPG"
+    reportable="yes"
+	sortorder="0"
+    description="Core Rulebook Data.">
+    </source>	
+	
+  <source
+    id="srcFalloutSettler"
+    name="Fallout RPG - Settler's Guide"
+    parent="srcFalloutGuides"
+    reportable="yes"
+	sortorder="0"
+    description="Data from the Settler's guide supplement.">
+    </source>	
+	
+  <source
+    id="srcFalloutWander"
+    name="Fallout RPG - Wanderer's Guide"
+    parent="srcFalloutGuides"
+    reportable="yes"
+	sortorder="1"
+    description="Data from the Wanderer's guide supplement.">
+    </source>	
+</document>

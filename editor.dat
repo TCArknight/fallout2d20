@@ -17,6 +17,25 @@
       <it_separator/>
       </inputthing>
     </inputthinggroup>
+	  
+  <inputthinggroup
+    id="ModCategoriesWeapon">
+	<inputthing
+      name="Modifications"
+      helptext="Entries related to any modifications are below..">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Mod Categories Allowed"
+      helptext="Specify the category for any Mods for this weapon.">
+      <it_taglist group="ItemModCatAllowed" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Mods Allowed"
+      helptext="Specify any specific Mods for this weapon.">
+      <it_taglist group="ItemModAllow" tag="?"/>
+      </inputthing>
+    </inputthinggroup>
 	
   <inputthinggroup
     id="ChooseGroup">
@@ -57,7 +76,187 @@
       </inputthing>
 	</inputthinggroup>
 
+  <inputthinggroup
+    id="ResistanceRatings">
+    <inputthing
+      name="Resistance Ratings"
+      helptext="DR Values for specific types.">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Physical DR"
+      helptext="Specify the Physical DR of the armor against attacks.">
+      <it_field field="defPhysical"/>
+      </inputthing>
+    <inputthing
+      name="Energy DR"
+      helptext="Specify the Energy DR of the armor against attacks.">
+      <it_field field="defEnergy"/>
+      </inputthing>
+    <inputthing
+      name="Radiation DR"
+      helptext="Specify the Radiation DR of the armor against attacks.">
+      <it_field field="defRadiation"/>
+      </inputthing>
+	
+    </inputthinggroup>
 
+  <inputthinggroup
+    id="ModResistRatings">
+    <inputthing
+      name="Resistance Ratings"
+      helptext="DR Values for specific types.">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Physical DR"
+      helptext="Specify the modification to the Physical DR of the armor against attacks.">
+      <it_field field="modDRPhysical"/>
+      </inputthing>
+    <inputthing
+      name="Energy DR"
+      helptext="Specify the modification to the Energy DR of the armor against attacks.">
+      <it_field field="modDREnergy"/>
+      </inputthing>
+    <inputthing
+      name="Radiation DR"
+      helptext="Specify the modification to the Radiation DR of the armor against attacks.">
+      <it_field field="modDRRadiation"/>
+      </inputthing>
+	
+    </inputthinggroup>
+
+  <inputthinggroup
+    id="ArmorDetails">
+    <inputthing
+      name="Armor Type"
+      helptext="Specify the type of armor this is.">
+      <it_taglist group="ArmorType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Armor Locations"
+      helptext="Specific areas that the Armor protects">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Coverage"
+      helptext="Specify what areas are protected by this armor.">
+      <it_taglist group="ArmorLoc" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Notes"
+      helptext="Specific areas that the Armor protects">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Armor Special"
+      helptext="Specify any specific special tags for this weapon.">
+      <it_taglist group="ArmorSpecial" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the armor of which the user should be reminded.">
+      <it_field field="defSpecial"/>
+      </inputthing>
+    </inputthinggroup>	
+	
+  <inputthinggroup
+    id="PwrArmorDetails">
+    <inputthing
+      name="Power Armor Type"
+      helptext="Specify the type of armor this is.">
+      <it_taglist group="PowerArmorType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Armor Locations"
+      helptext="Specific areas that the Armor protects">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Head?"
+      helptext="Specify whether this armor protects the head.">
+      <it_tagcheck group="ArmorLoc" tag="Head"/>
+      </inputthing>
+    <inputthing
+      name="Torso?"
+      helptext="Specify whether this armor protects the torso.">
+      <it_tagcheck group="ArmorLoc" tag="Torso"/>
+      </inputthing>
+    <inputthing
+      name="Left Arm?"
+      helptext="Specify whether this armor protects the arms.">
+      <it_tagcheck group="ArmorLoc" tag="ArmLeft"/>
+      </inputthing>
+    <inputthing
+      name="Right Arm?"
+      helptext="Specify whether this armor protects the arms.">
+      <it_tagcheck group="ArmorLoc" tag="ArmRight"/>
+      </inputthing>
+    <inputthing
+      name="Left Leg?"
+      helptext="Specify whether this armor protects the legs.">
+      <it_tagcheck group="ArmorLoc" tag="LegLeft"/>
+      </inputthing>
+    <inputthing
+      name="Right Leg?"
+      helptext="Specify whether this armor protects the legs.">
+      <it_tagcheck group="ArmorLoc" tag="LegRight"/>
+      </inputthing>
+    <inputthing
+      name="Notes"
+      helptext="Specific areas that the Armor protects">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Armor Special"
+      helptext="Specify any specific special tags for this weapon.">
+      <it_taglist group="ArmorSpecial" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the armor of which the user should be reminded.">
+      <it_field field="defSpecial"/>
+      </inputthing>
+    </inputthinggroup>	
+  <inputthinggroup
+    id="ModArmorLoc">
+	<inputthing
+      name="Limited to Armor Location"
+      helptext="Specific areas that the Armor protects">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Head Only?"
+      helptext="Specify whether this armor protects the head.">
+      <it_tagcheck group="ItemModArmorLoc" tag="Head"/>
+      </inputthing>
+    <inputthing
+      name="Torso Only?"
+      helptext="Specify whether this armor protects the torso.">
+      <it_tagcheck group="ItemModArmorLoc" tag="Torso"/>
+      </inputthing>
+    <inputthing
+      name="Left Arm Only?"
+      helptext="Specify whether this armor protects the arms.">
+      <it_tagcheck group="ItemModArmorLoc" tag="ArmLeft"/>
+      </inputthing>
+    <inputthing
+      name="Right Arm Only?"
+      helptext="Specify whether this armor protects the arms.">
+      <it_tagcheck group="ItemModArmorLoc" tag="ArmRight"/>
+      </inputthing>
+    <inputthing
+      name="Left Leg Only?"
+      helptext="Specify whether this armor protects the legs.">
+      <it_tagcheck group="ItemModArmorLoc" tag="LegLeft"/>
+      </inputthing>
+    <inputthing
+      name="Right Leg Only?"
+      helptext="Specify whether this armor protects the legs.">
+      <it_tagcheck group="ItemModArmorLoc" tag="LegRight"/>
+      </inputthing>
+    </inputthinggroup>
+	
   <inputthinggroup
     id="BaseWeapon">
     <inputthing
@@ -253,13 +452,48 @@
     </editthing>
 
 
-  <!-- Species editthing -->
+  <!-- Origin editthing -->
   <editthing
-    compset="Species"
-    name="Species"
-    prefix="rac"
-    description="Races have no special fields - only a name. If a race confers an ability,{br}create it as a special ability and bootstrap it from the race."
-    summary="Defines a Species that can be selected by a character.">
+    compset="Origin"
+    name="Origins"
+    prefix="spc"
+    description="Origins have no special fields - only a name. If a race confers an ability,{br}create it as a special ability and bootstrap it from the race."
+    summary="Defines an Origin that can be selected by a character.">
+    <inputthing
+      name="Hit Locations"
+      helptext="What body parts for the origin (typically Head, Torso, LeftArm, RightArm, LeftLeg, RightLeg)">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Body Locations"
+      helptext="Specify what areas are available.">
+      <it_taglist group="HitLocation" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Traits"
+      helptext="Trait-related Selections">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Number of Traits"
+      helptext="Specify the number of traits for the Origin.">
+      <it_field field="orNumTraits"/>
+      </inputthing>
+	<inputthing
+        name="Origin Trait"
+        helptext="Select any traits for the origin.">
+	  <it_bootlist compset="OriginTrait" />
+      </inputthing>
+    <inputthing
+      name="Perk instead of a Trait?"
+      helptext="Specify whether can select a Perk in place of an additional Trait.">
+      <it_tagcheck group="User" tag="PerkForTrait"/>
+      </inputthing>
+    <inputthing
+      name="Select Trait from a list?"
+      helptext="Specify whether can select a Trait from a list.">
+      <it_tagcheck group="User" tag="SelectTrait"/>
+      </inputthing>
 	<inputthing>
       <it_groupref id="ChooseGroup"/>
       </inputthing>
@@ -268,13 +502,18 @@
       </inputthing>
     </editthing>
 
-  <!-- Ability editthing -->
+  <!-- Origin Trait editthing -->
   <editthing
-    compset="SpecTrait"
-    name="Species Trait"
+    compset="OriginTrait"
+    name="Origin Trait"
     prefix="st"
     description="As basic traits, "
-    summary="Defines a Species Trait upon which starting CPs can be spent by a character.">
+    summary="Defines an Origin Trait upon which starting CPs can be spent by a character.">
+	<inputthing
+      name="Associated Origin"
+      helptext="Specify the origin this trait is for.">
+      <it_tagpick group="OriginCat" tag="?" />
+      </inputthing>
     <inputthing
       name="Name for Special Tab"
       helptext="Specify an optional custom name to be used on the Special tab.">
@@ -343,6 +582,7 @@
 
   <!-- Ammunition editthing - for ammunition -->
   <editthing
+    group="Weapons"
     compset="Ammunition"
     name="Ammunition"
     prefix="am"
@@ -359,23 +599,15 @@
 
   <!-- Melee editthing - for melee weapons -->
   <editthing
+    group="Weapons"
     compset="Melee"
     name="Melee Weapon"
     prefix="wp"
+	defchild="ItemMods"
     description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
     summary="Defines a melee weapon that can be selected on the Armory tab.">
 	<inputthing>
       <it_groupref id="BaseWeapon"/>
-      </inputthing>
-    <inputthing
-      name="Mod Categories Allowed"
-      helptext="Specify the category for any Mods for this weapon.">
-      <it_taglist group="ItemModCatAllowed" tag="?"/>
-      </inputthing>
-    <inputthing
-      name="Mods Allowed"
-      helptext="Specify any specific Mods for this weapon.">
-      <it_taglist group="MeleeMod" tag="?"/>
       </inputthing>
     <inputthing
       name="Special Behaviors"
@@ -387,8 +619,16 @@
       helptext="Specify whether this weapon should be treated as a natural attack.">
       <it_tagcheck group="Equipment" tag="Natural"/>
       </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
+      </inputthing>
 	<inputthing>
       <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
       </inputthing>
     <inputthing>
       <it_groupref id="SourceInfo"/>
@@ -398,17 +638,13 @@
 
   <!-- Ranged editthing - for ranged weapons -->
   <editthing
-    compset="Ranged"
-    name="Ranged Weapon"
+    group="Weapons"
+    compset="Bow"
+    name="Bow"
     prefix="wp"
 	defchild="ItemMods"
     description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
     summary="Defines a ranged weapon that can be selected on the Armory tab.">
-    <inputthing
-      name="Ammunition Used"
-      helptext="Specify type of ammo for this weapon.">
-      <it_taglist group="AmmoType" tag="?"/>
-      </inputthing>
 	<inputthing>
       <it_groupref id="BaseWeapon"/>
       </inputthing>
@@ -418,19 +654,14 @@
       <it_taglist group="AmmoType" tag="?"/>
       </inputthing>
     <inputthing
-      name="Mod Categories Allowed"
-      helptext="Specify the category for any Mods for this weapon.">
-      <it_taglist group="ItemModCatAllowed" tag="?"/>
-      </inputthing>
-    <inputthing
-      name="Mods Allowed"
-      helptext="Specify any specific Mods for this weapon.">
-      <it_taglist group="RangedMod" tag="?"/>
-      </inputthing>
-    <inputthing
       name="Special Behaviors"
       helptext="Specify any special behaviors for the weapon of which the user should be reminded.">
       <it_field field="wpSpecial"/>
+      </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
       </inputthing>
     <inputthing
       name="Natural Attack?"
@@ -439,6 +670,223 @@
       </inputthing>
 	<inputthing>
       <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+
+
+  <!-- Ranged editthing - for ranged weapons -->
+  <editthing
+    group="Weapons"
+    compset="SmallGun"
+    name="Small Guns"
+    prefix="wp"
+	defchild="ItemMods"
+    description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines a ranged weapon that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="BaseWeapon"/>
+      </inputthing>
+    <inputthing
+      name="Ammunition Used"
+      helptext="Specify type of ammo for this weapon.">
+      <it_taglist group="AmmoType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the weapon of which the user should be reminded.">
+      <it_field field="wpSpecial"/>
+      </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
+      </inputthing>
+    <inputthing
+      name="Natural Attack?"
+      helptext="Specify whether this weapon should be treated as a natural attack.">
+      <it_tagcheck group="Equipment" tag="Natural"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+	
+  <editthing
+    group="Weapons"
+    compset="BigGun"
+    name="Big Guns"
+    prefix="wp"
+	defchild="ItemMods"
+    description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines a ranged weapon that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="BaseWeapon"/>
+      </inputthing>
+    <inputthing
+      name="Ammunition Used"
+      helptext="Specify type of ammo for this weapon.">
+      <it_taglist group="AmmoType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the weapon of which the user should be reminded.">
+      <it_field field="wpSpecial"/>
+      </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
+      </inputthing>
+    <inputthing
+      name="Natural Attack?"
+      helptext="Specify whether this weapon should be treated as a natural attack.">
+      <it_tagcheck group="Equipment" tag="Natural"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+	
+  <editthing
+    group="Weapons"
+    compset="Throwing"
+    name="Throwing Weapons"
+    prefix="wp"
+	defchild="ItemMods"
+    description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines a ranged weapon that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="BaseWeapon"/>
+      </inputthing>
+    <inputthing
+      name="Ammunition Used"
+      helptext="Specify type of ammo for this weapon.">
+      <it_taglist group="AmmoType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the weapon of which the user should be reminded.">
+      <it_field field="wpSpecial"/>
+      </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
+      </inputthing>
+    <inputthing
+      name="Natural Attack?"
+      helptext="Specify whether this weapon should be treated as a natural attack.">
+      <it_tagcheck group="Equipment" tag="Natural"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+
+  <!-- Energy editthing - for energy weapons -->
+  <editthing
+    group="Weapons"
+    compset="Energy"
+    name="Energy Weapon"
+    prefix="wp"
+	defchild="ItemMods"
+    description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines an energy-based ranged weapon that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="BaseWeapon"/>
+      </inputthing>
+    <inputthing
+      name="Ammunition Used"
+      helptext="Specify type of ammo for this weapon.">
+      <it_taglist group="AmmoType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the weapon of which the user should be reminded.">
+      <it_field field="wpSpecial"/>
+      </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
+      </inputthing>
+    <inputthing
+      name="Natural Attack?"
+      helptext="Specify whether this weapon should be treated as a natural attack.">
+      <it_tagcheck group="Equipment" tag="Natural"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
+
+  <!-- Explosive editthing - for Explosives (grenades, dynamite, etc.) -->
+  <editthing
+    group="Weapons"
+    compset="Explosive"
+    name="Explosives"
+    prefix="wp"
+	defchild="ItemMods"
+    description="Armor, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines an energy-based ranged weapon that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="BaseWeapon"/>
+      </inputthing>
+    <inputthing
+      name="Ammunition Used"
+      helptext="Specify type of ammo for this weapon.">
+      <it_taglist group="AmmoType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Special Behaviors"
+      helptext="Specify any special behaviors for the weapon of which the user should be reminded.">
+      <it_field field="wpSpecial"/>
+      </inputthing>
+    <inputthing
+      name="Hide from Purchase?"
+      helptext="Specify whether this weapon should not be able to be purchased (hide on equipment purchase screens).">
+      <it_tagcheck group="Equipment" tag="Hide"/>
+      </inputthing>
+    <inputthing
+      name="Natural Attack?"
+      helptext="Specify whether this weapon should be treated as a natural attack.">
+      <it_tagcheck group="Equipment" tag="Natural"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ModCategoriesWeapon"/>
       </inputthing>
     <inputthing>
       <it_groupref id="SourceInfo"/>
@@ -455,61 +903,11 @@
 	defchild="ItemMods"
     description="Weapons, vehicles, and simple equipment all have their own tabs for creating objects of those types."
     summary="Defines armor that can be selected on the Armory tab.">
-	
-    <inputthing
-      name="Resistance Ratings"
-      helptext="DR Values for specific types.">
-      <it_separator/>
+	<inputthing>
+      <it_groupref id="ResistanceRatings"/>
       </inputthing>
-    <inputthing
-      name="Physical DR"
-      helptext="Specify the Physical DR of the armor against attacks.">
-      <it_field field="defPhysical"/>
-      </inputthing>
-    <inputthing
-      name="Energy DR"
-      helptext="Specify the Energy DR of the armor against attacks.">
-      <it_field field="defEnergy"/>
-      </inputthing>
-    <inputthing
-      name="Radiation DR"
-      helptext="Specify the Radiation DR of the armor against attacks.">
-      <it_field field="defRadiation"/>
-      </inputthing>
-    <inputthing
-      name="Armor Locations"
-      helptext="Specific areas that the Armor protects">
-      <it_separator/>
-      </inputthing>
-    <inputthing
-      name="Head?"
-      helptext="Specify whether this armor protects the head.">
-      <it_tagcheck group="ArmorLoc" tag="Head"/>
-      </inputthing>
-    <inputthing
-      name="Torso?"
-      helptext="Specify whether this armor protects the torso.">
-      <it_tagcheck group="ArmorLoc" tag="Torso"/>
-      </inputthing>
-    <inputthing
-      name="Left Arm?"
-      helptext="Specify whether this armor protects the arms.">
-      <it_tagcheck group="ArmorLoc" tag="LeftArm"/>
-      </inputthing>
-    <inputthing
-      name="Right Arm?"
-      helptext="Specify whether this armor protects the arms.">
-      <it_tagcheck group="ArmorLoc" tag="RightArm"/>
-      </inputthing>
-    <inputthing
-      name="Left Leg?"
-      helptext="Specify whether this armor protects the legs.">
-      <it_tagcheck group="ArmorLoc" tag="LeftLeg"/>
-      </inputthing>
-    <inputthing
-      name="Right Leg?"
-      helptext="Specify whether this armor protects the legs.">
-      <it_tagcheck group="ArmorLoc" tag="RightLeg"/>
+	<inputthing>
+      <it_groupref id="ArmorDetails"/>
       </inputthing>
     <inputthing
       name="Modifications"
@@ -524,7 +922,7 @@
     <inputthing
       name="Mods Allowed"
       helptext="Specify any specific Mods for this weapon.">
-      <it_taglist group="ClothingMod" tag="?"/>
+      <it_taglist group="ArmorMod" tag="?"/>
       </inputthing>
 	<inputthing>
       <it_groupref id="WeightCost"/>
@@ -543,65 +941,49 @@
 	defchild="ItemMods"
     description="Weapons, vehicles, and simple equipment all have their own tabs for creating objects of those types."
     summary="Defines armor that can be selected on the Armory tab.">
-    <inputthing
-      name="Is Outfit?"
-      helptext="Specify whether this is considered an Outfit or not.">
-      <it_tagcheck group="User" tag="Activation"/>
+	<inputthing>
+      <it_groupref id="ResistanceRatings"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="ArmorDetails"/>
       </inputthing>
     <inputthing
-      name="Resistance Ratings"
-      helptext="DR Values for specific types.">
+      name="Modifications"
+      helptext="--">
       <it_separator/>
       </inputthing>
     <inputthing
-      name="Physical DR"
-      helptext="Specify the Physical DR of the armor against attacks.">
-      <it_field field="defPhysical"/>
+      name="Mod Categories Allowed"
+      helptext="Specify the category for any Mods for this weapon.">
+      <it_taglist group="ItemModCatAllowed" tag="?"/>
       </inputthing>
     <inputthing
-      name="Energy DR"
-      helptext="Specify the Energy DR of the armor against attacks.">
-      <it_field field="defEnergy"/>
+      name="Mods Allowed"
+      helptext="Specify any specific Mods for this weapon.">
+      <it_taglist group="ClothingMod" tag="?"/>
       </inputthing>
-    <inputthing
-      name="Radiation DR"
-      helptext="Specify the Radiation DR of the armor against attacks.">
-      <it_field field="defRadiation"/>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
       </inputthing>
-    <inputthing
-      name="Armor Locations"
-      helptext="Specific areas that the Armor protects">
-      <it_separator/>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
       </inputthing>
-    <inputthing
-      name="Head?"
-      helptext="Specify whether this armor protects the head.">
-      <it_tagcheck group="ArmorLoc" tag="Head"/>
+    </editthing>
+	
+  <!-- Clothing editthing -->
+  <editthing
+    group="Armor"
+    compset="Outfit"
+    name="Outfit"
+    prefix="arm"
+	defchild="ItemMods"
+    description="Weapons, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines armor that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="ResistanceRatings"/>
       </inputthing>
-    <inputthing
-      name="Torso?"
-      helptext="Specify whether this armor protects the torso.">
-      <it_tagcheck group="ArmorLoc" tag="Torso"/>
-      </inputthing>
-    <inputthing
-      name="Left Arm?"
-      helptext="Specify whether this armor protects the arms.">
-      <it_tagcheck group="ArmorLoc" tag="LeftArm"/>
-      </inputthing>
-    <inputthing
-      name="Right Arm?"
-      helptext="Specify whether this armor protects the arms.">
-      <it_tagcheck group="ArmorLoc" tag="RightArm"/>
-      </inputthing>
-    <inputthing
-      name="Left Leg?"
-      helptext="Specify whether this armor protects the legs.">
-      <it_tagcheck group="ArmorLoc" tag="LeftLeg"/>
-      </inputthing>
-    <inputthing
-      name="Right Leg?"
-      helptext="Specify whether this armor protects the legs.">
-      <it_tagcheck group="ArmorLoc" tag="RightLeg"/>
+	<inputthing>
+      <it_groupref id="ArmorDetails"/>
       </inputthing>
     <inputthing
       name="Modifications"
@@ -626,7 +1008,6 @@
       </inputthing>
     </editthing>
 
-	
   <!-- Clothing editthing -->
   <editthing
     group="Armor"
@@ -636,60 +1017,11 @@
 	defchild="ItemMods"
     description="Weapons, vehicles, and simple equipment all have their own tabs for creating objects of those types."
     summary="Defines armor that can be selected on the Armory tab.">
-    <inputthing
-      name="Resistance Ratings"
-      helptext="DR Values for specific types.">
-      <it_separator/>
+	<inputthing>
+      <it_groupref id="ResistanceRatings"/>
       </inputthing>
-    <inputthing
-      name="Physical DR"
-      helptext="Specify the Physical DR of the armor against attacks.">
-      <it_field field="defPhysical"/>
-      </inputthing>
-    <inputthing
-      name="Energy DR"
-      helptext="Specify the Energy DR of the armor against attacks.">
-      <it_field field="defEnergy"/>
-      </inputthing>
-    <inputthing
-      name="Radiation DR"
-      helptext="Specify the Radiation DR of the armor against attacks.">
-      <it_field field="defRadiation"/>
-      </inputthing>
-    <inputthing
-      name="Armor Locations"
-      helptext="Specific areas that the Armor protects">
-      <it_separator/>
-      </inputthing>
-    <inputthing
-      name="Head?"
-      helptext="Specify whether this armor protects the head.">
-      <it_tagcheck group="ArmorLoc" tag="Head"/>
-      </inputthing>
-    <inputthing
-      name="Torso?"
-      helptext="Specify whether this armor protects the torso.">
-      <it_tagcheck group="ArmorLoc" tag="Torso"/>
-      </inputthing>
-    <inputthing
-      name="Left Arm?"
-      helptext="Specify whether this armor protects the arms.">
-      <it_tagcheck group="ArmorLoc" tag="LeftArm"/>
-      </inputthing>
-    <inputthing
-      name="Right Arm?"
-      helptext="Specify whether this armor protects the arms.">
-      <it_tagcheck group="ArmorLoc" tag="RightArm"/>
-      </inputthing>
-    <inputthing
-      name="Left Leg?"
-      helptext="Specify whether this armor protects the legs.">
-      <it_tagcheck group="ArmorLoc" tag="LeftLeg"/>
-      </inputthing>
-    <inputthing
-      name="Right Leg?"
-      helptext="Specify whether this armor protects the legs.">
-      <it_tagcheck group="ArmorLoc" tag="RightLeg"/>
+	<inputthing>
+      <it_groupref id="ArmorDetails"/>
       </inputthing>
     <inputthing
       name="Modifications"
@@ -741,6 +1073,53 @@
     </editthing>
 
 
+  <!-- Power Armor editthing -->
+  <editthing
+    group="Armor"
+    compset="PowerArmor"
+    name="Power Armor"
+    prefix="pa"
+	defchild="ItemMods"
+    description="Weapons, vehicles, and simple equipment all have their own tabs for creating objects of those types."
+    summary="Defines armor that can be selected on the Armory tab.">
+	<inputthing>
+      <it_groupref id="ResistanceRatings"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="PwrArmorDetails"/>
+      </inputthing>
+    <inputthing
+      name="Power Armor?"
+      helptext="Leave checked for Power Armor">
+      <it_tagcheck group="ArmorType" tag="ArmorPower" default="yes"/>
+      </inputthing>	
+    <inputthing
+      name="Health Points"
+      helptext="HP for the part">
+      <it_field field="paHealthPoints"/>
+      </inputthing>	
+    <inputthing
+      name="Modifications"
+      helptext="--">
+      <it_separator/>
+      </inputthing>
+    <inputthing
+      name="Mod Categories Allowed"
+      helptext="Specify the category for any Mods for this weapon.">
+      <it_taglist group="ItemModCatAllowed" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Mods Allowed"
+      helptext="Specify any specific Mods for this weapon.">
+      <it_taglist group="ArmorMod" tag="?"/>
+      </inputthing>
+	<inputthing>
+      <it_groupref id="WeightCost"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="SourceInfo"/>
+      </inputthing>
+    </editthing>
   <!-- Mechanics editthing -->
   <editthing
     compset="Mechanics"
@@ -784,19 +1163,75 @@
       <it_groupref id="SourceInfo"/>
       </inputthing>
     </editthing>
-
-  <!-- Mechanics editthing -->
+	
+  <!-- Frame Mod editthing -->
   <editthing
     group="Modifications"
-    compset="RangedMod"
-    name="Ranged Wpn Mod"
+    compset="FrameMod"
+    name="Frame Mod"
+    prefix="mod"
+    description="A gear mod ..."
+    summary="Defines a set of modifications that can be applied to various bows or crossbows.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Frame?"/>
+      </inputthing>
+    <inputthing
+      name="For Weapon Type?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModWpnType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Weapon?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModSpecWpn" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>
+
+  <!-- Ranged Weapon editthing -->
+  <editthing
+    group="Modifications"
+    compset="UpgradeRangeMod"
+    name="Upgrade (Ranged) Mod"
     prefix="mod"
     description="A gear mod ..."
     summary="Defines a set of modifications that can be applied to various ranged weapons.">
     <inputthing
       name="Mod Category"
       helptext="Specify the category that this mods belongs to.">
-      <it_taglist group="ItemModCat" tag="Ranged?"/>
+      <it_taglist group="ItemModCat" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Weapon Type?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModWpnType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Weapon?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModSpecWpn" tag="?"/>
       </inputthing>
     <inputthing
       name="Name Prefix"
@@ -804,45 +1239,83 @@
       <it_field field="modNamePrefix"/>
       </inputthing>
     <inputthing
-      name="Cost"
-      helptext="Cost of the mod.">
-      <it_field field="modCost"/>
+      name="Name Suffix"
+      helptext="Suffix for the name with the attachment.">
+      <it_field field="modNameSuffix"/>
+      </inputthing>
+    <inputthing
+      name="Name Replace this..."
+      helptext="Replace this in the name...">
+      <it_field field="modNameReplaceTxt"/>
+      </inputthing>
+    <inputthing
+      name="With This"
+      helptext="Replace field above with this text.">
+      <it_field field="modNameReplaceWth"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
       </inputthing>
     <inputthing
       name="Weight"
       helptext="Weight that the mod adds to the gear.">
       <it_field field="modWeight"/>
       </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
     </editthing>
 	
   <editthing
     group="Modifications"
-    compset="MeleeMod"
-    name="Melee Wpn Mod"
+    compset="UpgradeMeleeMod"
+    name="Upgrade (Melee) Mod"
     prefix="mod"
     description="A gear mod ..."
     summary="Defines a set of modifications that can be applied to various melee weapons.">
     <inputthing
       name="Mod Category"
       helptext="Specify the category that this mods belongs to.">
-      <it_taglist group="ItemModCat" tag="Upgrade?"/>
+      <it_taglist group="ItemModCat" tag="Melee?"/>
+      </inputthing>
+    <inputthing
+      name="For Weapon Type?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModWpnType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Weapon?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModSpecWpn" tag="?"/>
       </inputthing>
     <inputthing
       name="Name Prefix"
       helptext="Prefix for the name with the attachment.">
       <it_field field="modNamePrefix"/>
       </inputthing>
+	  
     <inputthing
-      name="Cost"
-      helptext="Cost of the mod.">
-      <it_field field="modCost"/>
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
       </inputthing>
     <inputthing
       name="Weight"
       helptext="Weight that the mod adds to the gear.">
       <it_field field="modWeight"/>
       </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
     </editthing>
+	
   <editthing
     group="Modifications"
     compset="ClothingMod"
@@ -856,19 +1329,33 @@
       <it_taglist group="ItemModCat" tag="Clothing?"/>
       </inputthing>
     <inputthing
+      name="For Specific Armor?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModSpecArmor" tag="?"/>
+      </inputthing>
+    <inputthing
       name="Name Prefix"
       helptext="Prefix for the name with the attachment.">
       <it_field field="modNamePrefix"/>
       </inputthing>
+    <inputthing>
+      <it_groupref id="ModResistRatings"/>
+      </inputthing>
+	  
     <inputthing
-      name="Cost"
-      helptext="Cost of the mod.">
-      <it_field field="modCost"/>
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
       </inputthing>
     <inputthing
       name="Weight"
       helptext="Weight that the mod adds to the gear.">
       <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
       </inputthing>
     </editthing>
 	
@@ -885,21 +1372,342 @@
       <it_taglist group="ItemModCat" tag="Capacitor?"/>
       </inputthing>
     <inputthing
+      name="For Weapon Type?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModWpnType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Weapon?"
+      helptext="Specify any Mods only for a particular weapon.">
+      <it_taglist group="ItemModSpecWpn" tag="?"/>
+      </inputthing>
+    <inputthing
       name="Name Prefix"
       helptext="Prefix for the name with the attachment.">
       <it_field field="modNamePrefix"/>
       </inputthing>
+	  
     <inputthing
-      name="Cost"
-      helptext="Cost of the mod.">
-      <it_field field="modCost"/>
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
       </inputthing>
     <inputthing
       name="Weight"
       helptext="Weight that the mod adds to the gear.">
       <it_field field="modWeight"/>
       </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
     </editthing>
+	
+  <editthing
+    group="Modifications"
+    compset="RobotMod"
+    name="Robot Mod"
+    prefix="mod"
+    description="A gear mod for robotic components..."
+    summary="Defines a set of modifications that can be applied to various robots.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Robot?"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>	
+	
+  <editthing
+    group="Modifications"
+    compset="MaterialMod"
+    name="Material Mod"
+    prefix="mod"
+    description="A gear mod for material components..."
+    summary="Defines a set of material modifications that can be applied to various armor.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Material?"/>
+      </inputthing>
+    <inputthing
+      name="For Armor Type?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModArmorType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Armor?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModSpecArmor" tag="?"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="ModArmorLoc"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="ModResistRatings"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>	
+	
+  <editthing
+    group="Modifications"
+    compset="UpgradeArmorMod"
+    name="Upgrade (Armor) Mod"
+    prefix="mod"
+    description="A gear mod ..."
+    summary="Defines a set of upgrade modifications that can be applied to various armor.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Upgrade?"/>
+      </inputthing>
+    <inputthing
+      name="For Armor Type?"
+      helptext="Specify any Mods only for a particular armor or clothing type.">
+      <it_taglist group="ItemModArmorType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Armor?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModSpecArmor" tag="?"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="ModArmorLoc"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="ModResistRatings"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>
+	
+  <editthing
+    group="Modifications"
+    compset="UpgradePAMod"
+    name="Upgrade (Power Armor) Mod"
+    prefix="mod"
+    description="A gear mod ..."
+    summary="Defines a set of upgrade modifications that can be applied to various armor.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Upgrade?"/>
+      </inputthing>
+    <inputthing
+      name="For Armor Type?"
+      helptext="Specify any Mods only for a particular armor or clothing type.">
+      <it_taglist group="ItemModArmorType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Armor?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModSpecPwrArm" tag="?"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="ModArmorLoc"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="ModResistRatings"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>
+	
+  <editthing
+    group="Modifications"
+    compset="SystemMod"
+    name="PA System Mod"
+    prefix="mod"
+    description="A gear mod for material components..."
+    summary="Defines a set of system modifications that can be applied to various power armor.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="System" require="yes" deftag="System"/>
+      </inputthing>
+    <inputthing
+      name="For Armor Type?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModArmorType" tag="?" require="no" deftag="ArmorPower"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Armor?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModSpecPwrArm" tag="?"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="ModArmorLoc"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="ModResistRatings"/>
+      </inputthing>
+	  
+    <inputthing
+      name="HP Adjust"
+      helptext="Adjust part HP by this amount.">
+      <it_field field="modHP"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>	
+	
+  <editthing
+    group="Modifications"
+    compset="PlatingMod"
+    name="PA Plating Mod"
+    prefix="mod"
+    description="A gear mod for material components..."
+    summary="Defines a set of system modifications that can be applied to various power armor.">
+    <inputthing
+      name="Mod Category"
+      helptext="Specify the category that this mods belongs to.">
+      <it_taglist group="ItemModCat" tag="Plating?"/>
+      </inputthing>
+    <inputthing
+      name="For Armor Type?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModArmorType" tag="?"/>
+      </inputthing>
+    <inputthing
+      name="For Specific Armor?"
+      helptext="Specify any Mods only for a particular armor or clothing.">
+      <it_taglist group="ItemModSpecArmor" tag="?"/>
+      </inputthing>
+	  
+	<inputthing>
+      <it_groupref id="ModArmorLoc"/>
+      </inputthing>
+    <inputthing
+      name="Name Prefix"
+      helptext="Prefix for the name with the attachment.">
+      <it_field field="modNamePrefix"/>
+      </inputthing>
+    <inputthing>
+      <it_groupref id="ModResistRatings"/>
+      </inputthing>
+	  
+    <inputthing
+      name="Special"
+      helptext="Notes.">
+      <it_field field="modNotes"/>
+      </inputthing>
+    <inputthing
+      name="Weight"
+      helptext="Weight that the mod adds to the gear.">
+      <it_field field="modWeight"/>
+      </inputthing>
+    <inputthing
+      name="Cost"
+      helptext="Cost of the mod.">
+      <it_field field="modCost"/>
+      </inputthing>
+    </editthing>	
+	
+	
 	
   <!-- Companion editthing -->
   <editthing
@@ -919,7 +1727,7 @@
       <it_separator/>
       </inputthing>
     <inputthing
-      name="Companion Race"
+      name="Companion Origin"
       helptext="If you want to have this always add a certain race to the minion, select the race here.">
       <it_bootcustom compset="Creature" target="minion">
         <match><![CDATA[!thing.showonly]]></match>
@@ -928,7 +1736,7 @@
     <inputthing
       name="Fixed companion race?"
       helptext="If you've selected a companion race, check here so that the user cannot change that race (which is necessary, because the race you've selected will always be there, meaning that if the user chose another one, the character would have two races).">
-      <it_tagcheck group="Hero" tag="SetRace" default="yes" target="minion"/>
+      <it_tagcheck group="Hero" tag="SetOrigin" default="yes" target="minion"/>
       </inputthing>
     <inputthing
       name="Companion a Creature?"

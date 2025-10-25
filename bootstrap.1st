@@ -38,16 +38,14 @@
     Helper.Bootstrap
     ]]></enmasse>
 
-
   <!-- The "bootstrap" elements identify individual things that should be automatically
         added to every new character by Hero Lab.
   -->
-
   <!-- And one personal info pick -->
   <bootstrap index="10" thing="mscPerson"/>
 
-  <!-- Add the "unarmed attack" pick -->
-  <bootstrap index="20" thing="wpUnarmed"/>
+  <!-- Add the "unarmed attack" pick 
+  <bootstrap index="20" thing="wpUnarmed"/> -->
 
   <!-- The "autoadd" elements identify individual things that should be automatically
         added to every new character by Hero Lab. The key difference from "bootstrap"

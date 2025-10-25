@@ -133,7 +133,7 @@
         xml[node].attr["equipped"] = "yes"
         endif
 
-      if (eachpick.tagis[component.WeapRange] <> 0) then
+      if (eachpick.tagis[component.WeaponRanged] <> 0) then
         xml[node].attr["range"] = eachpick.field[wpRange].text
         xml[node].attr["rangeabbrev"] = eachpick.field[wpRangeAbbrev].text
         endif
@@ -308,7 +308,7 @@
         xmlroot.attr["playername"] = playername
 
         ~output any race
-        txt = hero.findchild[Species].field[name].text
+        txt = hero.findchild[Origin].field[name].text
         node = xmlroot.addchild["race"]
         xml[node].attr["name"] = txt
 

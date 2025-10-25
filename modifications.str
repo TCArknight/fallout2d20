@@ -1,0 +1,962 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains the definitions of components associated with equipment such as
+      weapons, armor, gear, etc.
+-->
+
+<document signature="Hero Lab Structure">
+
+  <!-- GearMod component -->
+  <component
+    id="GearMod"
+    name="Gear Modification"
+    autocompset="no">
+
+    <field
+      id="modNamePrefix"
+      name="Name Prefix"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
+    <field
+      id="modNameSuffix"
+      name="Name Suffix"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
+    <field
+      id="modNameReplaceTxt"
+      name="Name Suffix"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
+    <field
+      id="modNameReplaceWth"
+      name="Name Suffix"
+      type="derived"
+      maxlength="100">
+      </field>
+	  
+    <!-- Gear HP Adjust (Power Armor part upgrades) -->
+    <field
+      id="modHP"
+      name="Health Points"
+      defvalue="0"
+      type="derived">
+    </field>
+	
+    <!-- Gear cost -->
+    <field
+      id="modCost"
+      name="Cost"
+      minvalue="0"
+      defvalue="0"
+      type="derived">
+    </field>
+
+    <!-- Gear Weight -->
+    <field
+      id="modWeight"
+      name="Weight"
+      defvalue="0"
+      type="derived">
+    </field>	
+
+    <!-- Manage an optional notes for custom equipment -->
+    <field
+      id="modNotes"
+      name="Notes"
+      maxlength="250"
+      type="derived">
+      </field>	
+	  
+    <identity group="ItemMod"/>
+    <identity group="ItemModAllow"/>
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ get ItemModCat tag on the mod
+	  var cat as string
+	  cat = tagids[ItemModCat.?,"|"]
+	  cat = replace(cat,"ItemModCat.","ItemModSelected.",0)
+	  
+	  perform parent.assignstr[cat]
+	  if (tagis[Helper.CostRebate] <> 0) then
+	    parent.field[grCost].value -= field[modCost].value
+	  else
+	    if (tagis[component.PowerArmor] <> 0) then
+		  parent.field[paHealthPoints].value += field[modHP].value
+		  endif
+	    parent.field[grCost].value += field[modCost].value
+	    parent.field[gearWeight].value += field[modWeight].value
+		
+		if (parent.tagis[ArmorLoc.Torso] <> 0) then
+		  if (tagis[ItemModLimit.ArmorTorsoOnly] = 0) then
+		    ~add the cost again for Torso modifications if not
+			~ a Torso Only mod
+		    parent.field[grCost].value += field[modCost].value
+	        parent.field[gearWeight].value += field[modWeight].value
+			endif
+		  endif
+		
+	    endif
+		
+      ]]></eval>
+	
+    <eval index="2" phase="Render" priority="5000"><![CDATA[
+      ~ set prefixed name
+	  var name as string
+	  ~ notify field[modNamePrefix].text
+	  
+	  doneif (field[modNamePrefix].isempty <> 0)
+	  
+	  name = field[modNamePrefix].text & " "
+	  name &= parent.field[name].text
+	  
+	  parent.field[livename].text = name
+	  
+      ]]></eval>
+	
+    <eval index="3" phase="Render" priority="5100"><![CDATA[
+      ~ set suffixed name
+	  var name as string
+	  doneif (field[modNameSuffix].isempty <> 0)
+	  
+	  name = parent.field[name].text & " "
+	  name &= field[modNameSuffix].text
+
+	  parent.field[livename].text = name
+	  
+      ]]></eval>
+	
+    <eval index="4" phase="Render" priority="5200"><![CDATA[
+      ~ set suffixed name
+	  var name as string
+	  var rep as string
+	  var newtxt as string
+	  var tmpName as string
+	  
+	  doneif (field[modNameReplaceWth].isempty <> 0)
+	  
+	  name = parent.field[name].text
+	  newtxt = field[modNameReplaceWth].text
+	  rep = field[modNameReplaceTxt].text
+	  
+	  ~ doneif (lastpos(name,field[modNameReplaceWth].text) = -1)
+	  
+	  tmpName = replace(name, rep, newtxt, 0) 
+	  ~ notify tmpName
+	  
+	  parent.field[livename].text = tmpName
+	  
+      ]]></eval>
+	  
+    </component>
+		
+  <!-- ItemModHelper component -->
+  <component
+    id="ItemModHelper"
+    name="Item Mod Helper"
+	autocompset="yes">
+	
+    <field
+      id="imhItemName"
+      name="Item Name"
+      maxlength="100"
+      type="derived">
+      </field>
+	
+    <field
+      id="imhUserName"
+      name="Item Name"
+      maxlength="100"
+      type="user">
+      </field>	
+	  	  
+    <field
+      id="imhExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived">
+      </field>
+	  
+    <field
+      id="imhGearModExpr"
+      name="Gear Mod Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="component.GearMod">
+      </field>
+	  
+    <field
+      id="imhRangedModExpr"
+      name="Construction Type Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="component.UpgradeRangeMod">
+      </field>
+
+    <field
+      id="imhMelUpgradeExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.UpgradeMelee">
+      </field>	
+
+    <field
+      id="imhUpgradeExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.Upgrade">
+      </field>	
+
+    <field
+      id="imhUtilityExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.Utility">
+      </field>	
+
+    <field
+      id="imhClothingExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.Clothing">
+      </field>
+
+    <field
+      id="imhMaterialExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.Material">
+      </field>
+	  
+    <field
+      id="imhRMReceiverExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RangedReceiver">
+      </field>	
+
+    <field
+      id="imhRMBarrelExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RangedBarrel">
+      </field>
+
+    <field
+      id="imhRMGripExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RangedGrip">
+      </field>
+
+    <field
+      id="imhRMMagExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RangedMag">
+      </field>	 
+
+    <field
+      id="imhRMSightsExpr"
+      name="Expression"
+      maxlength="1500"
+	  defvalue="ItemModCat.RangedStock"
+      type="derived">
+      </field>	  
+
+    <field
+      id="imhRMMuzzleExpr"
+      name="Expression"
+      maxlength="1500"
+	  defvalue="ItemModCat.RangedMuzzle"
+      type="derived">
+      </field>
+
+    <field
+      id="imhRMStockExpr"
+      name="Expression"
+      maxlength="1500"
+	  defvalue="ItemModCat.RangedStock"
+      type="derived">
+      </field>
+
+    <field
+      id="imhFrameExpr"
+      name="Expression"
+      maxlength="1500"
+	  defvalue="ItemModCat.Frame"
+      type="derived">
+      </field>
+
+    <field
+      id="imhCapacitorExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.Capacitor">
+      </field>
+
+    <field
+      id="imhRobotModuleExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RobotModule">
+      </field>
+
+    <field
+      id="imhRobotBodyExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RobotBody">
+      </field>
+
+    <field
+      id="imhRobotArmExpr"
+      name="Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RobotArm">
+      </field>
+
+    <field
+      id="imhRobotLegExpr"
+      name="Robot Leg Expression"
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.RobotLeg">
+      </field>
+
+    <field
+      id="imhPAUpgradeExpr"
+      name="Power Armor Upgrade Expr."
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.UpgradePA">
+      </field>
+
+    <field
+      id="imhPASystemExpr"
+      name="Power Armor System Expr."
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.System">
+      </field>
+
+    <field
+      id="imhPAPlatingExpr"
+      name="Power Armor Plating Expr."
+      maxlength="1500"
+      type="derived"
+	  defvalue="ItemModCat.Plating">
+      </field>
+	  
+    <field
+      id="imhMaxHP"
+      name="Max Hardpoints"
+      type="derived">
+      </field>
+	
+    <field
+      id="imhUsedHP"
+      name="Used Hardpoints"
+      type="derived">
+      </field>
+
+    <eval index="1" phase="Initialize" priority="2100" name="Build Mod Expressions" ><![CDATA[
+      ~ make sure we have a parent to grab tags from
+	  doneif (parent.isgizmo = 0)
+	  
+	  var temp as string
+	  
+	  ~ Parent's id for Specific Mods
+	  var parentArmorType as string
+	  var parentArmorLoc as string
+	  var parentWeaponType as string
+	  var parentSpecArmMod as string
+	  var parentSpecPAMod as string
+	  var parentSpecWpnMod as string
+	  var ItemModAllowTags as string
+	  var ItemModCatAllowTags as string
+	  
+	  parentSpecArmMod = parent.tagids[ItemModSpecArmor.?," | "]
+	  
+	  parentSpecPAMod = parent.tagids[ItemModSpecPwrArm.?," | "]
+	  
+	  parentArmorLoc = parent.tagids[ArmorLoc.?," | "]
+	  parentArmorLoc = replace(parentArmorLoc,"ArmorLoc.","ItemModArmorLoc.",0)
+	  
+	  parentArmorType = parent.tagids[ArmorType.?," | "]
+	  parentArmorType = replace(parentArmorType,"ArmorType.","ItemModArmorType.",0)
+	  
+	  parentWeaponType = parent.tagids[WeaponType.?," | "]
+	  parentWeaponType = replace(parentWeaponType,"WeaponType.","ItemModWpnType.",0)
+	  
+	  parentSpecWpnMod = parent.tagids[ItemModSpecWpn.?," | "]
+	  
+	  ItemModAllowTags = parent.tagids[ItemModAllow.?," | "]
+	  ItemModCatAllowTags = parent.tagids[ItemModCatAllowed.?," | "]
+
+	  perform forward[ItemMod.ItemModHelper]
+
+	  ~ Load only those expression fields for allowed categories
+	  ~ Clothing
+	  if (parent.tagids[ItemModCatAllowed.Clothing] <> 0) then
+		~ Clothing Mods
+		var clothTags as string
+		var ClothMods as string
+	  
+		ClothMods = "ClothingMod.?"
+	  
+		clothTags = parentSpecArmMod
+		clothTags = splice(clothTags, ItemModAllowTags,"|")
+		clothTags = splice(clothTags, ClothMods," & ")
+	  
+	    field[imhClothingExpr].text = clothTags
+	    endif
+	
+	  ~ Armor (Material, Upgrade, Utility)
+	  if (parent.tagids[ItemModCatAllowed.Material] <> 0) then 
+	    var materialTags as string
+	    materialTags = parentSpecArmMod
+	    materialTags = splice(materialTags, parentArmorType," | ")
+	    materialTags = splice(materialTags, ItemModAllowTags," | ")
+		
+		field[imhMaterialExpr].text = materialTags
+	    endif
+		
+	  if (parent.tagids[ItemModCatAllowed.Upgrade] <> 0) then  
+		var upgradeTags as string
+		upgradeTags = parentArmorLoc & " & (" & parentSpecArmMod
+	    upgradeTags = splice(upgradeTags, parentArmorType," | ")
+	    upgradeTags = splice(upgradeTags, ItemModAllowTags," | ")
+		upgradeTags &= ")"
+		
+		field[imhUpgradeExpr].text = upgradeTags
+	    endif
+	  
+	  if (parent.tagids[ItemModCatAllowed.Utility] <> 0) then 
+	    var utilityTags as string
+	    utilityTags = parentSpecArmMod
+	    utilityTags = splice(utilityTags, parentArmorType," | ")
+	    utilityTags = splice(utilityTags, ItemModAllowTags," | ")
+		
+		field[imhUtilityExpr].text = utilityTags
+	    endif
+
+	  ~ Power Armor Mods (Upgrade, System, Plating)
+	  if (parent.tagids[ItemModCatAllowed.UpgradePA] <> 0) then 
+		var paUpgradeTags as string
+		paUpgradeTags = parentArmorLoc & " & (" & parentSpecPAMod
+		paUpgradeTags = splice(paUpgradeTags, parentArmorType," | ")
+		paUpgradeTags = splice(paUpgradeTags, ItemModAllowTags," | ")
+		paUpgradeTags &= ")"
+	  
+		field[imhPAUpgradeExpr].text = paUpgradeTags
+		endif
+		
+	  ~ PA System
+	  if (parent.tagids[ItemModCatAllowed.System] <> 0) then 
+		var paSystemTags as string
+		paSystemTags = parentArmorLoc & " & (" & parentSpecPAMod
+		paSystemTags = splice(paSystemTags, parentArmorType," | ")
+		paSystemTags = splice(paSystemTags, ItemModAllowTags," | ")
+		paSystemTags &= ")"
+		
+        field[imhPASystemExpr].text = paSystemTags
+		endif
+	  
+	  ~ PA Plating
+	  if (parent.tagids[ItemModCatAllowed.Plating] <> 0) then 
+		var paPlatingTags as string
+		paPlatingTags = parentArmorLoc & " & (" & parentSpecPAMod
+		paPlatingTags = splice(paPlatingTags, parentArmorType," | ")
+		paPlatingTags = splice(paPlatingTags, ItemModAllowTags," | ")
+		paPlatingTags &= ")"
+		
+        field[imhPAPlatingExpr].text = paPlatingTags
+		endif
+		
+	  ~ Melee Weapon Mods (UpgradeMelee)
+	  if (parent.tagids[ItemModCatAllowed.UpgradeMelee] <> 0) then  
+	    var meleeTags as string
+		meleeTags = parentSpecWpnMod 
+		meleeTags = splice(meleeTags, parentWeaponType," | ")
+		meleeTags = splice(meleeTags, ItemModAllowTags," | ")
+		
+		field[imhMelUpgradeExpr].text = meleeTags
+	    endif
+		
+	  ~ Bow Weapon Mods (Frame, Sights)
+	  if (parent.tagids[ItemModCatAllowed.Frame] <> 0) then
+		var frameTags as string
+		frameTags = parentSpecWpnMod
+		frameTags = splice(frameTags, ItemModAllowTags," | ")
+		frameTags = splice(frameTags, parentWeaponType," | ")
+	  
+		field[imhFrameExpr].text = "ItemModCat.Frame & (" & frameTags & ")"
+	    endif
+	  
+	  if (parent.tagids[ItemModCatAllowed.RangedSights] <> 0) then
+		var sightTags as string
+		sightTags = parentSpecWpnMod
+		sightTags = splice(sightTags, ItemModAllowTags," | ")
+		sightTags = splice(sightTags, parentWeaponType," | ")
+	  
+		field[imhRMSightsExpr].text = "ItemModCat.RangedSights & (" & sightTags & ")"
+	    endif
+	  
+	  ~ Ranged Weapon Mods (Sights, Receiver, Barrel, Mag, Grip, Muzzle, Stock)
+	  
+	  if (parent.tagids[ItemModCatAllowed.RangedReceiver] <> 0) then
+		var recvTags as string
+		recvTags = parentSpecWpnMod
+		recvTags = splice(recvTags, ItemModAllowTags," | ")
+		recvTags = splice(recvTags, parentWeaponType," | ")
+	  
+	    field[imhRMReceiverExpr].text = "ItemModCat.RangedReceiver & (" & recvTags & ")"
+	    endif
+		
+	  if (parent.tagids[ItemModCatAllowed.RangedBarrel] <> 0) then
+		var barTags as string
+		barTags = parentSpecWpnMod
+		barTags = splice(barTags, ItemModAllowTags," | ")
+		barTags = splice(barTags, parentWeaponType," | ")
+	  
+	    field[imhRMBarrelExpr].text = "ItemModCat.RangedBarrel & (" & barTags & ")"
+	    endif
+		
+	  if (parent.tagids[ItemModCatAllowed.RangedMag] <> 0) then
+		var magTags as string
+		magTags = parentSpecWpnMod
+		magTags = splice(magTags, ItemModAllowTags," | ")
+		magTags = splice(magTags, parentWeaponType," | ")
+	  
+	    field[imhRMMagExpr].text = "ItemModCat.RangedMag & (" & magTags & ")"
+	    endif
+		
+	  if (parent.tagids[ItemModCatAllowed.RangedGrip] <> 0) then
+		var gripTags as string
+		gripTags = parentSpecWpnMod
+		gripTags = splice(gripTags, ItemModAllowTags," | ")
+		gripTags = splice(gripTags, parentWeaponType," | ")
+	  
+        field[imhRMGripExpr].text = "ItemModCat.RangedGrip & (" & gripTags & ")"
+	    endif
+		
+	  if (parent.tagids[ItemModCatAllowed.RangedMuzzle] <> 0) then
+		var muzTags as string
+		muzTags = parentSpecWpnMod
+		muzTags = splice(muzTags, ItemModAllowTags," | ")
+		muzTags = splice(muzTags, parentWeaponType," | ")
+	  
+	    field[imhRMMuzzleExpr].text = "ItemModCat.RangedMuzzle & (" & muzTags & ")"
+	    endif
+		
+	  if (parent.tagids[ItemModCatAllowed.RangedStock] <> 0) then
+		var stkTags as string
+		stkTags = parentSpecWpnMod
+		stkTags = splice(stkTags, ItemModAllowTags," | ")
+		stkTags = splice(stkTags, parentWeaponType," | ")
+	  
+	    field[imhRMStockExpr].text = "ItemModCat.RangedStock & (" & stkTags & ")"
+	    endif
+  
+	  ~ Capacitor Mods	
+	  if (parent.tagids[ItemModCatAllowed.Capacitor] <> 0) then
+		var capTags as string
+		capTags = parentSpecWpnMod
+		capTags = splice(capTags, ItemModAllowTags," | ")
+		capTags = splice(capTags, parentWeaponType," | ")
+	  
+	    field[imhCapacitorExpr].text = "ItemModCat.Capacitor & (" & capTags & ")"
+	    endif
+  
+	  ~ Robot Mods (Body, Arm, Leg)
+	  
+		
+      ]]></eval>
+	  
+	<eval index="2" phase="Render" priority="10000"><![CDATA[
+	  ~ notify parent.field[name].text
+	  field[imhItemName].text = parent.field[name].text
+      ]]></eval> 
+	
+	<eval index="3" phase="Setup" priority="5000"><![CDATA[
+	  ~ notify parent.field[name].text
+	  trustme
+	  parent.field[UserName].text = field[imhUserName].text 
+      ]]></eval>
+ 
+    <eval index="4" phase="Initialize" priority="100"><![CDATA[
+      ~empty script, but earlier than scripts on the picks in this gizmo
+      ]]></eval>
+	  
+    </component>
+	
+  <component
+    id="RobotMod"
+    name="Robot Modification"
+    autocompset="no">
+
+    <identity group="RobotMod"/> 
+	
+    <shadow target="hero">Helper.Shadow</shadow>
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+	
+  <component
+    id="ClothingMod"
+    name="Clothing Modification"
+    autocompset="no">
+
+    <identity group="ArmorMod"/> 
+    <identity group="ClothingMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>	
+	
+  <component
+    id="MaterialMod"
+    name="Material Modification"
+    autocompset="no">
+
+    <identity group="ArmorMod"/> 
+    <identity group="MaterialMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+	
+  <component
+    id="UpgradeArmorMod"
+    name="Upgrade Modification"
+    autocompset="no">
+
+    <identity group="UpgradeArmorMod"/> 
+    <identity group="ArmorMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>	
+	
+  <component
+    id="FrameMod"
+    name="Frame Modification"
+    autocompset="no">
+
+    <identity group="FrameMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+	
+ <component
+    id="CapacitorMod"
+    name="Capacitor Energy Modification"
+    autocompset="no">
+
+    <identity group="CapacitorMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+	
+  <component
+    id="UpgradePAMod"
+    name="Power Armor Upgrade Modification"
+    autocompset="no">
+
+    <identity group="UpgradePAMod"/> 
+    <identity group="ArmorMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>	
+		
+   <component
+    id="SystemMod"
+    name="PA System Modification"
+    autocompset="no">
+
+    <identity group="SystemMod"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>	
+	
+  <component
+    id="PlatingMod"
+    name="PA Plating Modification"
+    autocompset="no">
+
+    <identity group="Plating"/> 
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+
+    </component>
+	
+  <component
+    id="WeaponMod"
+    name="Weapon Modification"
+    autocompset="yes">
+
+    <identity group="WeaponMod"/>
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+ 
+    <!-- This initializes and manages the user-generated name field,
+         the Notes field, the Trappings field, and sets up the item type text fields. -->
+    <eval index="2" phase="Initialize" name="Set User Name/Notes" priority="5000"><![CDATA[
+
+      ~notes
+      if (field[modNotes].isempty = 0) then
+        trustme
+        parent.field[wpSpecial].text = splice(parent.field[wpSpecial].text,field[modNotes].text,"; ")
+        endif
+
+      ]]></eval>
+    </component>
+		
+  <component
+    id="UpgradeMeleeMod"
+    name="Melee Weapon Modification"
+    autocompset="no">
+
+    <identity group="UpgradeMeleeMod"/>
+    <identity group="ItemModAllow"/>
+	
+    <eval index="1" phase="Setup" priority="5000"><![CDATA[
+      ~ dummy
+	  
+      ]]></eval>
+	  
+    </component>
+	
+  <component
+    id="UpgradeRangeMod"
+    name="Ranged Weapon Modification"
+    autocompset="no">
+
+    <identity group="UpgradeRangeMod"/> 
+    <identity group="ItemModAllow"/>
+	
+    <eval index="1" phase="Render" priority="5000"><![CDATA[
+	  doneif (parent.isgizmo = 0)
+	  
+	  var name as string
+	  var tmpName as string
+	  
+	  ~ if there is no "Gun" in the name, no need to continue
+	  doneif (lastpos(parent.field[name].text,"Gun") < 0)
+	  
+	  if (tagis[ItemModCat.RangedStock] <> 0) then
+	    if (parent.field[livename].isempty = 0) then
+		  name = parent.field[livename].text
+		else
+		  name = parent.field[name].text
+		  endif
+
+		tmpName = replace(name, "Gun", "Rifle", 0)
+		~ notify tmpName
+		
+		parent.field[livename].text = tmpName
+		endif
+      ]]></eval>
+	
+    <eval index="2" phase="Render" priority="5100"><![CDATA[
+	  doneif (parent.isgizmo = 0)
+	  
+	  doneif (lastpos(parent.field[livename].text,"Rifle") >= 0)
+	  
+	  if (tagis[ItemModCat.RangedStock] <> 0) then
+		if (parent.field[livename].isempty = 0) then
+	      parent.field[livename].text &= " Rifle"
+		else 
+		  parent.field[livename].text = parent.field[name].text & " Rifle"
+		  endif
+	    endif
+      ]]></eval>
+
+    </component>
+	
+  <component
+    id="DefenseMod"
+    name="Defense Modification"
+    autocompset="yes">
+
+    <!-- Defense adjustment conferred by the equipment -->
+    <field
+      id="modDRPhysical"
+      name="Physical DR Adjustment"
+      type="derived">
+      </field>
+    <field
+      id="modDREnergy"
+      name="Energy DR Adjustment"
+      type="derived">
+      </field>
+	<field
+      id="modDRRadiation"
+      name="Radiation DR Adjustment"
+      type="derived">
+      </field>
+	  
+    <identity group="DefenseMod"/>
+	
+    <eval index="1" phase="Effects" priority="5000" name="Mod - Adjust DR"><![CDATA[
+	  parent.field[defPhysical].value += field[modDRPhysical].value
+	  parent.field[defEnergy].value += field[modDREnergy].value
+	  parent.field[defRadiation].value += field[modDRRadiation].value
+      ]]></eval>
+ 
+    <!-- This initializes and manages the user-generated name field,
+         the Notes field, the Trappings field, and sets up the item type text fields. -->
+    <eval index="2" phase="Initialize" name="Set Mod Special" priority="5000"><![CDATA[
+
+      ~notes
+      if (field[modNotes].isempty = 0) then
+        trustme
+        parent.field[defSpecial].text = splice(parent.field[defSpecial].text,field[modNotes].text,"; ")
+        endif
+
+      ]]></eval>
+    </component>
+
+ <compset
+    id="GearMod">
+    <compref component="GearMod"/>
+    </compset>
+	
+  <compset
+    id="RobotMod">
+    <compref component="RobotMod"/>
+    <compref component="GearMod"/>
+    </compset>
+
+  <compset
+    id="ClothingMod">
+    <compref component="ClothingMod"/>
+    <compref component="DefenseMod"/>
+    <compref component="GearMod"/>
+    </compset>	
+
+  <compset
+    id="MaterialMod">
+    <compref component="MaterialMod"/>
+    <compref component="DefenseMod"/>
+    <compref component="GearMod"/>
+    </compset>	
+
+  <compset
+    id="UpgradeArmorMod">
+    <compref component="UpgradeArmorMod"/>
+    <compref component="DefenseMod"/>
+    <compref component="GearMod"/>
+    </compset>	
+	
+  <compset
+    id="CapacitorMod">
+    <compref component="CapacitorMod"/>
+    <compref component="UpgradeRangeMod"/>
+    <compref component="WeaponMod"/>
+    <compref component="GearMod"/>
+    </compset>
+	
+  <compset
+    id="UpgradeRangeMod">
+    <compref component="UpgradeRangeMod"/>
+    <compref component="WeaponMod"/>
+    <compref component="GearMod"/>
+    </compset>
+	
+  <compset
+    id="UpgradeMeleeMod">
+    <compref component="UpgradeMeleeMod"/>
+    <compref component="WeaponMod"/>
+    <compref component="GearMod"/>
+    </compset>
+
+  <compset
+    id="UpgradePAMod">
+    <compref component="UpgradePAMod"/>
+    <compref component="DefenseMod"/>
+    <compref component="GearMod"/>
+    </compset>	
+	
+  <compset
+    id="FrameMod">
+    <compref component="FrameMod"/>
+    <compref component="WeaponMod"/>
+    <compref component="GearMod"/>
+    </compset>
+	
+  <compset
+    id="SystemMod">
+    <compref component="SystemMod"/>
+    <compref component="DefenseMod"/>
+    <compref component="GearMod"/>
+    </compset>
+	
+  <compset
+    id="PlatingMod">
+    <compref component="PlatingMod"/>
+    <compref component="DefenseMod"/>
+    <compref component="GearMod"/>
+    </compset>
+
+  <!-- form="itemmodgiz"> -->
+  <entity
+    id="ItemMods"
+    form="itemmodgiz">
+      <bootstrap thing="ItemModHelper"/>
+    </entity>
+  </document>

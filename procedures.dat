@@ -310,9 +310,9 @@
     iteminfo = ""
     if (tagis[component.Perk] <> 0) then
       call InfoPerk
-    elseif (tagis[component.WeapRange] <> 0) then
+    elseif (tagis[component.WeaponRanged] <> 0) then
       call InfoRange
-    elseif (tagis[component.WeapMelee] <> 0) then
+    elseif (tagis[component.WeaponMelee] <> 0) then
       call InfoMelee
     elseif (tagis[component.Defense] <> 0) then
       call InfoDef
@@ -334,8 +334,8 @@
 
       ~append the item's weight
       iteminfo &= "Weight: "
-      if (field[gearWeight].value > 0) then
-        iteminfo &= field[gearWeight].text 
+      if (field[gearNet].value > 0) then
+        iteminfo &= field[gearNet].text 
 		~ & " each"
       else
         iteminfo &= chr(150)
@@ -418,21 +418,18 @@
 
     ~report the damage rating of the weapon
     iteminfo &= "Damage Rating: " & field[wpDamage].text & "{br}"
+
+    ~report the damage type of the weapon
+    iteminfo &= "Damage Type: " &  tagnames[DamageType.?,","] & "{br}"
 	
     ~report the net attack rating of the weapon
-    iteminfo &= "Damage Effects: "
+    iteminfo &= "Effects: "
 	if (field[wpEffects].isempty = 0) then
         iteminfo &= field[wpEffects].text
       else
         iteminfo &= chr(150)
         endif
 	iteminfo &= "{br}"
-
-    ~report the net attack rating of the weapon
-    iteminfo &= "Damage Type: " &  tagnames[DamageType.?,","] & "{br}"
-
-    ~report the net attack rating of the weapon
-    iteminfo &= "Fire Rate: " & field[wpFireRate].text & "{br}"
 	
 	~ the minimum strength requirement (omitting if there is none)
     if (field[wpStrReq].value > 0) then
@@ -502,8 +499,12 @@
     ~start with generic details for all weapons
     call InfoWeapon
 
-    ~add the range details for the weapon
-    iteminfo &= "Range: " & field[wpRange].text & "{br}"
+    ~ add the fire rate and range details for the weapon 
+	~ (throwing weapons have range included in Quality tag)
+	if (tagis[WeaponType.Throwing] = 0) then
+      iteminfo &= "Fire Rate: " & field[wpFireRate].text & "{br}"
+      iteminfo &= "Range: " & field[wpRange].text & "{br}"
+	  endif
 
     ~finish with generic special abilities for all weapons
     call InfoWeapSp
@@ -522,12 +523,34 @@
     var iteminfo as string
 
     ~add the defense rating
-    iteminfo &= "Defense: " & field[defPhysical].text & "{br}"
+    iteminfo &= "Resistance (Physical): " & field[defPhysical].text & "{br}"
+    iteminfo &= "Resistance (Energy): " & field[defEnergy].text & "{br}"
+    iteminfo &= "Resistance (Radiation): " & field[defRadiation].text & "{br}"
+	
+	~health of part if PA part
+	if (tagis[component.PowerArmor] <> 0) then
+	  iteminfo &= "Health Points: " & field[paHealthPoints].text & "{br}"
+	  endif
+	  
+    ~add the coverage
+    iteminfo &= "Covers: " & tagabbrevs[ArmorLoc.?,", "] & "{br}"
 
     ~report the minimum strength requirement (omitting if there is none)
     if (field[defStrReq].value > 0) then
       iteminfo &= "Minimum Strength: " & field[defStrReq].text & "{br}"
       endif
+	
+	~report any special details about the defense (omitting if there are none)
+    var special as string
+    special = tagnames[ArmorSpecial.?,", "]
+    special = splice(special,field[defSpecial].text,", ")
+    if (empty(special) = 0) then
+      iteminfo &= "Special: " & special & "{br}"
+      endif
+	  
+    if (tagis[component.PowerArmorBase] <> 0) then
+	    iteminfo &=  "PA Components Attached: " & field[paComponents].text & "{br}{br}"
+	    endif
     ]]></procedure>
 
 
@@ -895,11 +918,11 @@
     var info as string
 
     ~output our race
-    info = hero.findchild[Species].field[name].text
+    info = hero.findchild[Origin].field[name].text
     if (empty(info) <> 0) then
       info = "-none-"
       endif
-    final = "Species: {b}" & info & "{/b}{br}{br}"
+    final = "Origin: {b}" & info & "{/b}{br}{br}"
 
     ~output our power point pool
     perform hero.child[trPowerPts].setfocus

@@ -73,9 +73,9 @@
     <leadsummary><![CDATA[
       ~start with the race
       var txt as string
-      txt = hero.findchild[Species].field[name].text
+      txt = hero.findchild[Origin].field[name].text
       if (empty(txt) <> 0) then
-        txt = "No Species"
+        txt = "No Origin"
         endif
       @text &= txt
 
@@ -115,7 +115,15 @@
   <scriptmacro
     name="traitbonus"
     param1="trait"
-    result="hero.child[#trait].field[trtBonus].value"/>
+    result="hero.childfound[#trait].field[trtBonus].value"/>
+  <scriptmacro
+    name="traitbase"
+    param1="trait"
+    result="hero.child[#trait].field[trtBase].value"/>
+  <scriptmacro
+    name="traitmax"
+    param1="trait"
+    result="hero.child[#trait].field[trtMaximum].value"/>
   <scriptmacro
     name="traitinplay"
     param1="trait"
@@ -154,25 +162,82 @@
     name="islevel"
     result="herofield[acLevel].value"/>
 
+  <!-- Macros for Hit Locations-->
+  <scriptmacro
+    name="hashead"
+    result="tagis[HitLocation.Head]"/>
+  <scriptmacro
+    name="hastorso"
+    result="tagis[HitLocation.Torso]"/>
+  <scriptmacro
+    name="hasleftarm"
+    result="tagis[HitLocation.ArmLeft]"/>
+  <scriptmacro
+    name="hasleftleg"
+    result="tagis[HitLocation.LegLeft]"/>
+  <scriptmacro
+    name="hasrightarm"
+    result="tagis[HitLocation.ArmRight]"/>
+  <scriptmacro
+    name="hasrightleg"
+    result="tagis[HitLocation.LegRight]"/>
+	
+  <scriptmacro
+    name="hasoptics"
+    result="tagis[HitLocation.Optics]"/>
+  <scriptmacro
+    name="hasmainbody"
+    result="tagis[HitLocation.MainBody]"/>
+  <scriptmacro
+    name="hasarm1"
+    result="tagis[HitLocation.Arm1]"/>
+  <scriptmacro
+    name="hasarm2"
+    result="tagis[HitLocation.Arm2]"/>
+  <scriptmacro
+    name="hasarm3"
+    result="tagis[HitLocation.Arm3]"/>
+  <scriptmacro
+    name="hasthruster"
+    result="tagis[HitLocation.Thruster]"/>
+	
   <!-- Macros for DR Values of body -->
   <scriptmacro
     name="isheadarmor"
     result="tagis[ArmorLoc.Head]"/>
   <scriptmacro
+    name="isopticsarmor"
+    result="tagis[ArmorLoc.Optics]"/>
+  <scriptmacro
     name="istorsoarmor"
     result="tagis[ArmorLoc.Torso]"/>
   <scriptmacro
-    name="isleftarmarmor"
-    result="tagis[ArmorLoc.LeftArm]"/>
+    name="ismainbodyarmor"
+    result="tagis[ArmorLoc.MainBody]"/>
   <scriptmacro
-    name="isleftlegarmor"
-    result="tagis[ArmorLoc.LeftLeg]"/>
+    name="isleftarmarmor"
+    result="tagis[ArmorLoc.ArmLeft]"/>
   <scriptmacro
     name="isrightarmarmor"
-    result="tagis[ArmorLoc.RightArm]"/>
+    result="tagis[ArmorLoc.ArmRight]"/>
+  <scriptmacro
+    name="isarm1armor"
+    result="tagis[ArmorLoc.Arm1]"/>
+  <scriptmacro
+    name="isarm2armor"
+    result="tagis[ArmorLoc.Arm2]"/>
+  <scriptmacro
+    name="isarm3armor"
+    result="tagis[ArmorLoc.Arm3]"/>
+  <scriptmacro
+    name="isleftlegarmor"
+    result="tagis[ArmorLoc.LegLeft]"/>
   <scriptmacro
     name="isrightlegarmor"
-    result="tagis[ArmorLoc.RightLeg]"/>
+    result="tagis[ArmorLoc.LegRight]"/>
+  <scriptmacro
+    name="isthrusterarmor"
+    result="tagis[ArmorLoc.Thruster]"/>
 	
   <scriptmacro
     name="headDRPhys"
@@ -185,6 +250,16 @@
     result="herofield[acHeadDRRad].value"/>
 	
   <scriptmacro
+    name="opticDRPhys"
+    result="herofield[acOpticDRPhys].value"/>
+  <scriptmacro
+    name="opticDREner"
+    result="herofield[acOpticDREner].value"/>
+  <scriptmacro
+    name="opticDRRad"
+    result="herofield[acOpticDRRad].value"/>
+	
+  <scriptmacro
     name="torsoDRPhys"
     result="herofield[acTorsoDRPhys].value"/>
   <scriptmacro
@@ -195,6 +270,16 @@
     result="herofield[acTorsoDRRad].value"/>
 	
   <scriptmacro
+    name="mainbodyDRPhys"
+    result="herofield[acMainBodyDRPhys].value"/>
+  <scriptmacro
+    name="mainbodyDREner"
+    result="herofield[acMainBodyDREner].value"/>
+  <scriptmacro
+    name="mainbodyDRRad"
+    result="herofield[acMainBodyDRRad].value"/>
+	
+  <scriptmacro
     name="armleftDRPhys"
     result="herofield[acArmLeftDRPhys].value"/>
   <scriptmacro
@@ -203,6 +288,46 @@
   <scriptmacro
     name="armleftDRRad"
     result="herofield[acArmLeftDRRad].value"/>
+	
+  <scriptmacro
+    name="arm1DRPhys"
+    result="herofield[acArm1DRPhys].value"/>
+  <scriptmacro
+    name="arm1DREner"
+    result="herofield[acArm1DREner].value"/>
+  <scriptmacro
+    name="arm1DRRad"
+    result="herofield[acArm1DRRad].value"/>
+	
+  <scriptmacro
+    name="arm2DRPhys"
+    result="herofield[acArm2DRPhys].value"/>
+  <scriptmacro
+    name="arm2DREner"
+    result="herofield[acArm2DREner].value"/>
+  <scriptmacro
+    name="arm2DRRad"
+    result="herofield[acArm2DRRad].value"/>
+	
+  <scriptmacro
+    name="arm3DRPhys"
+    result="herofield[acArm3DRPhys].value"/>
+  <scriptmacro
+    name="arm3DREner"
+    result="herofield[acArm3DREner].value"/>
+  <scriptmacro
+    name="arm3DRRad"
+    result="herofield[acArm3DRRad].value"/>
+	
+  <scriptmacro
+    name="thrusterDRPhys"
+    result="herofield[acThrusterDRPhys].value"/>
+  <scriptmacro
+    name="thrusterDREner"
+    result="herofield[acThrusterDREner].value"/>
+  <scriptmacro
+    name="thrusterDRRad"
+    result="herofield[acThrusterDRRad].value"/>
 	
   <scriptmacro
     name="armrightDRPhys"
@@ -240,6 +365,15 @@
   <scriptmacro
     name="iscreature"
     result="hero.tagis[HeroType.Creature]"/>
+  <scriptmacro
+    name="halfcarrystr"
+    result="hero.tagis[Hero.HalfCarryStr]"/>
+  <scriptmacro
+    name="nocarrystr"
+    result="hero.tagis[Hero.NoCarryStr]"/>
+  <scriptmacro
+    name="isrobot"
+    result="hero.tagis[Hero.IsRobot]"/>
   <scriptmacro
     name="mastertrait"
     param1="trait"

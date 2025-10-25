@@ -23,28 +23,31 @@
   -->
   <group
     id="Helper">
-    <value id="Bootstrap"/>   <!-- Identifies a pick that must be bootstrapped for every hero -->
-    <value id="Displace"/>    <!-- Pick should be displaced if it is designated for displacement -->
-    <value id="Maximum"/>     <!-- Ability has reached its maximum level and cannot be improved -->
-    <value id="Minimum"/>     <!-- Ability has reached its minimum level and cannot be decreased -->
-    <value id="NoDelete"/>    <!-- Indicates the pick cannot be deleted because another selection precludes it -->
-    <value id="Activated"/>   <!-- Indicates an in-play adjustment or ability that has been activated -->
-    <value id="NoMove"/>      <!-- Identifies gear that cannot be transferred between actors -->
-    <value id="UserAdjust"/>  <!-- Identifies a user-added adjustment -->
-    <value id="BadStrReq"/>   <!-- Identifies a weapon that has failed its minimum strength requirement -->
-    <value id="MaxLevel"/>    <!-- Tracker reset value is the maximum instead of the minimum -->
-    <value id="ResetMax"/>    <!-- Tracker reset value is the maximum instead of the minimum -->
-    <value id="NoReset"/>     <!-- Tracker value does not possess a reset button -->
-    <value id="NoMaxBound"/>  <!-- Tracker user value is not bounded at the maximum end -->
-    <value id="NoMinBound"/>  <!-- Tracker user value is not bounded at the minimum end -->
-    <value id="NoMinimum"/>   <!-- Resource does NOT need to be fully spent to avoid reporting a warning -->
-    <value id="CustomItem"/>  <!-- Identifies a thing that has a user customizable name -->
-    <value id="NoPersText"/>  <!-- User entered no background text -->
-    <value id="FirstCopy"/>   <!-- This pick is the first copy of the trait -->
-    <value id="OnlyCopy"/>   <!-- This pick is the only copy of the component -->
-    <value id="MultiCopy"/>   <!-- This pick is one of multiple of the component -->
-    <value id="SpecUp"/>      <!-- This pick is an additional copy of the same trait -->
-    <value id="CostRebate"/>      <!-- This pick is an additional copy of the same trait -->
+    <value id="Bootstrap"/>   		<!-- Identifies a pick that must be bootstrapped for every hero -->
+    <value id="Displace"/>    		<!-- Pick should be displaced if it is designated for displacement -->
+    <value id="Shadow"/>      		<!-- Pick should be displaced if it is designated for shadowing -->
+    <value id="Maximum"/>     		<!-- Ability has reached its maximum level and cannot be improved -->
+    <value id="Minimum"/>     		<!-- Ability has reached its minimum level and cannot be decreased -->
+    <value id="NoDelete"/>    		<!-- Indicates the pick cannot be deleted because another selection precludes it -->
+    <value id="Activated"/>   		<!-- Indicates an in-play adjustment or ability that has been activated -->
+    <value id="Disabled"/>   		 <!-- Indicates the pick cannot be deleted because another selection precludes it -->
+    <value id="NoMove"/>      		<!-- Identifies gear that cannot be transferred between actors -->
+    <value id="UserAdjust"/>  		<!-- Identifies a user-added adjustment -->
+    <value id="BadStrReq"/>   		<!-- Identifies a weapon that has failed its minimum strength requirement -->
+    <value id="MaxLevel"/>    		<!-- Tracker reset value is the maximum instead of the minimum -->
+    <value id="ResetMax"/>    		<!-- Tracker reset value is the maximum instead of the minimum -->
+    <value id="NoReset"/>     		<!-- Tracker value does not possess a reset button -->
+    <value id="NoMaxBound"/>  		<!-- Tracker user value is not bounded at the maximum end -->
+    <value id="NoMinBound"/>  		<!-- Tracker user value is not bounded at the minimum end -->
+    <value id="NoMinimum"/>   		<!-- Resource does NOT need to be fully spent to avoid reporting a warning -->
+    <value id="CustomItem"/>  		<!-- Identifies a thing that has a user customizable name -->
+    <value id="NoPersText"/>  		<!-- User entered no background text -->
+    <value id="FirstCopy"/>   		<!-- This pick is the first copy of the trait -->
+    <value id="OnlyCopy"/>   		<!-- This pick is the only copy of the component -->
+    <value id="MultiCopy"/>   		<!-- This pick is one of multiple of the component -->
+    <value id="SpecUp"/>      		<!-- This pick is an additional copy of the same trait -->
+    <value id="CostRebate"/>      	<!-- This pick is an additional copy of the same trait -->
+    <value id="FusCoreInstalled"/>	 
     <value id="MinionCantBeLive"/> 
     <value id="NoSkillValue"/> 
     <value id="StartValue4"/> 
@@ -67,9 +70,13 @@
     <value id="NeedDomain"/>  <!-- Whether an ability requires the user to specify a domain -->
     <value id="NoAutoName"/>  <!-- Whether to not automatically amend the naming of a pick with selections -->
     <value id="Resistance"/>  <!-- Identifies a resistance trait -->
+    <value id="Health"/>       <!-- Identifies a power trait -->
     <value id="Power"/>       <!-- Identifies a power trait -->
     <value id="Combat"/>      <!-- Identifies a combat trait -->
     <value id="DamageDice"/>      <!-- Identifies a combat trait -->
+    <value id="PerkForTrait"/>	<!-- Used for an origin tht can select a Perk in place of a Trait -->
+    <value id="SelectTrait"/>	<!-- Used for an origin tht can select a Trait from a list -->
+    <value id="MisterHandy"/>	<!-- Item is for Mr Handy -->
     </group>
 
   <!-- Hero group - Helper tags assigned exclusively to the hero/actor
@@ -80,14 +87,22 @@
   -->
   <group
     id="Hero">
-    <value id="Dead"/>        <!-- Indicates hero is dead or otherwise out of combat -->
-    <value id="NoDamage"/>    <!-- Indicates no damage history exists for the hero -->
-    <value id="Hand"/>        <!-- Each tag indicates one hand worth of weapons equipped -->
-    <value id="RerollInit"/>  <!-- Indicates that the hero can re-roll initiative values -->
-    <value id="NoRace"/> 
+    <value id="Dead"/>        	<!-- Indicates hero is dead or otherwise out of combat -->
+    <value id="NoDamage"/>    	<!-- Indicates no damage history exists for the hero -->
+    <value id="Hand"/>       	<!-- Each tag indicates one hand worth of weapons equipped -->
+    <value id="RerollInit"/>  	<!-- Indicates that the hero can re-roll initiative values -->
+    <value id="NoOrigin"/> 
     <value id="NoCarry"/> 
-    <value id="SetRace"/> 
+    <value id="SetOrigin"/> 
+    <value id="SkillLimit4"/> 	<!-- Indicates skill maximum value. if not present, defaults to 10 -->
     <value id="Minion"/>
+    <value id="NoUnarmed"/>
+    <value id="IsRobot"/>		<!-- Indicates hero is a Robot (i.e. Mr Handy, Protectron, etc.) -->
+    <value id="NoCarryStr"/>  	<!-- Indicates that the hero doesn't add strength to Carry Weight -->
+    <value id="HalfCarryStr"/>	<!-- Indicates that the hero doesn't add strength to Carry Weight -->
+    <value id="RadImmune"/>		<!-- Indicates that the hero is Immune to Radiation Damage -->
+    <value id="PoiImmune"/>		<!-- Indicates that the hero is Immune to Radiation Damage -->
+    <value id="Encumbered"/> 
     </group>
 	
   <group
@@ -115,11 +130,15 @@
   -->
   <group
     id="Equipment">
-    <value id="Hand" name="Requires one or more hands"/>          <!-- Identifies equipment that requires hands to use -->
-    <value id="TwoHand" name="Requires two hands"/>               <!-- Identifies equipment that is two-handed -->
-    <value id="StartEquip" name="Gear starts out equipped"/>      <!-- Identifies equipment that is equipped by default -->
-    <value id="AutoEquip" name="Gear is auto-equipped"/>          <!-- Identifies equipment that is automatically equipped (e.g. natural attacks) -->
-    <value id="Natural" name="Natural weapon/armor/etc."/>        <!-- Identifies equipment that is a natural form and exempt from various behaviors -->
+    <value id="Hide" 		name="Hide equipment from purchase"/>        	<!-- Identifies equipment that is concealed from purchasing -->
+    <value id="Hand" 		name="Requires one or more hands"/>          	<!-- Identifies equipment that requires hands to use -->
+    <value id="NoHands" 	name="Requires no hands"/>          			<!-- Identifies equipment that doesn't require hands to use -->
+    <value id="TwoHand" 	name="Requires two hands"/>               		<!-- Identifies equipment that is two-handed -->
+    <value id="StartEquip"	name="Gear starts out equipped"/>      			<!-- Identifies equipment that is equipped by default -->
+    <value id="AutoEquip"	name="Gear is auto-equipped"/>          		<!-- Identifies equipment that is automatically equipped (e.g. natural attacks) -->
+    <value id="Natural" 	name="Natural weapon/armor/etc."/>        		<!-- Identifies equipment that is a natural form and exempt from various behaviors -->
+    <value id="Outfit" 		name="Equipment is considered an Outfit"/>		<!-- Identifies equipment that requires hands to use -->
+    <value id="ModRequired"	name="Gear requires modification selection"/>	<!-- This gear requires modification -->
     </group>
 
   <!-- Weapon group - helper tags for weapon special abilities
@@ -199,8 +218,7 @@
     <value id="Special"/>         <!-- Indicates a trait that is hidden from the Special tab -->
     <value id="Perk"/>            <!-- Indicates an perk that is not user selectable (i.e. conferred by race or similar mechanism) -->
     <value id="Tracker"/>         <!-- Indicates a tracker that is hidden from the In-Play tab (and likely shown somewhere else) -->
-    <value id="Equipment"/>       <!-- Indicates a piece of gear that is hidden from the purchase screen -->
-    <value id="RaceChoose"/>    
+    <value id="OriginChoose"/>    
     </group>
 
   <!-- Show group - controls whether things are shown in certain contexts
@@ -241,8 +259,8 @@
     <value id="Clothing" order="0"/>
     <value id="Armor" order="1"/>
     <value id="Shield" order="2"/>
-    <value id="Range" order="3"/>
-    <value id="Melee" order="4"/>
+    <value id="Melee" order="3"/>
+    <value id="Range" order="4"/>
     </group>
 
   <!-- Equipped group - used for sorting equipped weapons first
@@ -360,49 +378,32 @@
     dynamic="yes">
     <value id="TagSkill"/>      <!-- default term use for a domain -->
     </group>
-	
-  <!-- ItemMod tags -->
-  <group
-    id="ItemMod"
-	dynamic="yes">
-    <value id="ItemModHelper" name="Item Mod Helper"/>
-    </group>
 
+  <!-- HitLocations group - helper tags for body locations
+       Humanoid - Head, Torso, ArmLeft, ArmRight, LegLeft, LegRight
+	   Mr. Handy - Optics, MainBody, Arm1, Arm2, Arm3, Thruster
+  -->
   <group
-    id="ItemModCatAllowed"
-	dynamic="yes">
-    <value id="Gear" name="Gear" />
-    <value id="Material" name="Material" />		<!-- identifies a mod for Armor -->
-    <value id="Utility" name="Utility" />		<!-- identifies a mod for Armor -->
-    <value id="Clothing" name="Clothing" />		<!-- identifies a mod for a piece of clothing -->	
-    <value id="Upgrade" name="Upgrade" />		<!-- identifies a mod for a Melee Weapon -->
-    <value id="RobotHead" name="Robot Head" />	
-    <value id="RobotTorso" name="Robot Torso" />	
-    <value id="RobotArm" name="Robot Arm" />	
-    <value id="RobotLeg" name="Robot Leg" />
-    <value id="RobotInternal" name="Robot Internal Torso" />
-    <value id="Capacitor" name="Capacitor" />
-    <value id="RangedReceiver" name="Receiver" />
-    <value id="RangedBarrel" name="Barrel" />
-    <value id="RangedGrip" name="Grip" />
-    <value id="RangedMag" name="Magazine" />
-    <value id="RangedSights" name="Sights" />
-    <value id="RangedStock" name="Stock" />
-    <value id="RangedMuzzle" name="Muzzle" />
-	
-	
-    </group>	
-	
-  <!-- Item Mod Categories  -->
-  <group
-    id="ItemModCat"
-	inherit="ItemModCatAllowed">
+    id="HitLocation"
+    sequence="explicit">
+    <value id="Optics" 		name="Optics" 		abbrev="O"  order="5"/>		<!-- Head Armor -->
+    <value id="Head" 		name="Head" 		abbrev="H"  order="5"/>		<!-- Head Armor -->
+    <value id="MainBody" 	name="Main Body" 	abbrev="MB" order="15"/>	<!-- Torso Armor -->
+    <value id="Torso" 		name="Torso" 		abbrev="T"  order="15"/>	<!-- Torso Armor -->
+    <value id="ArmLeft" 	name="Arm (Left)" 	abbrev="LA" order="25"/>	<!-- Arm Armor -->
+    <value id="ArmRight" 	name="Arm (Right)" 	abbrev="RA" order="25"/>	<!-- Arm Armor -->
+    <value id="Arm1" 		name="Arm 1" 		abbrev="A1" order="25"/>	<!-- Arm Armor -->
+    <value id="Arm2" 		name="Arm 2" 		abbrev="A2" order="25"/>	<!-- Arm Armor -->
+    <value id="Arm3" 		name="Arm 3" 		abbrev="A3" order="25"/>	<!-- Arm Armor -->
+    <value id="Arm4" 		name="Arm 4" 		abbrev="A4" order="25"/>	<!-- Arm Armor -->
+    <value id="Thruster" 	name="Thruster" 	abbrev="TH" order="35"/>	<!-- Leg Armor -->
+    <value id="LegLeft" 	name="Leg (Left)" 	abbrev="LL" order="35"/>	<!-- Leg Armor -->
+    <value id="LegRight" 	name="Leg (Right)" 	abbrev="RL" order="35"/>	<!-- Leg Armor -->
+    <value id="Leg1" 		name="Leg 1" 		abbrev="L1" order="35"/>	<!-- Arm Armor -->
+    <value id="Leg2" 		name="Leg 2" 		abbrev="L2" order="35"/>	<!-- Arm Armor -->
+    <value id="Leg3" 		name="Leg 3" 		abbrev="L3" order="35"/>	<!-- Arm Armor -->
+    <value id="Leg4" 		name="Leg 4" 		abbrev="L4" order="35"/>	<!-- Arm Armor -->
     </group>
-	
-  <group
-    id="ItemModSelected"
-	inherit="ItemModCatAllowed">
-    </group>	
 	
   <!-- Weapon Type tags -->
   <group
@@ -412,10 +413,11 @@
     <value id="SmallGun" name="Small Guns" order="10" />
     <value id="EnergyWpn" name="Energy Weapons" order="20" />
     <value id="BigGun" name="Big Guns" order="30" />
-    <value id="MeleeWpn" name="Melee Weapons" order="40" />
-    <value id="Unarmed" name="Unarmed" order="40" />
-    <value id="Throwing" name="Throwing" order="50" />
-    <value id="Explosive" name="Explosives" order="60" />
+    <value id="Bow" name="Bows" order="40" />
+    <value id="MeleeWpn" name="Melee Weapons" order="50" />
+    <value id="Unarmed" name="Unarmed" order="50" />
+    <value id="Throwing" name="Throwing" order="60" />
+    <value id="Explosive" name="Explosives" order="70" />
     </group>
 	
   <!-- Weapon Type tags -->
@@ -425,6 +427,7 @@
     <value id="Burst" />
     <value id="Breaking" />
     <value id="Persistent" />
+    <value id="PersistentE" name="Persistent (Energy)"/>
     <value id="Piercing1" name="Piercing 1"/>
     <value id="Piercing2" name="Piercing 2"/>
     <value id="Piercing3" name="Piercing 3"/>
@@ -441,18 +444,38 @@
     id="Quality"
 	dynamic="yes">
     <value id="Accurate" />
+    <value id="AmmoHungry1" name="Ammo-Hungry (1)" />
+    <value id="AmmoHungry2" name="Ammo-Hungry (2)" />
+    <value id="AmmoHungry3" name="Ammo-Hungry (3)" />
+    <value id="AmmoHungry4" name="Ammo-Hungry (4)" />
+    <value id="AmmoHungry5" name="Ammo-Hungry (5)" />
     <value id="Blast" />
-    <value id="CQ" name="Close Quarters"/>
+    <value id="Bombard" />
+    <value id="CQ" name="Close Quarters" />
     <value id="Concealed" />
     <value id="Debilitating" />
+    <value id="Delay1" name="Delay (1)" />
+    <value id="Delay2" name="Delay (2)" />
+    <value id="Delay3" name="Delay (3)" />
+    <value id="Delay4" name="Delay (4)" />
+    <value id="Delay5" name="Delay (5)" />
     <value id="Gatling" />
     <value id="Inaccurate" />
     <value id="Mine" />
-    <value id="NV" name="Night Vision"/>
+    <value id="NV" name="Night Vision" />
     <value id="Parry" />
+    <value id="Placed" />
+    <value id="Recoil1" name="Recoil (1)" />
+    <value id="Recoil2" name="Recoil (2)" />
+    <value id="Recoil3" name="Recoil (3)" />
+    <value id="Recoil4" name="Recoil (4)" />
+    <value id="Recoil5" name="Recoil (5)" />
+    <value id="Recoil6" name="Recoil (6)" />
     <value id="Recon" />
     <value id="Reliable" />
+    <value id="SlowLoad" name="Slow Load" />
     <value id="Suppressed" />
+    <value id="Surge" />
     <value id="ThrownC" name="Thrown (C)" />
     <value id="ThrownM" name="Thrown (M)" />
     <value id="TwoHanded" name="Two-Handed" />
@@ -463,23 +486,60 @@
   <group
     id="DamageType"
 	dynamic="yes">
-    <value id="Physical" />
-    <value id="Energy" />
-    <value id="Radiation" />
-    <value id="Poison" />
+    <value id="Physical" abbrev="Ph" />
+    <value id="Energy" abbrev="En" />
+    <value id="Radiation" abbrev="Ra" />
+    <value id="Poison" abbrev="Po" />
     </group>
+	
+  <!-- Damage Value override tags -->
+  <group
+    id="DamageOverride">
+    <value id="1" />
+    <value id="2" />
+    <value id="3" />
+    <value id="4" />
+    <value id="5" />
+    <value id="6" />
+    <value id="7" />
+    <value id="8" />
+    <value id="9" />
+    <value id="10" />
+    </group>	
 	
   <!-- Weapon Range tags -->
   <group
     id="Range"
     sequence="explicit">
-    <value id="Close" abbrev="C" order="1" />
-    <value id="Medium" abbrev="M" order="2" />
-    <value id="Long" abbrev="L" order="3" />
+    <value id="Close" 	abbrev="C" order="1" />
+    <value id="Medium" 	abbrev="M" order="2" />
+    <value id="Long" 	abbrev="L" order="3" />
     <value id="Extreme" abbrev="X" order="4" />
     <value id="Special" abbrev="S" order="5" />
     </group>	
-
+	
+  <group
+    id="PowerArmorPart"
+    sequence="explicit">
+    <value id="Frame" 	order="1" />
+    <value id="Core" 	order="2" />
+    <value id="Helm" 	order="3" />
+    <value id="Chest"	order="4" />
+    <value id="Arm" 	order="5" />
+    <value id="Leg" 	order="6" />
+    </group>	
+	
+  <group
+    id="PowerArmorType"
+    sequence="explicit">
+    <value id="Frame" 	name="Frame"	order="1" />
+    <value id="Raider" 	name="Raider"	order="2" />
+    <value id="T45" 	name="T-45"		order="3" />
+    <value id="T51"		name="T-51"		order="4" />
+    <value id="T60" 	name="T-60"		order="5" />
+    <value id="X01" 	name="X-01"		order="6" />
+    </group>
+	
   <!-- GeatType group - used for sorting equipped weapons first
         This group should only ever have the one tag. If the tag is assigned to a
         thing, it has been equipped by the actor. By having this tag in its own
@@ -487,10 +547,20 @@
         are shown first.
   -->
   <group
-    id="ArmorType">
-    <value id="Clothing"/>	<!--  -->
-    <value id="Outfit"/>   	<!--  -->
-    <value id="Headgear"/>   	<!--  -->
+    id="ArmorType"
+    sequence="explicit">
+    <value id="ApparelClothing" name="Clothing"        	order="10"/>	<!--  -->
+    <value id="ApparelOutfit"   name="Outfit"          	order="20"/>	<!--  -->
+    <value id="ApparelHeadgear" name="Headgear"        	order="30"/>   	<!--  -->
+    <value id="ArmorRaider"     name="Raider Armor"    	order="40" />	<!--  -->
+    <value id="ArmorLeather"    name="Leather Armor"   	order="50" />	<!--  -->
+    <value id="ArmorMetal"      name="Metal Armor"     	order="60" />	<!--  -->
+    <value id="ArmorCombat"     name="Combat Armor"    	order="70" />	<!--  -->
+    <value id="ArmorSynth"      name="Synth Armor"     	order="80" />	<!--  -->
+    <value id="ArmorVaultTec"   name="Vault-Tec Armor" 	order="90" />	<!--  -->
+    <value id="ArmorWood"      	name="Wood Armor"     	order="100" />	<!--  -->
+    <value id="ArmorPower"      name="Power Armor"     	order="110" />	<!--  -->
+    <value id="ArmorRobot"      name="Robot Armor"     	order="120" />	<!--  -->
     </group>
 	
   <!-- ArmorLoc group - helper tags for armor location
@@ -498,22 +568,35 @@
         defined in this group.
   -->
   <group
-    id="ArmorLoc">
-    <value id="Head" name="Head" abbrev="H"/>               <!-- Head Armor -->
-    <value id="Torso" name="Torso" abbrev="T"/>             <!-- Torso Armor -->
-    <value id="LeftArm" name="Arm" abbrev="LA"/>               <!-- Arm Armor -->
-    <value id="RightArm" name="Arm" abbrev="RA"/>               <!-- Arm Armor -->
-    <value id="LeftLeg" name="Leg" abbrev="LL"/>               <!-- Leg Armor -->
-    <value id="RightLeg" name="Leg" abbrev="RL"/>               <!-- Leg Armor -->
+    id="ArmorLoc"
+    sequence="explicit"
+	inherit="HitLocation">
     </group>
 
+  <!-- ArmorLoc group - helper tags for armor location
+        If a tag is used to indicate a special ability for a weapon, it should be
+        defined in this group.
+  -->
+  <group
+    id="ArmorWornOn"
+    sequence="explicit"
+	inherit="HitLocation">
+    </group>
+	
+  <!-- Damage Type tags -->
+  <group
+    id="ArmorSpecial"
+	dynamic="yes">
+    <value id="None"/>
+    </group>
+	
   <group
     id="MinionType"
     dynamic="yes">
-    <value id="PC"/>           <!-- Minion is a PC -->
-    <value id="NPC"/>          <!-- Minion is an NPC -->
-    <value id="Creature"/>     <!-- Minion is a Creature -->
-    <value id="Vehicle"/>     <!-- Minion is a Vehicle -->
+    <value id="PC"/>		<!-- Minion is a PC -->
+    <value id="NPC"/>		<!-- Minion is an NPC -->
+    <value id="Creature"/>	<!-- Minion is a Creature -->
+    <value id="Vehicle"/>	<!-- Minion is a Vehicle -->
     </group>
 	
   <group
@@ -529,21 +612,155 @@
     <value id="Mighty" name="Mighty"/>   
     <value id="Legend" name="Legendary"/>     
     </group>
+
+  <group
+    id="RobotBody"
+    dynamic="yes">
+    <value id="ModuleAllowed"	name="Module Allowed"/>   
+    <value id="Head" 			name="Head"/>   
+    <value id="Body" 			name="Body"/>   
+    <value id="Arm" 			name="Arm"/>   
+    <value id="Leg" 			name="Leg"/>     
+    </group>
 	
   <group
     id="Keyword"
     dynamic="yes"
     sequence="explicit">
-    <value id="Robot" order="5"/>  
-    <value id="Mutated" order="5"/> 
-    <value id="Brotherhood" order="40"/> 
-    <value id="Human" order="50" />   
-    <value id="Ghoul" order="50"/> 
-    <value id="SuperMutant" name="Super Mutant" order="50"/> 
-    <value id="Mammal" order="60"/> 
-    <value id="Lizard" order="60"/> 
-    <value id="Insect" order="60"/>   
-    <value id="Raider" order="60" /> 
+    <value id="Robot" 									order="05" />  
+    <value id="Mutated" 								order="05" /> 
+    <value id="Brotherhood"	name="Brotherhood of Steel"	order="40" /> 
+    <value id="Human" 									order="50" />   
+    <value id="Ghoul" 									order="50" /> 
+    <value id="SuperMutant" name="Super Mutant" 		order="50" /> 
+    <value id="Mammal" 									order="60" /> 
+    <value id="Lizard" 									order="60" /> 
+    <value id="Insect" 									order="60" />   
+    <value id="Raider" 									order="60" /> 
+    </group>	
+	
+  <group
+    id="Immune">
+    <value id="Poison"/>		<!-- Indicates that the hero is Immune to Poison Damage -->
+    <value id="Radiation"/>		<!-- Indicates that the hero is Immune to Radiation Damage -->
     </group>	
 
+  <!-- ItemMod tags (from GearMod)-->
+  <group
+    id="ItemMod"
+	dynamic="yes">
+    <value id="ItemModHelper" name="Item Mod Helper"/>
+    </group>
+
+  <group
+    id="ItemModLimit"
+	dynamic="yes">
+    <value id="ArmorHeadOnly" name="Applies to Head Armor Only"/>
+    <value id="ArmorTorsoOnly" name="Applies to Torso Armor Only"/>
+    <value id="ArmorArmOnly" name="Applies to Arm Armor Only"/>
+    <value id="ArmorLegOnly" name="Applies to Leg Armor Only"/>
+    </group>
+	
+  <group
+    id="ItemModCatAllowed"
+	dynamic="yes">
+    <value id="Gear" name="Gear" />
+	
+	<!-- identifies a mod for a piece of apparel -->
+    <value id="Clothing" name="Clothing" />							
+	
+	<!-- identifies a mod for Armor -->
+    <value id="Upgrade" name="Upgrade (Armor)" />
+    <value id="Material" name="Material" />	
+    <value id="Utility" name="Utility" />	
+	
+	<!-- identifies a mod for a Melee Weapon -->
+    <value id="UpgradeMelee" name="Upgrade (Melee Weapon)" />		
+	
+	<!-- identifies a mod for Ranged Weapons -->
+    <value id="RangedReceiver" name="Receiver" />
+    <value id="RangedBarrel" name="Barrel" />
+    <value id="RangedGrip" name="Grip" />
+    <value id="RangedMag" name="Magazine" />
+    <value id="RangedSights" name="Sights" />
+    <value id="RangedStock" name="Stock" />
+    <value id="RangedMuzzle" name="Muzzle" />
+	
+	<!-- identifies a mod for Energy Weapons -->
+    <value id="Capacitor" name="Capacitor" />
+	
+	<!-- identifies a mod for Power Armor -->
+    <value id="UpgradePA" name="Upgrade (Power Armor)" />
+    <value id="System" name="System" />
+    <value id="Plating" name="Plating" />
+	
+	<!-- identifies a mod for Robots -->
+    <value id="RobotHead" 		name="Robot Head" />	
+    <value id="RobotTorso" 		name="Robot Torso" />	
+    <value id="RobotArm" 		name="Robot Arm" />	
+    <value id="RobotLeg" 		name="Robot Leg" />
+    <value id="RobotInternal" 	name="Robot Internal Torso" />
+    <value id="RobotModule" 	name="Robot Module" />
+	
+	<!-- identifies a mod for a Bow or Crossbow -->
+    <value id="Frame" name="Frame" />	
+	
+    </group>		
+
+  <!-- Item Mod Categories  -->
+  <group
+    id="ItemModCat"
+	inherit="ItemModCatAllowed">
+    </group>
+
+  <!-- ItemModSpecWpn tags 
+       Item mod is specific to an Individual weapon 
+	   -->
+  <group
+    id="ItemModSpecArmor"
+	dynamic="yes">
+    <value id="Any" name=""/>
+    </group>
+	
+  <!-- Item Mod Categories  -->
+  <group
+    id="ItemModArmorType"
+	inherit="ArmorType">
+    </group>
+	
+  <!-- Item Mod Categories  -->
+  <group
+    id="ItemModWpnType"
+	inherit="WeaponType">
+    </group>
+	
+  <!-- Item Mod Armor Location Categories  -->
+  <group
+    id="ItemModArmorLoc"
+	inherit="ArmorLoc">
+    </group>
+	
+  <!-- ItemModSpecWpn tags 
+       Item mod is specific to an Individual weapon 
+	   -->
+  <group
+    id="ItemModSpecWpn"
+	dynamic="yes">
+    <value id="Any" name=""/>
+    </group>
+
+  <!-- ItemModSpecWpn tags 
+       Item mod is specific to an Individual weapon 
+	   -->
+  <group
+    id="ItemModAllow"
+	dynamic="yes"
+	inherit="ItemMod">
+    </group>
+	
+  <group
+    id="ItemModSelected"
+	inherit="ItemModCatAllowed">
+    </group>
+	
   </document>

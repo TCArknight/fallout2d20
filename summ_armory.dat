@@ -25,7 +25,8 @@
       component="Defense"
       showtemplate="smDefense"
       showsortset="Armory"
-      scrollable="no">
+      scrollable="no"
+	  alwaysupdate="yes">
       <headertitle><![CDATA[
       @text = #summtitle_decoration[] & " Armor & Shields " & #summtitle_decoration[]
       ]]></headertitle>
@@ -39,9 +40,10 @@
     id="smRange"
     style="tblInvisSm">
     <table_fixed
-      component="WeapRange"
+      component="WeaponRanged"
       showtemplate="smWeapon"
-      scrollable="no">
+      scrollable="no"
+	  alwaysupdate="yes">
       <headertitle><![CDATA[
       @text = #summtitle_decoration[] & " Ranged Weapons " & #summtitle_decoration[]
       ]]></headertitle>
@@ -55,9 +57,10 @@
     id="smMelee"
     style="tblInvisSm">
     <table_fixed
-      component="WeapMelee"
+      component="WeaponMelee"
       showtemplate="smWeapon"
-      scrollable="no">
+      scrollable="no"
+	  alwaysupdate="yes">
       <headertitle><![CDATA[
       @text = #summtitle_decoration[] & " Melee Weapons " & #summtitle_decoration[]
       ]]></headertitle>

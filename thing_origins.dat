@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document signature="Hero Lab Data">
+  <thing id="spcBrotherIni" name="Brotherhood Initiate" description="Born from the terrible revelations of the Mariposa Rebellion, Roger Maxson formed the Brotherhood of Steel so that his people—and eventually the rest of the survivors in this new world—would have something to believe in. With its own mythology, creed, and hierarchy, the Brotherhood of Steel’s primary goal is the recovery and preservation of the technology of the pre-war world. With the Great War disrupting humanity’s access to technology, the Brotherhood’s knights and scribes do all they can to secure the technology of the past, for the needs of future generations.\n\nYou may be a descendant of a knight or paladin, born into the Brotherhood and a firm believer of their doctrine, or you may be a new recruit, pledging yourself to their cause and looking to rise through their ranks.\n\nAlthough the Brotherhood share a common goal, their chapters across the wasteland can have different beliefs and protocols, and they aren’t as unified as they seem from the outside. While the West Coast Brotherhood of Steel warred with the New California Republic over reclamation of technology and the NCR’s expansion efforts, the East Coast chapter was effectively isolated when it prioritized charity over the exchange of technology and the preservation of pre-war equipment. Elder Lyons’ mission became humanitarian, and while that earned them isolation at first, Arthur Maxson led their expansion of influence from Washington D.C. to the entire Eastern Seaboard, refocusing their efforts on technological recovery and development." compset="Origin" uniqueness="unique">
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <bootstrap thing="stChainThatBinds"></bootstrap>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="spcGhoul" name="Ghoul" description="Prolonged exposure to the effects of background gamma radiation—part of the fallout of the Great War—can spontaneously mutate humans. You are one of those mutants. Either slowly, or strangely spontaneously, your body changed into that of a rotting, living corpse. You no longer age the same way, and appear unaffected by radiation. Your skin peels from your flesh but seems to be sustained by your mutated metabolism.\n\nYou are a “ghoul”—a necrotic post-human—one of many rag-tag survivors who weren’t lucky enough to get into a Vault-Tec facility. You may have been born after the war, and over time developed the necrotic mutation. You may have come from Vault 12 in Bakersfield, California, whose vault door did not close, exposing the population to the radiation from outside. You may have taken refuge in a ghoul settlement, like Underworld in the Capital Wasteland, and have ventured out recently to explore, scavenge, and survive.\n\nCivilized ghouls, such as yourself, also fear a possible degeneration into a frenzied, feral nature. Feral ghouls are necrotic mutants like yourself who have lost higher brain functions, and reverted to a primal, violent state. They attack non-ghouls indiscriminately to defend their territory or feed. Whether this loss of reason is due to acute levels of radiation or the inevitable outcome of the mutation, you’re not sure, and that makes it all the more terrifying." compset="Origin" uniqueness="unique">
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <bootstrap thing="stNecroticPostHu"></bootstrap>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="spcSuperMutant" name="Super Mutant" description="You are a brutal, mutated human, forced to evolve from thoughtless experiments by the twisted science of the pre- and post-war world. Infected with the Forced Evolutionary Virus (F.E.V.), your body has mutated into a tall, muscular killing machine, filled with a rage.\n\nYou could have originated from the Master’s army at the Mariposa military base, California, created as he experimented on unwilling human victims, splitting into one of the factions upon his death to attack or rebuild the wasteland with its survivors. Your origins could be rooted in the Evolutionary Experimentation Program of Vault 87, whose super mutant groups terrorize the Capital Wasteland. You could have been abducted from the Commonwealth and exposed to the F.E.V. by the Institute and disposed of back into the wasteland to fend for yourself in small bands of raiders. Or finally, you could have been a resident of Huntersville, Appalachia, whose water supply was contaminated with the virus and the mutations went unchecked.\n\nAlthough these super mutants share the same qualities, the groups formed from the three strains haven’t mixed, and there is little evidence they have met one another. While some groups have migrated or moved in their lifetime, none have travelled far enough to encounter one another, so where your quests take place will likely dictate your origin." compset="Origin" uniqueness="unique">
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <bootstrap thing="stForcedEvolution"></bootstrap>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="spcMisterHandy" name="Mister Handy" description="The General Atomics International robot “Mister Handy” exploded onto the robotic market as a reliable construction robot, known for its durability and ease of maintenance, but its real breakthrough came in a collaboration with RobCo to produce a domestic model.\n\nYou are one of these domestic automatons, produced some time between 2037 and 2077, seeking to provide every household in America with butler-like servitude. Equipped with state-of-the-art programming, you have initiative and can adapt your own coding to learn more from your environment. This capacity for self-determination is what has enabled your survival beyond the Great War; where other robots may have broken down, you have managed to shake loose from the shackles of your programming and find a life for yourself.\n\nMany models exist, and you could come from any of the Mister Handy, Mister Gutsy, Miss Nanny, or Mister Orderly series. You are powered by a nuclear core, can replace your own fuel, and repair yourself or other Mister Handy units. Your model has three mechanical arms and three mechanical eyes on stalks, and your jet propulsion keeps you hovering above the ground, providing you have all the fuel you need. With this rugged design, you have survived so far." compset="Origin" uniqueness="unique">
+    <tag group="HitLocation" tag="Optics"/>
+    <tag group="HitLocation" tag="MainBody"/>
+    <tag group="HitLocation" tag="Arm1"/>
+    <tag group="HitLocation" tag="Arm2"/>
+    <tag group="HitLocation" tag="Arm3"/>
+    <tag group="HitLocation" tag="Thruster"/>
+    <tag group="Hero" tag="NoCarryStr"/>
+    <tag group="Hero" tag="IsRobot"/>
+    <tag group="Hero" tag="NoUnarmed"/>
+    <tag group="RobotBody" tag="Arm"/>
+    <tag group="RobotBody" tag="Arm"/>
+    <tag group="RobotBody" tag="Arm"/>
+    <tag group="RobotBody" tag="Torso"/>
+    <tag group="RobotBody" tag="Head"/>
+    <tag group="RobotBody" tag="ModuleAllowed"/>
+    <tag group="RobotBody" tag="ModuleAllowed"/>
+    <tag group="RobotBody" tag="ModuleAllowed"/>
+    <bootstrap thing="stMisterHandy"></bootstrap>
+    <bootstrap thing="robArm">
+      <autotag group="Equipment" tag="ModRequired"/>
+      </bootstrap>
+    <bootstrap thing="robArm">
+      <autotag group="Equipment" tag="ModRequired"/>
+      </bootstrap>
+    <bootstrap thing="robArm">
+      <autotag group="Equipment" tag="ModRequired"/>
+      </bootstrap>
+    <bootstrap thing="robBody">
+      <autotag group="RobotBody" tag="ModuleAllowed"/>
+      <autotag group="RobotBody" tag="ModuleAllowed"/>
+      <autotag group="RobotBody" tag="ModuleAllowed"/>
+      </bootstrap>
+    </thing>
+  <thing id="spcSurvivor" name="Survivor" description="You are the living legacy of the people who prepared for Armageddon on their own. You are only alive in the post-nuclear apocalyptic landscape because your forebears dug in, survived, and found community enough to continue humanity’s existence.\n\nYou could be from any number of settlements, isolated shelters, or traveling groups that sparsely populate the wasteland from West Coast to East Coast. You could be from the New California Republic, carrying on the legacy of Vault 15 and Shady Sands. You could fight to protect others, calling a group of survivors like the Minutemen or the Regulators your home. You could also be a merciless raider or be born into one of these groups but escaped in order to rehabilitate and reform.\n\nWherever you are from, or wherever you travel, making connections and laying down roots can be hard. Survivors are naturally wary of others, and are always on the lookout for the next conman, raiding party, or thief that will take their hard-earned resources. Travelling vast distances is difficult too, and many travelling survivors—particularly trading caravans—move between large settlements within their area of the wasteland, rather than travelling from coast to coast." compset="Origin" uniqueness="unique">
+    <fieldval field="orNumTraits" value="2"/>
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <tag group="User" tag="PerkForTrait"/>
+    <tag group="User" tag="SelectTrait"/>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="spcVaultDweller" name="Vault Dweller" description="When the bombs were falling, you or your predecessors were lucky enough to be safely secured in one of the one hundred and twenty-two Vault-Tec facilities, deep underground protected by thick blast doors and layers of rock and concrete. Your family either had enough money to buy their space or were randomly selected to enter the vault to be saved from the nuclear devastation above—perhaps only to be condemned to immoral experiments run by Vault-Tec on unwitting participants.\n\nYou are free from mutation and disease. The Vault- Tec program has afforded you a safe home for some time, but not without some cost. The vault you came from used you as a human test subject, manipulating your understanding of the world and your behavior in order to study you. That’s left you with a profound psychological change, compared to the survivors on the surface you now know, and affects how you make your way through the wasteland.\n\nWhether through design or poor planning, many of the vaults were not well stocked or prepared for the long wait until nuclear fallout had reached safe levels outside, and many fell into disrepair or out of supplies. Due to these shortcomings, many vault dwellers sought help from the surface, and many vaults opened in order to allow supplies to reach them. By opening their vault doors, the isolated societies inside opened themselves up to mixing with the survivors above, and established a permanent connection with the surface—the most notable example being the residents of Vault 15, who split up and went on to establish the settlement Shady Sands, as well as the raiding gangs of the Jackals, Vipers, and Khans when their vault opened." compset="Origin" uniqueness="unique">
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <bootstrap thing="stVaultKid"></bootstrap>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="stChainThatBinds" name="The Chain That Binds" description="You gain one additional Tag skill, which must be one of Energy Weapons, Science, or Repair.\n\nAs a member of the Brotherhood of Steel, you are bound by the chain of command: The Chain that Binds. You must carry out the orders of your immediate superiors, and you are responsible for your subordinate siblings. If you do not carry out your duty, you are expelled from the Brotherhood and your technology will be reclaimed—by any means  necessary." compset="OriginTrait" uniqueness="useronce">
+    <tag group="OriginCat" tag="spcBrotherIni"/>
+    <eval phase="PreTraits" priority="1000"><![CDATA[perform hero.findchild[Origin].setfocus
+
+doneif (state.isfocus = 0)
+
+focus.field[orMaxTagSkills].value += 1
+
+~additional tag skill must be one of Energy Weapons, Science or Repair
+focus.field[orSklChoiceExpr4].text = "component.Skill & !Skill.TagSkill & (thingid.skEnergyWpns|thingid.skScience|thingid.skRepair)"]]></eval>
+    </thing>
+  <thing id="stEducated" name="Educated" description="You have one additional tag skill.  When you fail a skill test using a skill other than a tag skill, the GM gains 1 AP." compset="OriginTrait" summary="Gain an additional Tag Skill of your choice. When you fail a skill test using a skill other than a tag skill, the GM gains 1 AP." uniqueness="useronce">
+    <tag group="OriginCat" tag="spcSurvivor"/>
+    <tag group="OriginCat" tag="spcTribal"/>
+    <eval phase="PreTraits" priority="1000">hero.findchild[Origin].field[orMaxTagSkills].value += 1</eval>
+    </thing>
+  <thing id="stHeavyHanded" name="Heavy Handed" description="Your Melee Damage bonus increases by +1 DC . Your melee and unarmed attacks suffer a complication on a 19 or 20, rather than only a 20." compset="OriginTrait" summary="+1 DC Melee Damage, but unarmed attacks suffer complication on a 19 or 20." uniqueness="useronce">
+    <tag group="OriginCat" tag="spcSurvivor"/>
+    <tag group="OriginCat" tag="spcTribal"/>
+    <eval phase="Setup" priority="1000">#traitbonus[trMeleeDmg] += 1</eval>
+    </thing>
+  <thing id="stNecroticPostHu" name="Necrotic Post-Human" description="You are immune to radiation damage. In fact, you’re healed by it—you regain 1 HP for every 3 points of radiation damage inflicted upon you, and if you rest in an irradiated location, you may re-roll your dice pool when checking if your injuries heal. In addition, Survival becomes a Tag skill, increasing it by 2 ranks.\n\nYou age at a much-decreased rate, and you’re probably older than your unmutated companions—you may even have survived the Great War of 2077—but you’re sterile: “the first generation of ghouls is the last” as the saying goes. You may face discrimination from “smoothskins” (humans who aren’t ghouls), increasing the difficulty or complication range of Charisma tests depending on your opponent’s beliefs." compset="OriginTrait" summary="Immune to Radiation damage. Radiation damage heals 1HP/3 rads, also if resting in irradiated location, may re-roll healing check. Survival becomes a Tag Skill." uniqueness="useronce">
+    <tag group="OriginCat" tag="spcGhoul"/>
+    <eval phase="Initialize" priority="1000">perform hero.childfound[skSurvival].assign[Skill.TagSkill]
+perform hero.assign[Hero.RadImmune]</eval>
+    </thing>
+  <thing id="spcVaultDwellerGh" name="Vault Dweller (Ghoul)" description="When the bombs were falling, you or your predecessors were lucky enough to be safely secured in one of the one hundred and twenty-two Vault-Tec facilities, deep underground protected by thick blast doors and layers of rock and concrete. Your family either had enough money to buy their space or were randomly selected to enter the vault to be saved from the nuclear devastation above—perhaps only to be condemned to immoral experiments run by Vault-Tec on unwitting participants.\n\nYou are free from mutation and disease. The Vault- Tec program has afforded you a safe home for some time, but not without some cost. The vault you came from used you as a human test subject, manipulating your understanding of the world and your behavior in order to study you. That’s left you with a profound psychological change, compared to the survivors on the surface you now know, and affects how you make your way through the wasteland.\n\nWhether through design or poor planning, many of the vaults were not well stocked or prepared for the long wait until nuclear fallout had reached safe levels outside, and many fell into disrepair or out of supplies. Due to these shortcomings, many vault dwellers sought help from the surface, and many vaults opened in order to allow supplies to reach them. By opening their vault doors, the isolated societies inside opened themselves up to mixing with the survivors above, and established a permanent connection with the surface—the most notable example being the residents of Vault 15, who split up and went on to establish the settlement Shady Sands, as well as the raiding gangs of the Jackals, Vipers, and Khans when their vault opened." compset="Origin" uniqueness="unique">
+    <bootstrap thing="stNecroticPostHu"></bootstrap>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="stVaultKid" name="Vault Kid" description="Your healthier start to life at the hands of trained doctors and sophisticated auto-docs means you reduce the difficulty of all END tests to resist the effects of disease. In addition, your carefully-planned upbringing means you have one additional tag skill of your choice.\n\nYou may also work with the Gamemaster to determine what sort of experiment took place within your Vault. Once per quest, the GM may introduce a complication which reflects the nature of the experiment you unwittingly took part in, or introduce a complication related to your early life of isolation and confinement within the Vault. If the GM does this, you immediately regain one Luck Point." compset="OriginTrait" summary="You reduce the difficulty of all END tests to resist the effects of disease. You also  gain one additional Tag Skill of your choice." uniqueness="useronce">
+    <tag group="OriginCat" tag="spcVaultDweller"/>
+    <eval phase="PreTraits" priority="1000">hero.findchild[Origin].field[orMaxTagSkills].value += 1</eval>
+    </thing>
+  <thing id="stFastShot" name="Fast Shot" description="If you take a second major action in combat, and use it to make a ranged attack, the additional major action only costs 1 AP, rather than 2. You cannot benefit from the Aim minor action—you’re too impatient." compset="OriginTrait" summary="Making a Ranged attack as an additional Major Action only costs 1 AP, but you cannot benefit from the Aim minor action" uniqueness="useronce">
+    <tag group="OriginCat" tag="spcSurvivor"/>
+    <tag group="OriginCat" tag="spcTribal"/>
+    </thing>
+  <thing id="stGifted" name="Gifted" description="Choose two S.P.E.C.I.A.L. attributes and increase them by +1 each. Your maximum number of Luck points is one fewer than your Luck attribute." compset="OriginTrait" summary="You gain a +1 to two attributes, but your maximum Luck Points is 1 less than your Luck attribute." uniqueness="useronce">
+    <fieldval field="usrCandid1" value="component.Attribute"/>
+    <fieldval field="usrCandid2" value="component.Attribute"/>
+    <tag group="OriginCat" tag="spcSurvivor"/>
+    <tag group="ChooseSrc2" tag="Hero"/>
+    <tag group="ChooseSrc1" tag="Hero"/>
+    <tag group="OriginCat" tag="spcTribal"/>
+    <eval phase="Traits" priority="5000" index="2">~ -1 to Luck
+#resmax[resLuckPoints] -= 1</eval>
+    <eval phase="Setup" priority="1000"><![CDATA[~ +1 to two attributes
+if (field[usrChosen1].ischosen <> 0) then
+  field[usrChosen1].chosen.field[trtBonus].value += 1
+  endif
+if (field[usrChosen2].ischosen <> 0) then
+  field[usrChosen2].chosen.field[trtBonus].value += 1
+  endif]]></eval>
+    </thing>
+  <thing id="stSmallFrame" name="Small Frame" description="You may re-roll 1d20 on all AGI tests which rely on balance or contortion. Your carry weight is 150 + (5 x STR) lbs., rather than 150 + (10 x STR) lbs." compset="OriginTrait" summary="You may re-roll 1d20 on all AGI tests which rely on balance or contortion, your additional carry weight is halved." uniqueness="useronce">
+    <tag group="OriginCat" tag="spcSurvivor"/>
+    <tag group="OriginCat" tag="spcTribal"/>
+    </thing>
+  <thing id="stForcedEvolution" name="Forced Evolution" description="Your initial Strength and Endurance attributes are increased by +2 each, and your maximum Strength and Endurance are increased to 12, but your maximum Intelligence and Charisma are both reduced to 6. You may not have more than 4 ranks in any skill. You are completely immune to radiation and poison damage.\n\nYou stand over seven feet tall, and your body is bulky and muscular. Your skin is green, yellow, or grey, regardless of what color it was when you were human. You do not seem to age, but you are sterile.\n\nYou can only wear armor which has been made to fit a super mutant." compset="OriginTrait">
+    <tag group="OriginCat" tag="spcSuperMutant"/>
+    <eval phase="Setup" priority="1000">~ +2 Strength and Endurance (and Maximums)
+#traitbase[attrStr] += 2
+#traitbase[attrEnd] += 2
+#traitmax[attrStr] += 2
+#traitmax[attrEnd] += 2
+
+~ 6 is Maximum for Intelligence and Charisma
+#traitmax[attrInt] = 6
+#traitmax[attrCha] = 6
+
+~max skill ranks is 4
+perform hero.assign[Hero.SkillLimit4]
+
+~immune to Radiation and Poison
+perform hero.assign[Hero.RadImmune]
+perform hero.assign[Hero.PoiImmune]</eval>
+    </thing>
+  <thing id="stMisterHandy" name="Mister Handy Robot" description="You have 360° vision and improved sensory systems that can detect smells, chemicals, and radiation, reducing the difficulty of Perception tests that rely on sight and smell by 1. You are also immune to radiation and poison damage, but you cannot use chems, nor can you benefit from food, drink, or rest. You move by jet propulsion, hovering above the ground, unaffected by difficult terrain or obstacles. Your carry weight is 150 lbs., and it cannot be increased by your Strength or perks, but it can be increased by modified armor. You cannot recover from your own injuries or heal health points without receiving repairs (see Healing Robots, p.34).\n\nYou cannot manipulate the physical world like humans do, instead you have three of the arm attachments in the Arm Attachments table, determined by your choice of equipment pack. If you select an arm that features a weapon, you also gain 20 shots of ammo for that weapon." compset="OriginTrait">
+    <tag group="OriginCat" tag="spcMisterHandy"/>
+    <eval phase="Initialize" priority="1000">perform hero.assign[Hero.RadImmune]
+perform hero.assign[Hero.PoiImmune]</eval>
+    </thing>
+  <thing id="stUnitedStand" name="United We Stand" description="Trade caravan posts in your settlements attract traders every 5 days rather than 7. Settlements you establish, by any means, have a base Defense resource of 4. You gain either Energy Weapons or Small Guns as a bonus tag skill (your choice). Your Damage Resistance is increased by +1 while in cover, and you deal +1 CD damage while you and your companions are outnumbered." compset="OriginTrait" summary="You gain either Energy Weapons or Small Guns as a bonus tag skill. Your Damage Resistance is increased by +1 while in cover, and you deal +1 CD damage while you and your companions are outnumbered.">
+    <usesource source="srcFalloutSettler"/>
+    <tag group="OriginCat" tag="spcMinuteman"/>
+    <eval phase="PreTraits" priority="1000"><![CDATA[perform hero.findchild[Origin].setfocus
+
+doneif (state.isfocus = 0)
+
+focus.field[orMaxTagSkills].value += 1
+
+~additional tag skill must be one of Energy Weapons or Small Guns
+focus.field[orSklChoiceExpr4].text = "component.Skill & !Skill.TagSkill & (thingid.skEnergyWpns|thingid.skSmallGuns)"]]></eval>
+    </thing>
+  <thing id="spcComMinuteman" name="Commonwealth Minuteman" description="“Protect the people at a minute’s notice.” A promise to live by, you belong to a unique brand of survivors in the Commonwealth who put others before themselves. With the threat of raiders, radioactive mutants, and morally corrupt factions that travel the wastes, another settlement always needs your help.\n\nYou could be a long-standing veteran of the Minutemen, rising to prominence in your defense of Diamond City against super mutant attackers. You could have signed on later, as the group’s founders tried to organize a government and unite settlements around the Commonwealth (only to be thwarted by the assassination of all the representatives in attendance), taking up residence in the old Fort Independence. “The Castle ‘’ could have been your home shortly before it was lost to a sea monster emerging from the Boston shoreline. Whatever your participation, the Quincy Massacre was a pivotal moment in your personal history, with Clint’s defection to the Gunners, Colonel Hollis’s capture and subsequent execution, and the Gunners slaughtering all but a few survivors in Quincy.\n\nPreston Garvey believed himself the only Minutemen survivor of the Quincy Massacre, but what if he was mistaken? What if you also survived, split off from your fellow militiamen, or went along with Clint’s plans just to live, but never losing the spirit of the Minutemen’s pledge to protect the citizens of the Commonwealth? Maybe you left the group before the events of Quincy, disenfranchised by the politics and infighting after the death of General Becker, but ready to dust off the hat and coat once more for someone who can reunite the militia and bring it back to its former glory." compset="Origin" uniqueness="unique">
+    <usesource source="srcFalloutSettler"/>
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <bootstrap thing="stUnitedStand"></bootstrap>
+    <bootstrap thing="wpUnarmed"></bootstrap>
+    </thing>
+  <thing id="spcTribal" name="Tribal" description="Inhabiting broad communities, composed of families with no distinct cultural identity, Tribal wastelanders inhabit the wasteland outside some of the more formalized ‘states’ like the NCR. While the territory they inhabit is larger than other settlements, they have a stronger sense of a community.\n\nTribal wastelanders may share a more spiritual philosophy with the wider wasteland, including a mythologized explanation of the world as it exists now compared to their more cynical neighbors. Additionally, they hold old technology in superstitious reverence." compset="Origin" uniqueness="unique">
+    <fieldval field="orNumTraits" value="2"/>
+    <usesource source="srcFalloutWander"/>
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <tag group="User" tag="PerkForTrait"/>
+    <tag group="User" tag="SelectTrait"/>
+    </thing>
+  <thing id="spcNCR" name="New California Republic" description="As a citizen of New California, you are the progeny of West Coast survivors of the nuclear apocalypse, a legacy of civilization rebuilding and expanding from the humble beginnings of Shady Sands. Formed from the political differences and exodus of Vault 15 in California, its founding members left the vault with a G.E.C.K., allowing them to grow food, build their first amenities, and establish Shady Sands. Soon, a thriving, self-sustaining community became the foundation stone of the New California Republic, or NCR. From its humble beginnings, the NCR expanded, promoting many old-world values: democracy, with its presidents and a Congress; liberty, by exalting personal freedoms; and the rule of law, by protecting its citizens and holding them accountable for immoral actions. Whether you live these values yourself is up to you, but if you come from New California, your life is marked by it in some way.\n\nMany citizens of the republic are just like survivors you’d find anywhere in the wastes: farmers, herders, mechanics, merchants, caravaneers, even mercenaries and soldiers. What sets you apart are the cultural touchstones other wastelanders don’t have in their everyday lives. The NCR Dollar, established at the turn of the 22nd century, dominates the New California economy and eclipses Nuka-Cola bottle caps as the default tender within NCR territory. You’ll likely have seen much more built-up urban areas, like the Hub, Junktown, Vault City, and New Reno. These sprawling urban centers make the rest of the wasteland seem backward, deserted, and otherwise dangerous. The trade pouring in and out of these settlements provides food, medicine, and even civil liberties like the right to vote and to pursue justice for crimes committed. That being said, a strain on the agricultural and industrial output of the republic has driven an expansion east, into the Mojave Wasteland in particular, to find and develop more farmland. The ensuing annexations, wars, and expansion to the NCR’s territory brought arguments of imperialism against its government, and its thinly-stretched military and prospecting frontiersmen lost the benefits of civilization for the benefit of everyone else." compset="Origin" uniqueness="unique">
+    <fieldval field="orNumTraits" value="2"/>
+    <usesource source="srcFalloutSettler"/>
+    <tag group="HitLocation" tag="Head"/>
+    <tag group="HitLocation" tag="Torso"/>
+    <tag group="HitLocation" tag="ArmLeft"/>
+    <tag group="HitLocation" tag="ArmRight"/>
+    <tag group="HitLocation" tag="LegLeft"/>
+    <tag group="HitLocation" tag="LegRight"/>
+    <tag group="User" tag="SelectTrait"/>
+    <tag group="User" tag="PerkForTrait"/>
+    </thing>
+  <thing id="stNomad" name="Nomad" description="Re-roll 1d20 on Survival tests to travel, set up camp, and forage for food and water. In addition, ignore the first complication rolled when making these tests.\n\nBarter and Speech tests increase their difficulty and complication range by 1 when dealing with inhabitants of a static settlement. Science cannot be a Tag skill." compset="OriginTrait" uniqueness="useronce">
+    <usesource source="srcFalloutWander"/>
+    <tag group="OriginCat" tag="spcTribal"/>
+    </thing>
+  </document>
